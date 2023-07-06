@@ -1,36 +1,4 @@
 {
-    "0index": {
-        "prefix": "0index",
-        "body": "int0 = lambda x:int(x)-1",
-        "description": ""
-    },
-    "int_input": {
-        "prefix": "intinput",
-        "body": [
-            "int(input())",
-        ],
-        "description": ""
-    },
-    "list_input": {
-        "prefix": "listinput",
-        "body": [
-            "list(map(${1|int,str|},input()${2:.split()}))",
-        ],
-        "description": ""
-    },
-    "map_input": {
-        "prefix": "mapinput",
-        "body": [
-            "map(${1|int,str|},input()${2:.split()})",
-        ],
-        "description": ""
-    },
-    "grid_input": {
-        "prefix": "gridinput",
-        "body": [
-            "[list(map(${1|int,str|}, input()${2:.split()})) for _ in range(${3|h,y|})]",
-        ],
-    },
     "UnionFind": {
         "prefix": "snippet:UF",
         "body": [

@@ -33,4 +33,4 @@ class UnionFind:
             else:
                 ret[root].append(i)
 
-        return ret
+        return list(filter(lambda r: r, ret))
