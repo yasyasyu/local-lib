@@ -5,8 +5,15 @@
 from math import log2
 
 
-n = int(input())
-k = n
-while k:
-    # print(bin(k)[2:].zfill(int(log2(n)) + 1), k)
-    k = (k - 1) & n
+# n = int(input())
+
+
+def bit_partial_set(k):
+    n = k
+    print(bin(k)[2:].zfill(int(log2(n)) + 1), k)
+    while k:
+        k = (k - 1) & n
+        print(bin(k)[2:].zfill(int(log2(n)) + 1), k)
+
+
+# bit_partial_set(n)
