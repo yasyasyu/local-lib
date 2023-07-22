@@ -1,7 +1,7 @@
 class SCC:
     import sys
 
-    sys.setrecursionlimit(2 * 10**5)
+    sys.setrecursionlimit(5 * 10**5)
 
     def __init__(self, n):
         self.n = n
