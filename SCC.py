@@ -1,4 +1,8 @@
 class SCC:
+    import sys
+
+    sys.setrecursionlimit(10**6)
+
     def __init__(self, n):
         self.n = n
         self.edge = [[] for _ in range(n)]
