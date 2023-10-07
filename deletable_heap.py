@@ -1,24 +1,28 @@
 import heapq
 
-
 class DeletableHeap:
-    def __init__(self):
+    def __init__(self, is_unique = False):
         self.heap = []
         self.d = dict()
         self.size = 0
         self.total = 0
+        self.is_unique = is_unique
 
     def __str__(self):
-        return f"[{','.join(map(str, self.heap))}]"
+        return f"[{', '.join(map(str, self.heap))}]"
 
     def push(self, x):
+        if x not in self.d:
+            self.d[x] = 1
+        elif self.is_unique:
+            return
+        else:
+            self.d[x] += 1
+
         self.size += 1
         self.total += x
         heapq.heappush(self.heap, x)
-        if x not in self.d:
-            self.d[x] = 1
-        else:
-            self.d[x] += 1
+
 
     def get(self):
         return self.heap[0]
