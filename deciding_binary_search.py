@@ -5,7 +5,7 @@ def is_ok(mid):
         return False
 
 
-def binary_search(ok, ng):
+def binary_search(ng, ok):
     """
     (ng : ok)
     """
