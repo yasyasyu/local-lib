@@ -1,7 +1,8 @@
 import heapq
 
+
 class DeletableHeap:
-    def __init__(self, is_unique = False):
+    def __init__(self, is_unique=False):
         self.heap = []
         self.d = dict()
         self.size = 0
@@ -22,7 +23,6 @@ class DeletableHeap:
         self.size += 1
         self.total += x
         heapq.heappush(self.heap, x)
-
 
     def get(self):
         return self.heap[0]
