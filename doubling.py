@@ -1,27 +1,43 @@
-class doubling:
-    def __init__(self, ne, K):
-        self.n = len(ne)
-        self.ne = ne
-        self.K = K
-        self.D = [[0] * self.n for _ in range(K + 1)]
-        for i in range(self.n):
-            self.D[0][i] = ne[i]
-        for k in range(K):
-            d = self.D[k]
-            nd = self.D[k + 1]
-            for i in range(self.n):
-                a = d[i]
-                if 0 <= a < self.n:
-                    nd[i] = d[a]
-                else:
-                    nd[i] = a
+from typing import Callable
 
-    def query(self, i, t):
-        s = i
-        for k in range(self.K):
-            if t & 1:
-                i = self.D[k][i]
-                if not 0 <= i < self.n:
-                    return i
-            t >>= 1
-        return i
+
+class Doubling:
+
+    def __init__(self, N: int, max_K: int, mapping: Callable[[int], int]) -> None:
+        """要素数nのダブリングテーブルを作成します。"""
+        print(max_K)
+        k_bits = max_K.bit_length()
+        print(k_bits)
+
+        # dub[i][j] = 値jを2**i回操作した結果
+        self.doubling_table = [[0] * N for _ in range(k_bits)]
+
+        # 1回(2**0回)操作した結果を作成
+        for j in range(N):
+            self.doubling_table[0][j] = mapping(j)
+
+        # 2**i回操作した結果を順に作成
+        # 2**(i-1)回操作を2回すれば2**i回操作したことになる
+        for i in range(1, k_bits):
+            for j in range(N):
+                self.doubling_table[i][j] = self.doubling_table[i - 1][
+                    self.doubling_table[i - 1][j]
+                ]
+
+    def get(self, x, k):
+        """xをk回操作した値を取得します。"""
+        # kをビットごとに分解して、2**a + 2**b + 2**c + ... の形で考える。
+        # xを2**a回操作した結果を2**b回操作した結果を2**c回操作… のように順に適用する
+        current = x
+        for i in range(k.bit_length()):
+            if k >> i & 1:
+                current = self.doubling_table[i][current]
+
+        return current
+
+
+N, K = map(int, input().split())
+mapping = list(map(lambda x: int(x) - 1, input().split()))
+
+doubling = Doubling(N, K, lambda x: mapping[x])
+doubling.get()
