@@ -1,7 +1,7 @@
 # https://github.com/tatyam-prime/SortedSet/blob/main/SortedMultiset.py
 import math
 from bisect import bisect_left, bisect_right
-from typing import Generic, Iterable, Iterator, List, Tuple, TypeVar, Optional
+from typing import Generic, Iterable, Iterator, TypeVar, Optional
 
 T = TypeVar("T")
 
@@ -10,12 +10,12 @@ class SortedMultiset(Generic[T]):
     BUCKET_RATIO = 50
     REBUILD_RATIO = 170
 
-    def _build(self, a: Optional[List[T]] = None) -> None:
+    def _build(self, a: Optional[list[T]] = None) -> None:
         "Evenly divide `a` into buckets."
         if a is None:
             a = list(self)
         size = len(a)
-        bucket_size = int(math.ceil(math.sqrt(size / self.BUCKET_RATIO)))
+        bucket_size = int(math.sqrt(size / self.BUCKET_RATIO))
         self.a = [
             a[size * i // bucket_size : size * (i + 1) // bucket_size]
             for i in range(bucket_size)
@@ -52,7 +52,7 @@ class SortedMultiset(Generic[T]):
         s = str(list(self))
         return "{" + s[1 : len(s) - 1] + "}"
 
-    def _position(self, x: T) -> Tuple[List[T], int]:
+    def _position(self, x: T) -> tuple[list[T], int]:
         "Find the bucket and position which x should be inserted. self must not be empty."
         for a in self.a:
             if x <= a[-1]:
@@ -81,7 +81,7 @@ class SortedMultiset(Generic[T]):
         if len(a) > len(self.a) * self.REBUILD_RATIO:
             self._build()
 
-    def _pop(self, a: List[T], i: int) -> T:
+    def _pop(self, a: list[T], i: int) -> T:
         ans = a.pop(i)
         self.size -= 1
         if not a:
