@@ -1,12 +1,19 @@
-from sorted_set import SortedSet
+from .sorted_multi_set import SortedMultiset
 
 
-class Pairset:
-    def __init__(self, N) -> None:
-        # self.interval = SortedList()
-        self.data = SortedSet()
-        self.data.add((-(10**6), -(10**6)))
-        self.data.add((10**6, 10**6))
+class PairSet:
+    def __init__(self) -> None:
+        self.data = SortedMultiset()
+        self.interval = SortedMultiset()
+        self.__INF = 10**18
+        self.data.add((-(self.__INF), -(self.__INF)))
+        self.data.add((self.__INF, self.__INF))
+
+    def __len__(self):
+        return len(self.data) - 2
+
+    def __str__(self):
+        return str([(l, r) for l, r in self.data if -self.__INF < r and l < self.__INF])
 
     def contains(self, x):
         idx = self.data.index((x, 10**18)) - 1
@@ -23,21 +30,21 @@ class Pairset:
             self.data.add((x, x + 1))
         elif L_end == x and x + 1 < R_start:
             self.data.pop(idx)
-            # self.interval.discard(L_end - L_start)
+            self.interval.discard(L_end - L_start)
             self.data.add((L_start, x + 1))
         elif L_end < x and x + 1 == R_start:
             self.data.pop(idx + 1)
-            # self.interval.discard(R_end - R_start)
+            self.interval.discard(R_end - R_start)
             self.data.add((x, R_end))
         else:
             self.data.pop(idx + 1)
             self.data.pop(idx)
-            # self.interval.discard(L_end - L_start)
-            # self.interval.discard(R_end - R_start)
+            self.interval.discard(L_end - L_start)
+            self.interval.discard(R_end - R_start)
 
             self.data.add((L_start, R_end))
         l, r = self.expand(x)
-        # self.interval.add(r - l)
+        self.interval.add(r - l)
         return True
 
     def mex(self, x):
@@ -62,11 +69,11 @@ class Pairset:
         if L_end <= x:
             return False
         self.data.pop(idx)
-        # self.interval.discard(L_end - L_start)
+        self.interval.discard(L_end - L_start)
         if L_start < x:
             self.data.add((L_start, x))
-            # self.interval.add(x - L_start)
+            self.interval.add(x - L_start)
         if x + 1 < L_end:
             self.data.add((x + 1, L_end))
-            # self.interval.add(L_end - x + 1)
+            self.interval.add(L_end - x + 1)
         return True
