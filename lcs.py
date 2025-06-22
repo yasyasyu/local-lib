@@ -1,5 +1,8 @@
 def LCS(S, T):
     """Longest Common Sequence"""
+
+    """print(LCS("AABBABCCCABC", "ABC"))"""
+
     dp = [[0] * len(S) for _ in range(len(T))]
 
     for i in range(len(S)):
@@ -16,6 +19,3 @@ def LCS(S, T):
     print(*dp, sep="\n")
 
     return dp[-1][-1]
-
-
-print(LCS("AABBABCCCABC", "ABC"))

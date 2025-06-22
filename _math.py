@@ -1,7 +1,3 @@
-def compress(arr):
-    return {v: i for i, v in enumerate(sorted(set(arr)))}
-
-
 def divisors(n):
     lower_divisors, upper_divisors = [], []
     i = 1

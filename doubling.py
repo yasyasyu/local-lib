@@ -2,6 +2,15 @@ from typing import Callable
 
 
 class Doubling:
+    """ """
+
+    """
+    N, K = map(int, input().split())
+    mapping = list(map(lambda x: int(x) - 1, input().split()))
+
+    doubling = Doubling(N, K, lambda x: mapping[x])
+    doubling.get()
+    """
 
     def __init__(self, N: int, max_K: int, mapping: Callable[[int], int]) -> None:
         """要素数nのダブリングテーブルを作成します。"""
@@ -34,10 +43,3 @@ class Doubling:
                 current = self.doubling_table[i][current]
 
         return current
-
-
-N, K = map(int, input().split())
-mapping = list(map(lambda x: int(x) - 1, input().split()))
-
-doubling = Doubling(N, K, lambda x: mapping[x])
-doubling.get()

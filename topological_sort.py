@@ -4,8 +4,23 @@ from collections import deque
 def topological_sort(es):
     """
     es : 有向グラフ
-    order : トポロジカル順序
     """
+    """
+    
+    import sys
+
+    input = sys.stdin.readline
+    from array import array
+
+    n, m = map(int, input().split())
+    es = [array("i") for _ in range(n)]
+    for i in range(m):
+        start, end = map(int, input().split())
+        start -= 1
+        end -= 1
+        es[start].append(end)
+    """
+
     V = len(es)
     deg = [0] * V
     for i in range(V):
@@ -25,17 +40,3 @@ def topological_sort(es):
                 d.append(i)
 
     return order
-
-
-import sys
-
-input = sys.stdin.readline
-from array import array
-
-n, m = map(int, input().split())
-es = [array("i") for _ in range(n)]
-for i in range(m):
-    start, end = map(int, input().split())
-    start -= 1
-    end -= 1
-    es[start].append(end)
