@@ -133,11 +133,12 @@ def expand_imports(module_file_path, module, expand_folder, space_indent) -> str
                 else:
                     # その他の行はそのまま表示
                     expand_results.append(f"{INDENT*space_indent}{module_line}")
-
+            else:
+                expand_results.append("")
+    expand_results.extend(["", ""])
     expand_results.append(
-        f"{INDENT * space_indent}{'#'*INDENT_SIZE**2} {module} end {'#'*INDENT_SIZE**2}\n\n"
+        f"{INDENT * space_indent}{'#'*INDENT_SIZE**2} {module} end {'#'*INDENT_SIZE**2}"
     )
-
     return "\n".join(expand_results)
 
 
@@ -169,7 +170,7 @@ def main():
             expand_results.append(f"{expand_result}")
         else:
             expand_results.append(line)
-
+    expand_results.append("")
     if len(sys.argv) > 3:
         # 追加の引数がある場合は、展開された内容をファイルに書き込む
         output_file = sys.argv[3]
