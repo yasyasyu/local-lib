@@ -65,7 +65,7 @@ def expand_line(line: str, expand_folder, current_space_indent) -> str | None:
             imported = parts[1].strip()
 
         else:
-            raise NotImplementedError(
+            raise ValueError(
                 "from folder.filename import classname の形式のみ実装済みです。"
             )
             # import モジュール
@@ -76,7 +76,7 @@ def expand_line(line: str, expand_folder, current_space_indent) -> str | None:
             imported = ""
 
     elif line.startswith("import "):
-        raise NotImplementedError(
+        raise ValueError(
             "from folder.filename import classname の形式のみ実装済みです。"
         )
         # import モジュール
