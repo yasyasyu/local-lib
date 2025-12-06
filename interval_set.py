@@ -1,7 +1,7 @@
 from .sorted_multi_set import SortedMultiset
 
 
-class PairSet:
+class IntervalSet:
     """区間の集合を管理するデータ構造"""
 
     def __init__(self) -> None:
