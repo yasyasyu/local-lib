@@ -1,3 +1,4 @@
+from collections import defaultdict
 import heapq
 
 
@@ -10,7 +11,17 @@ class DeletableHeap:
         self.is_unique = is_unique
 
     def __str__(self):
-        return f"[{', '.join(map(str, self.heap))}]"
+        result = []
+        cnt = defaultdict(int)
+        for a in self.heap:
+            if not a in self.d.keys():
+                continue
+
+            if cnt[a] < self.d[a]:
+                cnt[a] += 1
+                result.append(str(a))
+
+        return f"[{', '.join(result)}]"
 
     def push(self, x):
         if x not in self.d:
