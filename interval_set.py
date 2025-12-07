@@ -66,38 +66,7 @@ class IntervalSet:
         self.total_count += 1  # 要素数を増加
         return True
 
-    def mex(self, x):
-        """x以上で集合に含まれない最小の整数を返す"""
-        start, end = self._get_interval(x)
-        return end if x < end else x
-
-    def expand(self, x):
-        """xを含む区間を返す。含まれない場合は(x, x)を返す"""
-        start, end = self._get_interval(x)
-        return (start, end) if x < end else (x, x)
-
-    def remove(self, x):
-        """xを集合から削除。含まれない場合はFalseを返す"""
-        idx = self._get_interval_index(x)
-        start, end = self.data[idx]
-
-        if end <= x:
-            return False
-
-        self.data.pop(idx)
-        self.interval.discard(end - start)
-
-        if start < x:
-            self.data.add((start, x))
-            self.interval.add(x - start)
-        if x + 1 < end:
-            self.data.add((x + 1, end))
-            self.interval.add(end - (x + 1))
-
-        self.total_count -= 1  # 要素数を減少
-        return True
-
-    def add_interval(self, left, right):
+    def insert(self, left, right):
         """区間[left, right)を集合に追加"""
         if left >= right:
             return
@@ -133,6 +102,37 @@ class IntervalSet:
         self.interval.add(right - left)
         # 追加された新しい要素数 = (新しい区間の長さ) - (削除された要素数)
         self.total_count += (right - left) - removed_count
+
+    def mex(self, x):
+        """x以上で集合に含まれない最小の整数を返す"""
+        start, end = self._get_interval(x)
+        return end if x < end else x
+
+    def expand(self, x):
+        """xを含む区間を返す。含まれない場合は(x, x)を返す"""
+        start, end = self._get_interval(x)
+        return (start, end) if x < end else (x, x)
+
+    def remove(self, x):
+        """xを集合から削除。含まれない場合はFalseを返す"""
+        idx = self._get_interval_index(x)
+        start, end = self.data[idx]
+
+        if end <= x:
+            return False
+
+        self.data.pop(idx)
+        self.interval.discard(end - start)
+
+        if start < x:
+            self.data.add((start, x))
+            self.interval.add(x - start)
+        if x + 1 < end:
+            self.data.add((x + 1, end))
+            self.interval.add(end - (x + 1))
+
+        self.total_count -= 1  # 要素数を減少
+        return True
 
     def remove_interval(self, left, right):
         """区間[left, right)を集合から削除"""
