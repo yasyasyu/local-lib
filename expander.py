@@ -1,186 +1,248 @@
 import os
 import sys
+from dataclasses import dataclass
+from typing import Optional
 
 SPACE = " "
 INDENT_SIZE = 4
 INDENT = SPACE * INDENT_SIZE
-
-exist_import = set()
-
-
-def current_indent(line: str) -> int:
-    return (len(line) - len(line.lstrip())) // len(INDENT)
+SEPARATOR_LENGTH = INDENT_SIZE * INDENT_SIZE
 
 
-def expand_line(line: str, expand_folder, current_space_indent) -> str | None:
+@dataclass
+class ParsedImport:
+    """パースされたインポート文の情報"""
 
-    if not (
-        line.lstrip().startswith(f"from {expand_folder}")
-        or line.lstrip().startswith(f"from .")
-        or line.lstrip().startswith(f"import {expand_folder}")
-    ):
-        return None
+    module_file_path: str
+    module: str
 
-    expand_results = []
 
-    space_indent = current_indent(line)
-    expand_results.append(
-        f"{INDENT*(space_indent + current_space_indent)}# {line.lstrip()}"
-    )
+class ImportParser:
+    """インポート文をパースするクラス"""
 
-    line = line.lstrip()
-    # インポート文を展開
-    if line.startswith("from ."):
-        # from .folder.filename import classname
-        # from .folder import filename
+    def __init__(self, expand_folder: str):
+        self.expand_folder = expand_folder
+
+    @staticmethod
+    def calculate_indent_level(line: str) -> int:
+        """行のインデントレベルを計算する"""
+        return (len(line) - len(line.lstrip())) // len(INDENT)
+
+    def should_expand(self, line: str) -> bool:
+        """この行を展開すべきかどうかを判定する"""
+        stripped = line.lstrip()
+        return (
+            stripped.startswith(f"from {self.expand_folder}")
+            or stripped.startswith("from .")
+            or stripped.startswith(f"import {self.expand_folder}")
+        )
+
+    def parse_relative_import(self, line: str) -> ParsedImport:
+        """相対インポート (from .) をパースする"""
         parts = line.split("import")
         module = parts[0].replace("from .", "").strip()
+
         if "." in module:
-            # ネストされたモジュールの場合
+            # ネストされたモジュールの場合: from .folder.filename import classname
             module_file_path = os.path.abspath(
-                "./" + f"{expand_folder}" + "/".join(module.split(".")) + ".py"
+                f"./{self.expand_folder}/{'/'.join(module.split('.'))}.py"
             )
-            module = f"{expand_folder}/".join(module.split("."))
-            imported = parts[1].strip()
-
+            module = f"{self.expand_folder}/{'/'.join(module.split('.'))}"
         else:
-            # import モジュール
-            module_file_path = os.path.abspath(
-                "./" + expand_folder + "/" + module + ".py"
-            )
-            imported = parts[1].strip()
-            module = f"{expand_folder}" + "/" + "/".join(module.split("."))
+            # シンプルなモジュール: from .folder import filename
+            module_file_path = os.path.abspath(f"./{self.expand_folder}/{module}.py")
+            module = f"{self.expand_folder}/{module}"
 
-    elif line.startswith("from "):
-        # from folder.filename import classname
-        # from folder import filename
+        return ParsedImport(module_file_path, module)
+
+    @staticmethod
+    def parse_absolute_import(line: str) -> ParsedImport:
+        """絶対インポート (from folder) をパースする"""
         parts = line.split("import")
         module = parts[0].replace("from ", "").strip()
-        if "." in module:
-            # ネストされたモジュールの場合
-            module_file_path = os.path.abspath(
-                "./" + "/".join(module.split(".")) + ".py"
-            )
-            module = "/".join(module.split("."))
-            imported = parts[1].strip()
 
-        else:
+        if "." not in module:
             raise ValueError(
-                "from folder.filename import classname の形式のみ実装済みです。"
+                "from folder.filename import classname の形式のみサポートされています。"
             )
-            # import モジュール
-            module_file_path = os.path.abspath(
-                "./" + module + "/" + parts[1].strip() + ".py"
+
+        # ネストされたモジュールの場合
+        module_file_path = os.path.abspath(f"./{'/'.join(module.split('.'))}.py")
+        module = "/".join(module.split("."))
+
+        return ParsedImport(module_file_path, module)
+
+    def parse(self, line: str) -> ParsedImport:
+        """インポート文をパースしてモジュール情報を返す"""
+        stripped_line = line.lstrip()
+
+        if stripped_line.startswith("from ."):
+            return self.parse_relative_import(line)
+        elif stripped_line.startswith("from "):
+            return self.parse_absolute_import(line)
+        elif stripped_line.startswith("import "):
+            raise ValueError(
+                "from folder.filename import classname の形式のみサポートされています。"
             )
-            module = module + "/" + parts[1].strip()
-            imported = ""
-
-    elif line.startswith("import "):
-        raise ValueError(
-            "from folder.filename import classname の形式のみ実装済みです。"
-        )
-        # import モジュール
-        module = line.replace("import ", "").strip()
-        if "." in module:
-            # ネストされたモジュールの場合
-            module_file_path = os.path.abspath("./" + "/".join(module.split(".")))
-
         else:
-            # 単一のモジュールの場合
-            module = module.strip()
+            raise ValueError(f"サポートされていないインポート文: {line}")
 
-        print(f"{module=}")
-    else:
-        # ここには入らないはず
-        raise ValueError(f"Unsupported import line: {line}")
 
-    if module in exist_import:
-        print(f"Skip module\t[{module}]", file=sys.stderr)
+class ModuleExpander:
+    """モジュールを展開するクラス"""
+
+    def __init__(self, expand_folder: str):
+        self.expand_folder = expand_folder
+        self.parser = ImportParser(expand_folder)
+        self.expanded_modules: set[str] = set()
+
+    def expand_line(self, line: str, current_space_indent: int) -> Optional[str]:
+        """インポート行を展開する。展開対象でない場合はNoneを返す"""
+        if not self.parser.should_expand(line):
+            return None
+
+        expand_results = []
+        space_indent = self.parser.calculate_indent_level(line)
+
+        # コメントとして元のインポート文を残す
+        expand_results.append(
+            f"{INDENT * (space_indent + current_space_indent)}# {line.lstrip()}"
+        )
+
+        # インポート文をパースしてモジュール情報を取得
+        parsed = self.parser.parse(line)
+
+        # 重複チェック
+        if parsed.module in self.expanded_modules:
+            print(f"Skip module\t[{parsed.module}]", file=sys.stderr)
+            return "\n".join(expand_results)
+
+        self.expanded_modules.add(parsed.module)
+        print(f"Expand module\t[{parsed.module}]", file=sys.stderr)
+
+        # モジュールの内容を展開
+        expand_results.append(
+            self._expand_module_file(
+                parsed.module_file_path,
+                parsed.module,
+                space_indent + current_space_indent,
+            )
+        )
         return "\n".join(expand_results)
-    exist_import.add(module)
 
-    print(f"Expand module\t[{module}]", file=sys.stderr)
-    expand_results.append(
-        expand_imports(
-            module_file_path, module, expand_folder, space_indent + current_space_indent
+    def _expand_module_file(
+        self, module_file_path: str, module: str, space_indent: int
+    ) -> str:
+        """モジュールファイルの内容を展開する"""
+        expand_results = []
+        expand_results.append(
+            f"{INDENT * space_indent}{'#' * SEPARATOR_LENGTH} {module} start {'#' * SEPARATOR_LENGTH}"
         )
-    )
-    return "\n".join(expand_results)
 
+        if not os.path.isfile(module_file_path):
+            raise FileNotFoundError(f"Module file not found: {module_file_path}")
 
-def expand_imports(module_file_path, module, expand_folder, space_indent) -> str:
-    expand_results = []
-    expand_results.append(
-        f"{INDENT * space_indent}{'#'*INDENT_SIZE **2} {module} start {'#'*INDENT_SIZE**2}"
-    )
-
-    if not os.path.isfile(module_file_path):
-        raise FileNotFoundError(f"Module file not found: {module_file_path}")
-
-    with open(module_file_path, "r", encoding="utf-8") as module_file:
-        module_content = module_file.read()
-        module_lines = module_content.splitlines()
-        for module_line in module_lines:
-            if module_line:
-                expand_result = expand_line(
-                    module_line,
-                    expand_folder,
-                    current_indent(module_line) + space_indent,
-                )
-                if isinstance(expand_result, str):
-                    # 展開された行を追加
-                    expand_results.append(f"{expand_result}")
+        with open(module_file_path, "r", encoding="utf-8") as module_file:
+            module_content = module_file.read()
+            module_lines = module_content.splitlines()
+            for module_line in module_lines:
+                if module_line:
+                    expand_result = self.expand_line(
+                        module_line,
+                        self.parser.calculate_indent_level(module_line) + space_indent,
+                    )
+                    if isinstance(expand_result, str):
+                        # 展開された行を追加
+                        expand_results.append(expand_result)
+                    else:
+                        # その他の行はそのまま表示
+                        expand_results.append(f"{INDENT * space_indent}{module_line}")
                 else:
-                    # その他の行はそのまま表示
-                    expand_results.append(f"{INDENT*space_indent}{module_line}")
+                    expand_results.append("")
+        expand_results.extend(["", ""])
+        expand_results.append(
+            f"{INDENT * space_indent}{'#' * SEPARATOR_LENGTH} {module} end {'#' * SEPARATOR_LENGTH}"
+        )
+        return "\n".join(expand_results)
+
+    def expand_file(self, file_path: str) -> list[str]:
+        """ファイルを読み込んでインポート文を展開する"""
+        with open(file_path, "r", encoding="utf-8") as file:
+            content = file.read()
+
+        expand_results = []
+        lines = content.splitlines()
+        for line in lines:
+            expand_result = self.expand_line(line, 0)
+            if expand_result is not None:
+                expand_results.append(expand_result)
             else:
-                expand_results.append("")
-    expand_results.extend(["", ""])
-    expand_results.append(
-        f"{INDENT * space_indent}{'#'*INDENT_SIZE**2} {module} end {'#'*INDENT_SIZE**2}"
-    )
-    return "\n".join(expand_results)
+                expand_results.append(line)
+        expand_results.append("")
+        return expand_results
 
 
-def main():
+class ExpanderConfig:
+    """展開ツールの設定を管理するクラス"""
+
+    def __init__(self, file_path: str, expand_path: str):
+        self.file_path = file_path
+        self.expand_path = expand_path
+        self.expand_folder = self._extract_folder_name(expand_path)
+
+    @staticmethod
+    def _extract_folder_name(expand_path: str) -> str:
+        """展開対象のフォルダ名を取得する"""
+        expand_path = os.path.abspath(expand_path)
+        expand_folder = expand_path.split(os.sep)[-1]
+        if expand_folder.endswith(".py"):
+            expand_folder = expand_folder[:-3]
+        return expand_folder
+
+    @classmethod
+    def from_command_line(cls) -> "ExpanderConfig":
+        """コマンドライン引数から設定を作成する"""
+        if len(sys.argv) < 2:
+            raise ValueError("Usage: python expander.py <file_path> [expand_path]")
+
+        file_path = sys.argv[1]
+        # expand_pathが指定されていない場合は、expander.pyと同じディレクトリを使用
+        expand_path = (
+            sys.argv[2]
+            if len(sys.argv) > 2
+            else os.path.dirname(os.path.abspath(__file__))
+        )
+
+        if not file_path or not os.path.isfile(file_path):
+            raise FileNotFoundError(f"ファイルが見つかりません: {file_path}")
+
+        return cls(file_path, expand_path)
+
+
+class ExpanderApplication:
+    """展開ツールのメインアプリケーションクラス"""
+
+    def __init__(self, config: ExpanderConfig):
+        self.config = config
+        self.expander = ModuleExpander(config.expand_folder)
+
+    def run(self) -> None:
+        """アプリケーションを実行する"""
+        expand_results = self.expander.expand_file(self.config.file_path)
+        output_content = "\n".join(expand_results)
+        
+        # 処理完了メッセージを標準エラー出力に表示
+        print(f"展開完了: {self.config.file_path} -> 標準出力", file=sys.stderr)
+        
+        # 結果を標準出力に出力
+        print(output_content)
+
+
+def main() -> None:
     """ファイルにインポートされているライブラリを展開する"""
-
-    # ファイルのパスを取得
-    file_path = sys.argv[1]
-    expand_path = sys.argv[2]
-    expand_path = os.path.abspath(expand_path)
-    expand_folder = expand_path.split(os.sep)[-1]
-    if expand_folder.endswith(".py"):
-        expand_folder = expand_folder[:-3]
-
-    expand_results = []
-    if not file_path or not os.path.isfile(file_path):
-        raise ValueError("Usage: python expander.py <file_path>")
-
-    # ファイルを読み込み、インポート文を展開
-    with open(file_path, "r", encoding="utf-8") as file:
-        content = file.read()
-
-    # インポート文を展開する処理（ここでは単純な例として置換）
-    lines = content.splitlines()
-    for line in lines:
-        expand_result = expand_line(line, expand_folder, 0)
-        if isinstance(expand_result, str):
-            # その他の行はそのまま表示
-            expand_results.append(f"{expand_result}")
-        else:
-            expand_results.append(line)
-    expand_results.append("")
-    if len(sys.argv) > 3:
-        # 追加の引数がある場合は、展開された内容をファイルに書き込む
-        output_file = sys.argv[3]
-        with open(output_file, "w", encoding="utf-8") as out_file:
-            out_file.write("\n".join(expand_results))
-        print(f"Expanded content written to {output_file}")
-        return
-    else:
-        # 展開された内容を表示
-        print("\n".join(expand_results))
+    config = ExpanderConfig.from_command_line()
+    app = ExpanderApplication(config)
+    app.run()
 
 
 if __name__ == "__main__":
