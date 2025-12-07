@@ -159,9 +159,9 @@ class ModuleExpander:
                         expand_results.append(f"{INDENT * space_indent}{module_line}")
                 else:
                     expand_results.append("")
-        expand_results.extend(["", ""])
+        expand_results.append("")
         expand_results.append(
-            f"{INDENT * space_indent}{'#' * SEPARATOR_LENGTH} {module} end {'#' * SEPARATOR_LENGTH}"
+            f"{INDENT * space_indent}{'#' * SEPARATOR_LENGTH} {module} end   {'#' * SEPARATOR_LENGTH}"
         )
         return "\n".join(expand_results)
 
@@ -230,18 +230,17 @@ class ExpanderApplication:
         """アプリケーションを実行する"""
         expand_results = self.expander.expand_file(self.config.file_path)
         output_content = "\n".join(expand_results)
-        
+
         # 処理完了メッセージを標準エラー出力に表示
         print(f"展開完了: {self.config.file_path} -> 標準出力", file=sys.stderr)
-        
+
         # 結果を標準出力に出力
         print(output_content)
 
 
 def main() -> None:
     """ファイルにインポートされているライブラリを展開する"""
-    config = ExpanderConfig.from_command_line()
-    app = ExpanderApplication(config)
+    app = ExpanderApplication(ExpanderConfig.from_command_line())
     app.run()
 
 
