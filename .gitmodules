@@ -1,0 +1,3 @@
+[submodule "expander"]
+	path = expander
+	url = https://github.com/yasyasyu/py-import-expander.git
