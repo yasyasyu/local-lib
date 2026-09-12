@@ -4,29 +4,77 @@
 
 ## ライブラリ一覧
 
+ファイルはフォルダを分けず全て直下に置いている（提出用に`expander.py`で展開する際のimportを短く保つため）。
+その代わり、ここでカテゴリ別に索引を作っておく。
+
+### Union-Find系
+
 | ファイル | 内容 |
 | --- | --- |
 | `union_find.py` | Union-Find（素集合データ構造） |
 | `potential_union_find.py` | 重み付きUnion-Find |
-| `scc.py` | 強連結成分分解（Kosaraju法） |
+| `rollback_union_find.py` | rollback（undo）可能なUnion-Find |
+
+### データ構造（集合・ヒープなど）
+
+| ファイル | 内容 |
+| --- | --- |
 | `sorted_set.py` | 昇順ソート済み集合（重複なし） |
 | `sorted_multi_set.py` | 昇順ソート済み多重集合（重複あり） |
-| `bucket_list.py` | 平方分割による可変長リスト |
 | `interval_set.py` | 区間の集合を管理するデータ構造（`sorted_multi_set.py`に依存） |
+| `bucket_list.py` | 平方分割による可変長リスト |
 | `deletable_heap.py` | 削除可能なヒープ |
 | `persistent_stack.py` | 永続スタック |
-| `cumulative_sum_2d.py` | 2次元累積和 |
-| `euler_tour.py` | オイラーツアー（深さ・部分木の管理） |
-| `doubling.py` | ダブリング |
+| `li_chao_tree.py` | Li Chao Tree（直線群の最小値クエリ） |
+
+セグメント木・遅延セグメント木・Fenwick Treeなど`ac-library-python`にある機能は実装せず、
+[USAGE_SegTree.md](USAGE_SegTree.md)に使い方一覧をまとめている。
+
+### グラフ・木
+
+| ファイル | 内容 |
+| --- | --- |
+| `scc.py` | 強連結成分分解（Kosaraju法） |
 | `topological_sort.py` | トポロジカルソート |
-| `lcs.py` | 最長共通部分列（LCS） |
+| `kruskal.py` | クラスカル法による最小全域木（`union_find.py`に依存） |
+| `dijkstra.py` | 単一始点最短路（ダイクストラ法） |
+| `bellman_ford.py` | 単一始点最短路（ベルマンフォード法、負閉路検出対応） |
+| `warshall_floyd.py` | 全点対最短路（ワーシャルフロイド法） |
+| `euler_tour.py` | オイラーツアー（深さ・部分木の管理） |
+| `doubling.py` | ダブリング（写像の高速反復適用） |
+| `lca.py` | 最小共通祖先（LCA、`doubling.py`に依存） |
+
+### 数学
+
+| ファイル | 内容 |
+| --- | --- |
 | `_math.py` | 約数列挙・素数篩・素因数分解・区間篩 |
 | `isqrt.py` | 整数の平方根（floor） |
+| `combinatorics.py` | mod付き組合せ論（階乗・逆元テーブルによるnCr等） |
+| `matrix_pow.py` | 行列累乗（繰り返し二乗法） |
+
+### 文字列
+
+| ファイル | 内容 |
+| --- | --- |
+| `rolling_hash.py` | ローリングハッシュ |
+| `lcs.py` | 最長共通部分列（LCS） |
+
+### 配列・グリッド操作
+
+| ファイル | 内容 |
+| --- | --- |
+| `cumulative_sum_2d.py` | 2次元累積和 |
 | `compress.py` | 座標圧縮 |
 | `rle.py` | ランレングス圧縮 |
 | `rotate90.py` | グリッドの90度回転・転置 |
 | `grid_trim.py` | グリッドの余白トリム |
 | `bit_partial_set.py` | ビットマスクの部分集合列挙 |
+
+### テンプレート／開発ツール
+
+| ファイル | 内容 |
+| --- | --- |
 | `deciding_binary_search.py` | 二分探索テンプレート（`is_ok`は問題ごとに書き換える） |
 | `add_treeview.py` | セグ木風クラスに`__str__`でツリー表示を追加するデコレータ |
 | `_parser.py` | 四則演算パーサー |
@@ -37,6 +85,8 @@
 ```bash
 python -m unittest discover -s tests -p "test_*.py"
 ```
+
+---
 
 ## expander.py
 
