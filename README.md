@@ -2,6 +2,42 @@
 
 競技プログラミング用のローカルライブラリとツール群です。
 
+## ライブラリ一覧
+
+| ファイル | 内容 |
+| --- | --- |
+| `union_find.py` | Union-Find（素集合データ構造） |
+| `potential_union_find.py` | 重み付きUnion-Find |
+| `scc.py` | 強連結成分分解（Kosaraju法） |
+| `sorted_set.py` | 昇順ソート済み集合（重複なし） |
+| `sorted_multi_set.py` | 昇順ソート済み多重集合（重複あり） |
+| `bucket_list.py` | 平方分割による可変長リスト |
+| `interval_set.py` | 区間の集合を管理するデータ構造（`sorted_multi_set.py`に依存） |
+| `deletable_heap.py` | 削除可能なヒープ |
+| `persistent_stack.py` | 永続スタック |
+| `cumulative_sum_2d.py` | 2次元累積和 |
+| `euler_tour.py` | オイラーツアー（深さ・部分木の管理） |
+| `doubling.py` | ダブリング |
+| `topological_sort.py` | トポロジカルソート |
+| `lcs.py` | 最長共通部分列（LCS） |
+| `_math.py` | 約数列挙・素数篩・素因数分解・区間篩 |
+| `isqrt.py` | 整数の平方根（floor） |
+| `compress.py` | 座標圧縮 |
+| `rle.py` | ランレングス圧縮 |
+| `rotate90.py` | グリッドの90度回転・転置 |
+| `grid_trim.py` | グリッドの余白トリム |
+| `bit_partial_set.py` | ビットマスクの部分集合列挙 |
+| `deciding_binary_search.py` | 二分探索テンプレート（`is_ok`は問題ごとに書き換える） |
+| `add_treeview.py` | セグ木風クラスに`__str__`でツリー表示を追加するデコレータ |
+| `_parser.py` | 四則演算パーサー |
+| `expander.py` | 提出用にローカルライブラリのインポートを展開するツール（詳細は下記） |
+
+各モジュールに対応するテストは `tests/test_*.py` にあります。以下でまとめて実行できます。
+
+```bash
+python -m unittest discover -s tests -p "test_*.py"
+```
+
 ## expander.py
 
 Pythonファイル内のローカルライブラリのインポート文を展開して、1つのファイルにまとめるツールです。競技プログラミングの提出時に便利です。

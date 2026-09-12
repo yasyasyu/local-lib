@@ -7,6 +7,17 @@ T = TypeVar("T")
 
 
 class SortedSet(Generic[T]):
+    """昇順ソート済み集合（重複なし、平方分割による実装）
+
+    使い方:
+        ss = SortedSet([3, 1, 2])
+        ss.add(4)         # True (新規追加)
+        ss.add(4)         # False (既に存在)
+        ss.discard(1)     # 削除してTrue/Falseを返す
+        3 in ss           # 存在確認
+        ss[0]             # 添字アクセス(昇順)
+    """
+
     BUCKET_RATIO = 16
     SPLIT_RATIO = 24
 

@@ -3,6 +3,12 @@ def euler_tour(G: list[list], root: int):
     G:隣接リスト\\
     root:根\\
     euler tourしてleft idとright idと深さのlistを返す
+
+    使い方:
+        # 0 -> 1, 2 ; 1 -> 3 という木
+        G = [[1, 2], [0, 3], [0], [1]]
+        left_id, right_id, depth = euler_tour(G, 0)
+        # 頂点vの部分木は left_id[v] <= id < right_id[v] の範囲に対応する
     """
     N = len(G)
     v = root

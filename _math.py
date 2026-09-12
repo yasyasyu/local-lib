@@ -1,7 +1,17 @@
+"""約数列挙・素数篩・素因数分解・区間篩
+
+使い方:
+    divisors(12)                  # [1, 2, 3, 4, 6, 12]
+    Eratosthenes(30)               # [2, 3, 5, 7, ..., 29]（30以下の素数）
+    dict(prime_factorize(360))     # {2: 3, 3: 2, 5: 1}
+    section_prime_sieve(14, 30)    # [L,R]の各値が素数かどうかのbool列
+"""
+
 import math
 
 
 def divisors(n):
+    """nの約数を昇順に列挙する。"""
     lower, upper = [], []
     i = 1
     while i * i <= n:
@@ -14,17 +24,20 @@ def divisors(n):
 
 
 def Eratosthenes(N):
+    """N以下の素数を列挙する（エラトステネスの篩）。"""
     prime = [2]
     data = [i + 1 for i in range(2, N, 2)]
-    while True:
+    while data:
         p = data[0]
-        if int(N**0.5) <= p:
-            return prime + data
         prime.append(p)
         data = [e for e in data if (e % p != 0)]
+        if int(N**0.5) <= p:
+            return prime + data
+    return prime
 
 
 def prime_factorize(N):
+    """Nを素因数分解し、{素数: 指数} の defaultdict を返す。"""
     from collections import defaultdict
 
     prime = defaultdict(int)
@@ -45,6 +58,10 @@ def prime_factorize(N):
 
 
 def section_prime_sieve(L, R):
+    """区間 [L, R] の各整数が素数かどうかを判定する（区間篩）。
+
+    戻り値は長さ R-L+1 のbool列で、値vの判定結果は is_prime_section[v-L] に入る。
+    """
     # √R 以下の素数を炙り出すための篩
     sqrt_R = int(math.sqrt(R) + 0.1)
     is_prime = [True] * (sqrt_R + 1)
@@ -66,7 +83,7 @@ def section_prime_sieve(L, R):
             q += p
 
         # L 以上の最小の p の倍数
-        start = --L // p * p
+        start = -(-L // p) * p
         if start == p:
             start = p * 2
 
@@ -75,5 +92,9 @@ def section_prime_sieve(L, R):
         while q <= R:
             is_prime_section[q - L] = False
             q += p
+
+    # 1 は素数ではないが、上記のふるいでは素数の倍数としては除外されない
+    if L <= 1 <= R:
+        is_prime_section[1 - L] = False
 
     return is_prime_section

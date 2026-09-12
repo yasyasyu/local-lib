@@ -3,6 +3,17 @@ import heapq
 
 
 class DeletableHeap:
+    """要素の削除が可能なヒープ（多重集合として扱える最小値取得ヒープ）
+
+    使い方:
+        h = DeletableHeap()
+        h.push(3)
+        h.push(1)
+        h.get()          # 1 (最小値を参照)
+        h.discard(1)     # 1を1個削除してTrueを返す
+        h.pop()          # 最小値を削除して返す
+    """
+
     def __init__(self, is_unique=False):
         self.heap = []
         self.d = dict()

@@ -2,6 +2,14 @@ from typing import Any, List
 
 
 class CumulativeSum2D:
+    """2次元累積和
+
+    使い方:
+        grid = [[1, 2, 3], [4, 5, 6]]
+        cs = CumulativeSum2D(grid)
+        cs.query(1, 1, 2, 3)  # 21 (全体の矩形和)
+    """
+
     def __init__(self, array: List[List[Any]]) -> None:
         self.height: int = len(array)
         self.width: int = len(array[0])
@@ -22,7 +30,7 @@ class CumulativeSum2D:
 
     def query(self, i: int, j: int, ii: int, jj: int) -> int:
         """
-        sum ((i:ii] (j:jj])
+        1-indexed,両端inclusiveで行[i, ii]・列[j, jj]の矩形和を返す。
         """
         i -= 1
         j -= 1

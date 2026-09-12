@@ -1,6 +1,12 @@
 def binary_search(ng, ok):
-    """
-    (ng : ok)
+    """めぐる式二分探索のテンプレート。
+
+    ng: is_ok が False になる値、ok: is_ok が True になる値(順は逆でもよい)。
+    is_ok の中身は問題に応じて書き換えて使う。
+
+    使い方:
+        # is_okを書き換えた上で
+        binary_search(-1, 10)  # is_ok(mid) = mid > 0 の場合、境界の1を返す
     """
 
     def is_ok(mid):

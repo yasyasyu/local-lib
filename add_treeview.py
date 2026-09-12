@@ -1,7 +1,17 @@
 def add_tree_view(target_class):
-    from math import log2
+    """セグメント木風のクラス(要素数を持つ self._size、内部配列を持つ self._d)に
+    ツリー状に整形した __str__ を追加するデコレータ。
 
-    bit_length = lambda x: int(log2(x))
+    使い方:
+        class Segtree:
+            def __init__(self, n):
+                self._size = n
+                self._d = [0] * (2 * n)
+
+        add_tree_view(Segtree)
+        print(Segtree(4))  # ツリー状に整形されて表示される
+    """
+    bit_length = lambda x: x.bit_length() - 1
 
     def format_tree(arr, k, z):
         rank = bit_length(len(arr))

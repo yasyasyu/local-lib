@@ -132,7 +132,7 @@ class PersistentStack(Generic[T]):
         """
         val = []
         cur = self
-        while cur.value:
+        while cur.value is not None:
             val.append(cur.value)
             cur = cur.prv
 

@@ -3,24 +3,17 @@ from collections import deque
 
 def topological_sort(es):
     """
-    es : 有向グラフ
-    """
-    """
-    
-    import sys
+    es : 有向グラフ（隣接リスト。es[u]はuから出る辺の行き先のリスト）
 
-    input = sys.stdin.readline
-    from array import array
+    使い方:
+        n, m = map(int, input().split())
+        es = [[] for _ in range(n)]
+        for _ in range(m):
+            u, v = map(int, input().split())
+            es[u - 1].append(v - 1)
 
-    n, m = map(int, input().split())
-    es = [array("i") for _ in range(n)]
-    for i in range(m):
-        start, end = map(int, input().split())
-        start -= 1
-        end -= 1
-        es[start].append(end)
+        order = topological_sort(es)
     """
-
     V = len(es)
     deg = [0] * V
     for i in range(V):

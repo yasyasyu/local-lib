@@ -1,7 +1,16 @@
-class SCC:
-    import sys
+import sys
 
-    sys.setrecursionlimit(10**6)
+
+class SCC:
+    """強連結成分分解（Kosaraju法）
+
+    使い方:
+        scc = SCC(4)
+        scc.connect(0, 1)
+        scc.connect(1, 0)
+        scc.connect(2, 3)
+        groups = scc.solve()  # 例: [[0, 1], [2], [3]]（トポロジカル順）
+    """
 
     def __init__(self, n):
         self.n = n
@@ -31,7 +40,7 @@ class SCC:
 
         return backorder
 
-    def dfs2(self, reveseorder):
+    def dfs2(self, reverse_order):
         bef = [False for _ in range(self.n)]
         grps = []
 
@@ -43,7 +52,7 @@ class SCC:
                     continue
                 _dfs(to, grp)
 
-        for v in reveseorder:
+        for v in reverse_order:
             grp = []
             if bef[v]:
                 continue
@@ -53,6 +62,7 @@ class SCC:
         return grps
 
     def solve(self):
+        sys.setrecursionlimit(max(sys.getrecursionlimit(), self.n * 2 + 10))
         order = self.dfs1()
         grps = self.dfs2(order[::-1])
 

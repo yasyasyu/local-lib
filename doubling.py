@@ -2,21 +2,19 @@ from typing import Callable
 
 
 class Doubling:
-    """ """
+    """ダブリング（写像の高速反復適用）
 
-    """
-    N, K = map(int, input().split())
-    mapping = list(map(lambda x: int(x) - 1, input().split()))
+    使い方:
+        N, K = map(int, input().split())
+        mapping = list(map(lambda x: int(x) - 1, input().split()))
 
-    doubling = Doubling(N, K, lambda x: mapping[x])
-    doubling.get()
+        doubling = Doubling(N, K, lambda x: mapping[x])
+        doubling.get(x, k)  # xにmappingをk回適用した結果
     """
 
     def __init__(self, N: int, max_K: int, mapping: Callable[[int], int]) -> None:
         """要素数nのダブリングテーブルを作成します。"""
-        print(max_K)
         k_bits = max_K.bit_length()
-        print(k_bits)
 
         # dub[i][j] = 値jを2**i回操作した結果
         self.doubling_table = [[0] * N for _ in range(k_bits)]

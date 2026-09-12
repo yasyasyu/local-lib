@@ -1,4 +1,16 @@
 class PotentialUnionFind:
+    """重み付きUnion-Find（ポテンシャル付き素集合データ構造）
+
+    unite(a, b, d) で「potential[b] - potential[a] = d」という関係を追加する。
+    連結判定は same() ではなく dist(a, b) != INF で行う。
+
+    使い方:
+        uf = PotentialUnionFind(3)
+        uf.unite(0, 1, 5)  # potential[1] - potential[0] = 5
+        uf.dist(0, 1)      # 5
+        uf.dist(1, 2)      # 未連結ならINF
+    """
+
     def __init__(self, N, inf=10**18):
         self.N = N
         self.parent = [-1] * N

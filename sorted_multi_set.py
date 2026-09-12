@@ -7,6 +7,16 @@ T = TypeVar("T")
 
 
 class SortedMultiset(Generic[T]):
+    """昇順ソート済み多重集合（重複あり、平方分割による実装）
+
+    使い方:
+        sm = SortedMultiset([3, 1, 2, 1])
+        sm.add(2)          # 重複追加可
+        sm.count(1)        # 2
+        sm.discard(1)      # 1個だけ削除してTrue/Falseを返す
+        sm[0]              # 添字アクセス(昇順)
+    """
+
     BUCKET_RATIO = 16
     SPLIT_RATIO = 24
 

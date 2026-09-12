@@ -1,4 +1,13 @@
 class UnionFind:
+    """Union-Find（素集合データ構造）
+
+    使い方:
+        uf = UnionFind(5)
+        uf.merge(0, 1)
+        uf.same(0, 1)   # True
+        uf.groups()     # [[0, 1], [2], [3], [4]]
+    """
+
     def __init__(self, N) -> None:
         self.N = N
         self.parent = [-1] * N
@@ -28,9 +37,6 @@ class UnionFind:
     def groups(self):
         G = [[] for _ in range(self.N)]
         for i in range(self.N):
-            if root := self.find(i) == -1:
-                G[i].append(i)
-            else:
-                G[root].append(i)
+            G[self.find(i)].append(i)
 
         return list(filter(lambda r: r, G))

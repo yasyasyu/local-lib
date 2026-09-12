@@ -2,7 +2,16 @@ from .sorted_multi_set import SortedMultiset
 
 
 class IntervalSet:
-    """区間の集合を管理するデータ構造"""
+    """区間の集合を管理するデータ構造
+
+    使い方:
+        s = IntervalSet()
+        s.insert(1, 5)   # 区間[1, 5)を追加
+        s.contains(3)    # True
+        s.mex(1)         # 1以上で含まれない最小の整数 -> 5
+        s.remove(3)      # 3のみ削除
+        len(s)           # 現在の要素数 -> 3
+    """
 
     def __init__(self) -> None:
         self.data = SortedMultiset()
@@ -13,7 +22,7 @@ class IntervalSet:
         self.data.add((self._INF, self._INF))
 
     def __len__(self):
-        return len(self.data) - 2
+        return self.total_count
 
     def __str__(self):
         return str([(l, r) for l, r in self.data if -self._INF < r and l < self._INF])

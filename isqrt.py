@@ -1,5 +1,10 @@
 def isqrt(n: int) -> int:
-    """a = floor(sqrt(n))) (とr = n - a*a)を返す."""
+    """a = floor(sqrt(n))) (とr = n - a*a)を返す.
+
+    使い方:
+        isqrt(10)  # 3
+        isqrt(16)  # 4
+    """
     a = 0
     r = 0
     for s in reversed(range(0, n.bit_length(), 2)):

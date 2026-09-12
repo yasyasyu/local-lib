@@ -5,7 +5,16 @@ factor  = ("(", expr, ")") | number
 number  = 1つ以上の数字
 """
 
-class parser:
+
+class Parser:
+    """四則演算(+ - * /)と括弧を含む数式を評価するパーサー。
+
+    使い方:
+        Parser().expr("2+3*4")     # 14
+        Parser().expr("(2+3)*4")   # 20
+        Parser().expr("2(3+4)")    # 14（括弧の前の掛け算記号は省略可）
+    """
+
     def __init__(self) -> None:
         self.i = 0
         return None
@@ -70,9 +79,3 @@ class parser:
             self._count_up()
 
         return int(res)
-    
-
-N = int(input())
-for _ in range(N):
-    p = parser()
-    print(p.expr(input()))
