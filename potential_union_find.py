@@ -9,6 +9,8 @@ class PotentialUnionFind:
         uf.unite(0, 1, 5)  # potential[1] - potential[0] = 5
         uf.dist(0, 1)      # 5
         uf.dist(1, 2)      # 未連結ならINF
+
+    https://github.com/yasyasyu/local-lib/blob/master/potential_union_find.py
     """
 
     def __init__(self, N, inf=10**18):

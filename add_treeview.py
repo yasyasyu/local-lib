@@ -10,6 +10,8 @@ def add_tree_view(target_class):
 
         add_tree_view(Segtree)
         print(Segtree(4))  # ツリー状に整形されて表示される
+
+    https://github.com/yasyasyu/local-lib/blob/master/add_treeview.py
     """
     bit_length = lambda x: x.bit_length() - 1
 

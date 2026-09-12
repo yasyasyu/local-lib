@@ -7,6 +7,8 @@ def binary_search(ng, ok):
     使い方:
         # is_okを書き換えた上で
         binary_search(-1, 10)  # is_ok(mid) = mid > 0 の場合、境界の1を返す
+
+    https://github.com/yasyasyu/local-lib/blob/master/deciding_binary_search.py
     """
 
     def is_ok(mid):

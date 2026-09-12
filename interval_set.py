@@ -11,6 +11,8 @@ class IntervalSet:
         s.mex(1)         # 1以上で含まれない最小の整数 -> 5
         s.remove(3)      # 3のみ削除
         len(s)           # 現在の要素数 -> 3
+
+    https://github.com/yasyasyu/local-lib/blob/master/interval_set.py
     """
 
     def __init__(self) -> None:

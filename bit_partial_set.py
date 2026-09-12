@@ -4,6 +4,8 @@
 
 使い方:
     bit_partial_set(0b1011)  # 標準出力に列挙結果を表示する
+
+https://github.com/yasyasyu/local-lib/blob/master/bit_partial_set.py
 """
 
 

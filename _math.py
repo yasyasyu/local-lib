@@ -11,7 +11,10 @@ import math
 
 
 def divisors(n):
-    """nの約数を昇順に列挙する。"""
+    """nの約数を昇順に列挙する。
+
+    https://github.com/yasyasyu/local-lib/blob/master/_math.py
+    """
     lower, upper = [], []
     i = 1
     while i * i <= n:
@@ -24,7 +27,10 @@ def divisors(n):
 
 
 def Eratosthenes(N):
-    """N以下の素数を列挙する（エラトステネスの篩）。"""
+    """N以下の素数を列挙する（エラトステネスの篩）。
+
+    https://github.com/yasyasyu/local-lib/blob/master/_math.py
+    """
     prime = [2]
     data = [i + 1 for i in range(2, N, 2)]
     while data:
@@ -37,7 +43,10 @@ def Eratosthenes(N):
 
 
 def prime_factorize(N):
-    """Nを素因数分解し、{素数: 指数} の defaultdict を返す。"""
+    """Nを素因数分解し、{素数: 指数} の defaultdict を返す。
+
+    https://github.com/yasyasyu/local-lib/blob/master/_math.py
+    """
     from collections import defaultdict
 
     prime = defaultdict(int)
@@ -61,6 +70,8 @@ def section_prime_sieve(L, R):
     """区間 [L, R] の各整数が素数かどうかを判定する（区間篩）。
 
     戻り値は長さ R-L+1 のbool列で、値vの判定結果は is_prime_section[v-L] に入る。
+
+    https://github.com/yasyasyu/local-lib/blob/master/_math.py
     """
     # √R 以下の素数を炙り出すための篩
     sqrt_R = int(math.sqrt(R) + 0.1)

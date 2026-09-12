@@ -14,6 +14,8 @@ class BucketList(Generic[T]):
         bl.append(5)      # [1, 2, 3, 4, 5]
         bl.pop(0)         # 1を削除して返す
         bl[1]             # 添字アクセス
+
+    https://github.com/yasyasyu/local-lib/blob/master/bucket_list.py
     """
 
     BUCKET_RATIO = 16

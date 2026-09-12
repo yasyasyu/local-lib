@@ -6,6 +6,8 @@ class UnionFind:
         uf.merge(0, 1)
         uf.same(0, 1)   # True
         uf.groups()     # [[0, 1], [2], [3], [4]]
+
+    https://github.com/yasyasyu/local-lib/blob/master/union_find.py
     """
 
     def __init__(self, N) -> None:

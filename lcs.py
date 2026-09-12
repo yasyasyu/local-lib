@@ -3,6 +3,8 @@ def LCS(S, T):
 
     >>> LCS("AABBABCCCABC", "ABC")
     3
+
+    https://github.com/yasyasyu/local-lib/blob/master/lcs.py
     """
     n, m = len(S), len(T)
     dp = [[0] * (m + 1) for _ in range(n + 1)]

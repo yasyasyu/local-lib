@@ -6,6 +6,8 @@ def rle(S):
 
     使い方:
         rle("aaabbc")  # [('a', 3), ('b', 2), ('c', 1)]
+
+    https://github.com/yasyasyu/local-lib/blob/master/rle.py
     """
     S = groupby(S)
     ret = []

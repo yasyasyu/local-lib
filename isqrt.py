@@ -4,6 +4,8 @@ def isqrt(n: int) -> int:
     使い方:
         isqrt(10)  # 3
         isqrt(16)  # 4
+
+    https://github.com/yasyasyu/local-lib/blob/master/isqrt.py
     """
     a = 0
     r = 0

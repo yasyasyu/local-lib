@@ -3,5 +3,7 @@ def compress(arr):
 
     使い方:
         compress([30, 10, 20])  # {10: 0, 20: 1, 30: 2}
+
+    https://github.com/yasyasyu/local-lib/blob/master/compress.py
     """
     return {v: i for i, v in enumerate(sorted(set(arr)))}

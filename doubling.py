@@ -10,6 +10,8 @@ class Doubling:
 
         doubling = Doubling(N, K, lambda x: mapping[x])
         doubling.get(x, k)  # xにmappingをk回適用した結果
+
+    https://github.com/yasyasyu/local-lib/blob/master/doubling.py
     """
 
     def __init__(self, N: int, max_K: int, mapping: Callable[[int], int]) -> None:

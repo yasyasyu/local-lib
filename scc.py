@@ -10,6 +10,8 @@ class SCC:
         scc.connect(1, 0)
         scc.connect(2, 3)
         groups = scc.solve()  # 例: [[0, 1], [2], [3]]（トポロジカル順）
+
+    https://github.com/yasyasyu/local-lib/blob/master/scc.py
     """
 
     def __init__(self, n):

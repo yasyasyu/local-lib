@@ -13,6 +13,8 @@ class Parser:
         Parser().expr("2+3*4")     # 14
         Parser().expr("(2+3)*4")   # 20
         Parser().expr("2(3+4)")    # 14（括弧の前の掛け算記号は省略可）
+
+    https://github.com/yasyasyu/local-lib/blob/master/_parser.py
     """
 
     def __init__(self) -> None:

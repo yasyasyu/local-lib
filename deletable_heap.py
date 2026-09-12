@@ -12,6 +12,8 @@ class DeletableHeap:
         h.get()          # 1 (最小値を参照)
         h.discard(1)     # 1を1個削除してTrueを返す
         h.pop()          # 最小値を削除して返す
+
+    https://github.com/yasyasyu/local-lib/blob/master/deletable_heap.py
     """
 
     def __init__(self, is_unique=False):

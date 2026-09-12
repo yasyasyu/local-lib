@@ -4,6 +4,8 @@ def trim(grid):
     使い方:
         trim([list("...."), list(".#.."), list("..#."), list("....")])
         # [['#', '.'], ['.', '#']]
+
+    https://github.com/yasyasyu/local-lib/blob/master/grid_trim.py
     """
     for _ in range(4):
         while True:

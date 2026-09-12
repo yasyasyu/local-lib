@@ -42,6 +42,8 @@ class PersistentStack(Generic[T]):
         >>> print(A)  # [a, b]
         >>> A = notebook["save1"]
         >>> print(A)  # [a]
+
+    https://github.com/yasyasyu/local-lib/blob/master/persistent_stack.py
     """
 
     def __init__(

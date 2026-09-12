@@ -15,6 +15,8 @@ class SortedMultiset(Generic[T]):
         sm.count(1)        # 2
         sm.discard(1)      # 1個だけ削除してTrue/Falseを返す
         sm[0]              # 添字アクセス(昇順)
+
+    https://github.com/yasyasyu/local-lib/blob/master/sorted_multi_set.py
     """
 
     BUCKET_RATIO = 16

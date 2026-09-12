@@ -13,6 +13,8 @@ def topological_sort(es):
             es[u - 1].append(v - 1)
 
         order = topological_sort(es)
+
+    https://github.com/yasyasyu/local-lib/blob/master/topological_sort.py
     """
     V = len(es)
     deg = [0] * V

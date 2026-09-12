@@ -16,6 +16,8 @@ class SortedSet(Generic[T]):
         ss.discard(1)     # 削除してTrue/Falseを返す
         3 in ss           # 存在確認
         ss[0]             # 添字アクセス(昇順)
+
+    https://github.com/yasyasyu/local-lib/blob/master/sorted_set.py
     """
 
     BUCKET_RATIO = 16

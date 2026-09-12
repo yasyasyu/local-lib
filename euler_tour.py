@@ -9,6 +9,8 @@ def euler_tour(G: list[list], root: int):
         G = [[1, 2], [0, 3], [0], [1]]
         left_id, right_id, depth = euler_tour(G, 0)
         # 頂点vの部分木は left_id[v] <= id < right_id[v] の範囲に対応する
+
+    https://github.com/yasyasyu/local-lib/blob/master/euler_tour.py
     """
     N = len(G)
     v = root

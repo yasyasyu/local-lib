@@ -8,6 +8,8 @@ class CumulativeSum2D:
         grid = [[1, 2, 3], [4, 5, 6]]
         cs = CumulativeSum2D(grid)
         cs.query(1, 1, 2, 3)  # 21 (全体の矩形和)
+
+    https://github.com/yasyasyu/local-lib/blob/master/cumulative_sum_2d.py
     """
 
     def __init__(self, array: List[List[Any]]) -> None:
