@@ -26,9 +26,15 @@
 | `deletable_heap.py` | 削除可能なヒープ |
 | `persistent_stack.py` | 永続スタック |
 | `li_chao_tree.py` | Li Chao Tree（直線群の最小値クエリ） |
+| `trie.py` | 文字列Trie木、およびXORクエリ用のBinaryTrie |
+| `fenwick_tree_2d.py` | 2次元Fenwick Tree（点更新・矩形和取得。列方向に`ac-library-python`の`FenwickTree`を使う） |
+| `segment_tree_2d.py` | 2次元セグメント木（点更新・矩形集約、任意の可換モノイド用。列方向に`ac-library-python`の`SegTree`を使う） |
 
-セグメント木・遅延セグメント木・Fenwick Treeなど`ac-library-python`にある機能は実装せず、
-[USAGE_SegTree.md](USAGE_SegTree.md)に使い方一覧をまとめている。
+セグメント木・遅延セグメント木・Fenwick Tree（1次元）など`ac-library-python`にある機能は実装せず、
+[USAGE_SegTree.md](USAGE_SegTree.md)に使い方一覧をまとめている。`fenwick_tree_2d.py`と
+`segment_tree_2d.py`は、列方向の1次元構造として`ac-library-python`の`FenwickTree`/`SegTree`を
+そのまま利用しているため、この2ファイルだけ`ac-library-python`が必要
+（他のファイルは標準ライブラリのみで動作する）。
 
 ### グラフ・木
 
@@ -59,6 +65,18 @@
 | --- | --- |
 | `rolling_hash.py` | ローリングハッシュ |
 | `lcs.py` | 最長共通部分列（LCS） |
+
+### 幾何
+
+| ファイル | 内容 |
+| --- | --- |
+| `geometry.py` | 凸包・線分交差判定・点と多角形の内外判定 |
+
+### クエリ処理テクニック
+
+| ファイル | 内容 |
+| --- | --- |
+| `mo.py` | Moのアルゴリズム（オフライン区間クエリの高速化） |
 
 ### 配列・グリッド操作
 
