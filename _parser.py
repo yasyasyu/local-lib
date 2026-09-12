@@ -1,11 +1,3 @@
-"""
-expr    = term, {("+", term) | ("-", term)}
-term    = factor, {("*", factor) | ("/", factor) | ("(", factor)}
-factor  = ("(", expr, ")") | number
-number  = 1つ以上の数字
-"""
-
-
 class Parser:
     """四則演算(+ - * /)と括弧を含む数式を評価するパーサー。
 

@@ -1,17 +1,9 @@
-"""約数列挙・素数篩・素因数分解・区間篩
-
-使い方:
-    divisors(12)                  # [1, 2, 3, 4, 6, 12]
-    Eratosthenes(30)               # [2, 3, 5, 7, ..., 29]（30以下の素数）
-    dict(prime_factorize(360))     # {2: 3, 3: 2, 5: 1}
-    section_prime_sieve(14, 30)    # [L,R]の各値が素数かどうかのbool列
-"""
-
 import math
 
 
-def divisors(n):
+def divisors(n) -> list[int]:
     """nの約数を昇順に列挙する。
+    divisors(12)                  # [1, 2, 3, 4, 6, 12]
 
     https://github.com/yasyasyu/local-lib/blob/master/_math.py
     """
@@ -26,8 +18,9 @@ def divisors(n):
     return lower + upper[::-1]
 
 
-def Eratosthenes(N):
+def Eratosthenes(N) -> list[int]:
     """N以下の素数を列挙する（エラトステネスの篩）。
+    Eratosthenes(30)               # [2, 3, 5, 7, ..., 29]（30以下の素数）
 
     https://github.com/yasyasyu/local-lib/blob/master/_math.py
     """
@@ -42,8 +35,9 @@ def Eratosthenes(N):
     return prime
 
 
-def prime_factorize(N):
+def prime_factorize(N) -> dict[int, int]:
     """Nを素因数分解し、{素数: 指数} の defaultdict を返す。
+    prime_factorize(360)     # {2: 3, 3: 2, 5: 1}
 
     https://github.com/yasyasyu/local-lib/blob/master/_math.py
     """
@@ -66,8 +60,9 @@ def prime_factorize(N):
     return prime
 
 
-def section_prime_sieve(L, R):
+def section_prime_sieve(L, R) -> list[bool]:
     """区間 [L, R] の各整数が素数かどうかを判定する（区間篩）。
+    section_prime_sieve(14, 30)    # [L,R]の各値が素数かどうかのbool列
 
     戻り値は長さ R-L+1 のbool列で、値vの判定結果は is_prime_section[v-L] に入る。
 
