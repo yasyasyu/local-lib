@@ -1,5 +1,5 @@
 def rotate90(grid):
-    """gridを90度ずつ回転したものを4回分(360度分)順に返すジェネレータ。
+    """gridを90度ずつ回転したものを4回分(360度分)順に返すジェネレータ。1回分ごとにO(HW)
 
     使い方:
         for rotated in rotate90(grid):
@@ -13,7 +13,7 @@ def rotate90(grid):
 
 
 def transpose(grid):
-    """gridを転置する。
+    """gridを転置する。O(HW)
 
     使い方:
         transpose([[1, 2, 3], [4, 5, 6]])  # [[1, 4], [2, 5], [3, 6]]

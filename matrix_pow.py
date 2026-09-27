@@ -1,7 +1,7 @@
 def mat_mul(
     A: list[list[int]], B: list[list[int]], mod: int | None = None
 ) -> list[list[int]]:
-    """行列の積 A * B を計算する。
+    """行列の積 A * B を計算する。O(nmp)（Aがn×m、Bがm×p）
 
     https://github.com/yasyasyu/local-lib/blob/master/matrix_pow.py
     """
@@ -23,7 +23,7 @@ def mat_mul(
 
 
 def mat_pow(A: list[list[int]], k: int, mod: int | None = None) -> list[list[int]]:
-    """正方行列Aのk乗を繰り返し二乗法で計算する。
+    """正方行列Aのk乗を繰り返し二乗法で計算する。O(n^3 log k)（Aはn×n）
 
     使い方:
         A = [[1, 1], [1, 0]]  # フィボナッチ数列の遷移行列

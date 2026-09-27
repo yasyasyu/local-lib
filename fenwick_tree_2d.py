@@ -18,20 +18,21 @@ class FenwickTree2D:
     """
 
     def __init__(self, h: int, w: int) -> None:
+        """H×Wの0で初期化する。O(HW)"""
         self.h = h
         self.w = w
         # tree[i]: 行方向の外側BITのノードiが担当する行の集合について、列方向を管理するBIT
         self.tree = [FenwickTree(w) for _ in range(h + 1)]
 
     def add(self, x: int, y: int, val) -> None:
-        """座標(x, y)にvalを加算する。"""
+        """座標(x, y)にvalを加算する。O(log H log W)"""
         i = x + 1
         while i <= self.h:
             self.tree[i].add(y, val)
             i += i & (-i)
 
     def _prefix_sum(self, x: int, y: int):
-        """半開矩形[0, x) x [0, y)の和を返す。"""
+        """半開矩形[0, x) x [0, y)の和を返す。O(log H log W)"""
         s = 0
         i = x
         while i > 0:
@@ -40,7 +41,7 @@ class FenwickTree2D:
         return s
 
     def sum(self, x1: int, y1: int, x2: int, y2: int):
-        """半開矩形[x1, x2) x [y1, y2)の和を返す。"""
+        """半開矩形[x1, x2) x [y1, y2)の和を返す。O(log H log W)"""
         return (
             self._prefix_sum(x2, y2)
             - self._prefix_sum(x1, y2)

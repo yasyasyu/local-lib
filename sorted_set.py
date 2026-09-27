@@ -42,36 +42,43 @@ class SortedSet(Generic[T]):
         ]
 
     def __iter__(self) -> Iterator[T]:
+        "Iterate in ascending order. / O(N)"
         for i in self.a:
             for j in i:
                 yield j
 
     def __reversed__(self) -> Iterator[T]:
+        "Iterate in descending order. / O(N)"
         for i in reversed(self.a):
             for j in reversed(i):
                 yield j
 
     def __eq__(self, other) -> bool:
+        "Return True if all elements are equal. / O(N)"
         return list(self) == list(other)
 
     def __len__(self) -> int:
+        "Return the number of elements. / O(1)"
         return self.size
 
     def __repr__(self) -> str:
+        "Return the bucket structure for debugging. / O(N)"
         return "SortedSet" + str(self.a)
 
     def __str__(self) -> str:
+        "Return the elements as a set-like string. / O(N)"
         s = str(list(self))
         return "{" + s[1 : len(s) - 1] + "}"
 
     def _position(self, x: T) -> tuple[list[T], int, int]:
-        "return the bucket, index of the bucket and position in which x should be. self must not be empty."
+        "return the bucket, index of the bucket and position in which x should be. self must not be empty. / O(√N)"
         for i, a in enumerate(self.a):
             if x <= a[-1]:
                 break
         return (a, i, bisect_left(a, x))
 
     def __contains__(self, x: T) -> bool:
+        "Return True if x is in the set. / O(√N)"
         if self.size == 0:
             return False
         a, _, i = self._position(x)
@@ -94,6 +101,7 @@ class SortedSet(Generic[T]):
         return True
 
     def _pop(self, a: list[T], b: int, i: int) -> T:
+        "Remove and return position i of bucket a (index b). / O(√N)"
         ans = a.pop(i)
         self.size -= 1
         if not a:
@@ -111,31 +119,31 @@ class SortedSet(Generic[T]):
         return True
 
     def lt(self, x: T) -> T | None:
-        "Find the largest element < x, or None if it doesn't exist."
+        "Find the largest element < x, or None if it doesn't exist. / O(√N)"
         for a in reversed(self.a):
             if a[0] < x:
                 return a[bisect_left(a, x) - 1]
 
     def le(self, x: T) -> T | None:
-        "Find the largest element <= x, or None if it doesn't exist."
+        "Find the largest element <= x, or None if it doesn't exist. / O(√N)"
         for a in reversed(self.a):
             if a[0] <= x:
                 return a[bisect_right(a, x) - 1]
 
     def gt(self, x: T) -> T | None:
-        "Find the smallest element > x, or None if it doesn't exist."
+        "Find the smallest element > x, or None if it doesn't exist. / O(√N)"
         for a in self.a:
             if a[-1] > x:
                 return a[bisect_right(a, x)]
 
     def ge(self, x: T) -> T | None:
-        "Find the smallest element >= x, or None if it doesn't exist."
+        "Find the smallest element >= x, or None if it doesn't exist. / O(√N)"
         for a in self.a:
             if a[-1] >= x:
                 return a[bisect_left(a, x)]
 
     def __getitem__(self, i: int) -> T:
-        "Return the i-th element."
+        "Return the i-th element. / O(√N)"
         if i < 0:
             for a in reversed(self.a):
                 i += len(a)
@@ -149,7 +157,7 @@ class SortedSet(Generic[T]):
         raise IndexError
 
     def pop(self, i: int = -1) -> T:
-        "Pop and return the i-th element."
+        "Pop and return the i-th element. / O(√N)"
         if i < 0:
             for b, a in enumerate(reversed(self.a)):
                 i += len(a)
@@ -163,7 +171,7 @@ class SortedSet(Generic[T]):
         raise IndexError
 
     def index(self, x: T) -> int:
-        "Count the number of elements < x."
+        "Count the number of elements < x. / O(√N)"
         ans = 0
         for a in self.a:
             if a[-1] >= x:
@@ -172,7 +180,7 @@ class SortedSet(Generic[T]):
         return ans
 
     def index_right(self, x: T) -> int:
-        "Count the number of elements <= x."
+        "Count the number of elements <= x. / O(√N)"
         ans = 0
         for a in self.a:
             if a[-1] > x:

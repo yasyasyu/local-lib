@@ -2,7 +2,7 @@ from typing import Any, List
 
 
 class CumulativeSum2D:
-    """2次元累積和
+    """2次元累積和（構築O(HW)、矩形和O(1)）
 
     使い方:
         grid = [[1, 2, 3], [4, 5, 6]]
@@ -13,6 +13,7 @@ class CumulativeSum2D:
     """
 
     def __init__(self, array: List[List[Any]]) -> None:
+        """H×Wのarrayから構築する。O(HW)"""
         self.height: int = len(array)
         self.width: int = len(array[0])
         self.summed_array: List[List[Any]] = [
@@ -32,7 +33,7 @@ class CumulativeSum2D:
 
     def query(self, i: int, j: int, ii: int, jj: int) -> int:
         """
-        1-indexed,両端inclusiveで行[i, ii]・列[j, jj]の矩形和を返す。
+        1-indexed,両端inclusiveで行[i, ii]・列[j, jj]の矩形和を返す。O(1)
         """
         i -= 1
         j -= 1

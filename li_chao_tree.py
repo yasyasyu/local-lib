@@ -2,7 +2,7 @@ import bisect
 
 
 class LiChaoTree:
-    """Li Chao Tree（直線の追加とある点での最小値クエリをO(log N)で処理する）
+    """Li Chao Tree（直線の追加とある点での最小値クエリをO(log N)で処理する。Nはxの候補数）
 
     最小値クエリ用。最大値がほしい場合は追加するa, bの符号を反転し、
     query()の結果も反転すればよい。
@@ -20,6 +20,7 @@ class LiChaoTree:
     INF = float("inf")
 
     def __init__(self, xs: list[int]) -> None:
+        """クエリしうるxの候補xsから構築する。O(N log N)"""
         xs = sorted(set(xs))
         n = max(len(xs), 1)
         self.size = 1
@@ -30,11 +31,12 @@ class LiChaoTree:
         self.line = [(0, self.INF)] * (2 * self.size)
 
     def _f(self, line: tuple[int, float], x: int) -> float:
+        """直線lineのxにおける値を返す。O(1)"""
         a, b = line
         return a * x + b
 
     def add_line(self, a: int, b: int) -> None:
-        """直線 y = a*x + b を追加する。"""
+        """直線 y = a*x + b を追加する。O(log N)"""
         line = (a, b)
         node, l, r = 1, 0, self.size
         while True:
@@ -56,7 +58,7 @@ class LiChaoTree:
                 node, l = node * 2 + 1, m
 
     def query(self, x: int) -> float:
-        """xにおける直線群の最小値を返す。"""
+        """xにおける直線群の最小値を返す。O(log N)"""
         idx = bisect.bisect_left(self.xs, x, 0, self.size)
         node, l, r = 1, 0, self.size
         res = self._f(self.line[node], x)

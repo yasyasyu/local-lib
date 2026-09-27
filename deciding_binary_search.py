@@ -3,6 +3,7 @@ def binary_search(ng, ok):
 
     ng: is_ok が False になる値、ok: is_ok が True になる値(順は逆でもよい)。
     is_ok の中身は問題に応じて書き換えて使う。
+    計算量: O(log |ok - ng|) 回 is_ok を呼ぶ（is_ok 1回がO(f)なら全体でO(f log |ok - ng|)）。
 
     使い方:
         # is_okを書き換えた上で

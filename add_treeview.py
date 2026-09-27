@@ -30,11 +30,13 @@ def add_tree_view(target_class):
 
     値の桁数（負号込み）はノードごとにバラバラでもよく、木全体で一番長い表示幅に自動的に揃える。
 
+    表示（__str__）の計算量: O(N z log N)（Nは葉の数、zは値の最大表示幅。1段がO(Nz)文字で、段数がlog N + 1）
+
     https://github.com/yasyasyu/local-lib/blob/master/add_treeview.py
     """
 
     def format_level(values, group_size, cell, total_width, z):
-        """1段分の行を組み立てる。
+        """1段分の行を組み立てる。O(total_width)
 
         group_size: この段の1ノードがまとめている葉の数
         cell: 葉1個分の表示幅（値の桁数z + 区切りの"|" 1文字）
@@ -53,6 +55,7 @@ def add_tree_view(target_class):
         return "".join(row)
 
     def view(self):
+        """木全体をツリー状に整形した文字列を返す。O(N z log N)"""
         n_leaves = self._size
         z = max((len(str(x)) for x in self._d[1 : n_leaves * 2]), default=1)
         cell = z + 1

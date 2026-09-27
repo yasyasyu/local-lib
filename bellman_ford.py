@@ -1,7 +1,7 @@
 def bellman_ford(
     edges: list[tuple[int, int, int]], N: int, start: int
 ) -> list[float]:
-    """単一始点最短路（ベルマンフォード法、負の重み・負閉路検出に対応）
+    """単一始点最短路（ベルマンフォード法、負の重み・負閉路検出に対応）。O(NM)（Nは頂点数、Mは辺数）
 
     edges: 辺のリスト [(u, v, cost), ...]（有向辺。無向辺はu->vとv->uの両方を入れる）
     N: 頂点数

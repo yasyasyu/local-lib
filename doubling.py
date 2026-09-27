@@ -15,7 +15,7 @@ class Doubling:
     """
 
     def __init__(self, N: int, max_K: int, mapping: Callable[[int], int]) -> None:
-        """要素数nのダブリングテーブルを作成します。"""
+        """要素数nのダブリングテーブルを作成します。O(N log K)"""
         k_bits = max_K.bit_length()
 
         # dub[i][j] = 値jを2**i回操作した結果
@@ -34,7 +34,7 @@ class Doubling:
                 ]
 
     def get(self, x, k):
-        """xをk回操作した値を取得します。"""
+        """xをk回操作した値を取得します。O(log k)"""
         # kをビットごとに分解して、2**a + 2**b + 2**c + ... の形で考える。
         # xを2**a回操作した結果を2**b回操作した結果を2**c回操作… のように順に適用する
         current = x

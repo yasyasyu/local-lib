@@ -16,6 +16,7 @@ class LCA:
     """
 
     def __init__(self, G: list[list[int]], root: int = 0) -> None:
+        """木Gを根rootで構築する。O(N log N)"""
         N = len(G)
         self.depth = [-1] * N
         parent = [0] * N
@@ -34,7 +35,7 @@ class LCA:
         self.doubling = Doubling(N, N, lambda x: parent[x])
 
     def query(self, u: int, v: int) -> int:
-        """頂点uとvの最小共通祖先を返す。"""
+        """頂点uとvの最小共通祖先を返す。O(log^2 N)（二分探索の各ステップでDoubling.getがO(log N)）"""
         if self.depth[u] < self.depth[v]:
             u, v = v, u
         u = self.doubling.get(u, self.depth[u] - self.depth[v])
@@ -52,5 +53,5 @@ class LCA:
         return self.doubling.get(u, ng)
 
     def distance(self, u: int, v: int) -> int:
-        """頂点uとvの間の距離（辺数）を返す。"""
+        """頂点uとvの間の距離（辺数）を返す。O(log^2 N)"""
         return self.depth[u] + self.depth[v] - 2 * self.depth[self.query(u, v)]

@@ -2,7 +2,7 @@ from itertools import groupby
 
 
 def rle(S):
-    """ランレングス圧縮。(値, 連続回数)のリストを返す。
+    """ランレングス圧縮。(値, 連続回数)のリストを返す。O(N)
 
     使い方:
         rle("aaabbc")  # [('a', 3), ('b', 2), ('c', 1)]

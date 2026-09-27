@@ -22,6 +22,7 @@ class BucketList(Generic[T]):
     SPLIT_RATIO = 24
 
     def __init__(self, a: Iterable[T] = []) -> None:
+        "Make a new BucketList from iterable. / O(N)"
         a = list(a)
         n = self.size = len(a)
         num_bucket = int(math.ceil(math.sqrt(n / self.BUCKET_RATIO)))
@@ -31,16 +32,19 @@ class BucketList(Generic[T]):
         ]
 
     def __iter__(self) -> Iterator[T]:
+        "Iterate from the front. / O(N)"
         for i in self.a:
             for j in i:
                 yield j
 
     def __reversed__(self) -> Iterator[T]:
+        "Iterate from the back. / O(N)"
         for i in reversed(self.a):
             for j in reversed(i):
                 yield j
 
     def __eq__(self, other) -> bool:
+        "Return True if all elements are equal. / O(N)"
         if len(self) != len(other):
             return False
         for x, y in zip(self, other):
@@ -49,12 +53,15 @@ class BucketList(Generic[T]):
         return True
 
     def __len__(self) -> int:
+        "Return the number of elements. / O(1)"
         return self.size
 
     def __repr__(self) -> str:
+        "Return the bucket structure for debugging. / O(N)"
         return "BucketList" + str(self.a)
 
     def __str__(self) -> str:
+        "Return the elements as a list string. / O(N)"
         return str(list(self))
 
     def __contains__(self, x: T) -> bool:
@@ -65,6 +72,7 @@ class BucketList(Generic[T]):
         return False
 
     def _insert(self, a: list[T], b: int, i: int, x: T) -> None:
+        "Insert x at position i of bucket a (index b), splitting it if too large. / O(√N)"
         a.insert(i, x)
         self.size += 1
         if len(a) > len(self.a) * self.SPLIT_RATIO:
@@ -101,10 +109,12 @@ class BucketList(Generic[T]):
         return self._insert(a, len(self.a) - 1, len(a), x)
 
     def extend(self, a: Iterable[T]) -> None:
+        "Append all elements of a. / amortized O(K) (K = len(a))"
         for x in a:
             self.append(x)
 
     def __getitem__(self, i: int) -> T:
+        "Return the i-th element. / O(√N)"
         if i < 0:
             for a in reversed(self.a):
                 i += len(a)
@@ -118,6 +128,7 @@ class BucketList(Generic[T]):
         raise IndexError
 
     def _pop(self, a: list[T], b: int, i: int) -> T:
+        "Remove and return position i of bucket a (index b). / O(√N)"
         ans = a.pop(i)
         self.size -= 1
         if not a:
@@ -154,13 +165,16 @@ class BucketList(Generic[T]):
         self.pop(self.index(x))
 
     def clear(self) -> None:
+        "Remove all elements. / O(1)"
         self.a = []
         self.size = 0
 
     def reverse(self) -> None:
+        "Reverse the list in place. / O(N)"
         self.a.reverse()
         for a in self.a:
             a.reverse()
 
     def copy(self) -> "BucketList[T]":
+        "Return a shallow copy. / O(N)"
         return BucketList(self)

@@ -15,6 +15,7 @@ class Combinatorics:
     """
 
     def __init__(self, max_n: int, mod: int) -> None:
+        """max_nまでの階乗・逆元テーブルを作る。O(max_n + log mod)"""
         self.mod = mod
         self.max_n = max_n
         self.factorial = [1] * (max_n + 1)
@@ -26,21 +27,21 @@ class Combinatorics:
             self.inv_factorial[i - 1] = self.inv_factorial[i] * i % mod
 
     def fact(self, n: int) -> int:
-        """n! mod pを返す。"""
+        """n! mod pを返す。O(1)"""
         return self.factorial[n]
 
     def inv_fact(self, n: int) -> int:
-        """(n!)^-1 mod pを返す。"""
+        """(n!)^-1 mod pを返す。O(1)"""
         return self.inv_factorial[n]
 
     def perm(self, n: int, r: int) -> int:
-        """nPr mod pを返す。0<=r<=nでない場合は0。"""
+        """nPr mod pを返す。0<=r<=nでない場合は0。O(1)"""
         if r < 0 or r > n:
             return 0
         return self.factorial[n] * self.inv_factorial[n - r] % self.mod
 
     def cmb(self, n: int, r: int) -> int:
-        """nCr mod pを返す。0<=r<=nでない場合は0。"""
+        """nCr mod pを返す。0<=r<=nでない場合は0。O(1)"""
         if r < 0 or r > n:
             return 0
         return (
@@ -52,7 +53,7 @@ class Combinatorics:
         )
 
     def hcm(self, n: int, r: int) -> int:
-        """重複組合せ nHr (= (n+r-1)Cr) mod pを返す。"""
+        """重複組合せ nHr (= (n+r-1)Cr) mod pを返す。O(1)"""
         if n == 0:
             return 1 if r == 0 else 0
         return self.cmb(n + r - 1, r)

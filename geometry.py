@@ -1,5 +1,5 @@
 def cross(o, a, b):
-    """ベクトルOA, OBの外積 (OA x OB) を返す。
+    """ベクトルOA, OBの外積 (OA x OB) を返す。O(1)
 
     正: OからみてBがAより反時計回り側、負: 時計回り側、0: 一直線上。
 
@@ -9,7 +9,7 @@ def cross(o, a, b):
 
 
 def ccw(a, b, c):
-    """3点a, b, cの向きを判定する。1: 反時計回り, -1: 時計回り, 0: 一直線上。
+    """3点a, b, cの向きを判定する。1: 反時計回り, -1: 時計回り, 0: 一直線上。O(1)
 
     https://github.com/yasyasyu/local-lib/blob/master/geometry.py
     """
@@ -22,7 +22,7 @@ def ccw(a, b, c):
 
 
 def convex_hull(points):
-    """点集合の凸包を、反時計回りの頂点列として返す（Andrewのモノトーンチェーン法）。
+    """点集合の凸包を、反時計回りの頂点列として返す（Andrewのモノトーンチェーン法）。O(N log N)
     convex_hull([(0, 0), (1, 1), (1, 0), (0, 1), (0.5, 0.5)])
     # -> [(0, 0), (1, 0), (1, 1), (0, 1)]（反時計回り、内部の点は除かれる）
 
@@ -51,7 +51,7 @@ def convex_hull(points):
 
 
 def on_segment(a, b, p):
-    """点a, b, pが一直線上にある前提で、pが線分ab上（端点含む）にあるかを返す。
+    """点a, b, pが一直線上にある前提で、pが線分ab上（端点含む）にあるかを返す。O(1)
 
     https://github.com/yasyasyu/local-lib/blob/master/geometry.py
     """
@@ -59,7 +59,7 @@ def on_segment(a, b, p):
 
 
 def segments_intersect(p1, p2, p3, p4):
-    """線分p1p2と線分p3p4が交差する（端点や一直線上での接触も含む）かを返す。
+    """線分p1p2と線分p3p4が交差する（端点や一直線上での接触も含む）かを返す。O(1)
     segments_intersect((0, 0), (2, 2), (0, 2), (2, 0))  # True（交差する）
 
     https://github.com/yasyasyu/local-lib/blob/master/geometry.py
@@ -87,7 +87,7 @@ def segments_intersect(p1, p2, p3, p4):
 
 
 def point_in_polygon(point, polygon):
-    """点と多角形（頂点列、時計回り/反時計回りどちらでも可）の位置関係を判定する。
+    """点と多角形（頂点列、時計回り/反時計回りどちらでも可）の位置関係を判定する。O(N)（Nは多角形の頂点数）
     point_in_polygon((1, 1), [(0, 0), (2, 0), (2, 2), (0, 2)])
     # 1: 内部, 0: 辺上, -1: 外部
 

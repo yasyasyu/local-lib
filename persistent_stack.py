@@ -9,6 +9,7 @@ class PersistentStack(Generic[T]):
 
     スタックの各操作（push, pop）は新しいスタックを返し、元のスタックは変更されません。
     これにより、過去の状態を保持したまま操作を行うことができます。
+    push / pop / peekはO(1)、要素を全て辿る__iter__ / __str__ / __repr__はO(N)。
 
     Attributes:
         value: スタックの先頭要素
@@ -52,7 +53,7 @@ class PersistentStack(Generic[T]):
         prev: Optional["PersistentStack"] = None,
     ):
         """
-        スタックの初期化。
+        スタックの初期化。O(1)（valueにイテラブルを渡した場合はO(N)）
 
         Args:
             value: スタックに積む値、またはイテラブル
@@ -72,7 +73,7 @@ class PersistentStack(Generic[T]):
 
     def push(self, value) -> "PersistentStack":
         """
-        新しい値を積んだ新しいスタックを返します。
+        新しい値を積んだ新しいスタックを返します。O(1)
 
         Args:
             value: 積む値
@@ -84,7 +85,7 @@ class PersistentStack(Generic[T]):
 
     def pop(self) -> "PersistentStack":
         """
-        1つ前の状態のスタックを返します。
+        1つ前の状態のスタックを返します。O(1)
 
         Returns:
             PersistentStack: 1つ前のスタック
@@ -93,7 +94,7 @@ class PersistentStack(Generic[T]):
 
     def peek(self) -> Optional[T]:
         """
-        先頭要素を返します。
+        先頭要素を返します。O(1)
 
         Returns:
             Optional[T]: 先頭要素（空ならNone）
@@ -103,7 +104,7 @@ class PersistentStack(Generic[T]):
     @staticmethod
     def from_iterable(iterable: Iterable[T]) -> "PersistentStack":
         """
-        イテラブルからスタックを生成します。
+        イテラブルからスタックを生成します。O(N)
 
         Args:
             iterable: イテラブル
@@ -118,7 +119,7 @@ class PersistentStack(Generic[T]):
 
     def __repr__(self) -> str:
         """
-        デバッグ用にクラス名付きでスタック内容を返します。
+        デバッグ用にクラス名付きでスタック内容を返します。O(N)
 
         Returns:
             str: スタックのデバッグ用表現
@@ -127,7 +128,7 @@ class PersistentStack(Generic[T]):
 
     def __iter__(self) -> T:
         """
-        スタックを下から上へイテレートします。
+        スタックを下から上へイテレートします。O(N)
 
         Yields:
             T: スタックの各要素
@@ -143,7 +144,7 @@ class PersistentStack(Generic[T]):
 
     def __str__(self) -> str:
         """
-        スタック内容を文字列で返します。
+        スタック内容を文字列で返します。O(N)
 
         Returns:
             str: スタックの内容

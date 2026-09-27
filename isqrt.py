@@ -1,5 +1,5 @@
 def isqrt(n: int) -> int:
-    """a = floor(sqrt(n))) (とr = n - a*a)を返す.
+    """a = floor(sqrt(n))) (とr = n - a*a)を返す. O(log n)（nのビット長に比例）
 
     使い方:
         isqrt(10)  # 3

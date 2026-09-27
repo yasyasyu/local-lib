@@ -4,7 +4,7 @@ from .union_find import UnionFind
 def kruskal(
     edges: list[tuple[int, int, int]], N: int
 ) -> tuple[int, list[tuple[int, int, int]]]:
-    """クラスカル法による最小全域木（MST）
+    """クラスカル法による最小全域木（MST）。O(M log M)（Mは辺数）
 
     edges: 辺のリスト [(cost, u, v), ...]
     N: 頂点数

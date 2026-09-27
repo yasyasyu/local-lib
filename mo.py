@@ -34,16 +34,20 @@ class Mo:
     """
 
     def __init__(self, n: int) -> None:
+        """長さnの列に対するクエリを受け付ける。O(1)"""
         self.n = n
         self.queries: list[tuple[int, int]] = []
 
     def add_query(self, l: int, r: int) -> int:
-        """半開区間[l, r)へのクエリを追加する。追加した順番（0-indexed）を返す。"""
+        """半開区間[l, r)へのクエリを追加する。追加した順番（0-indexed）を返す。O(1)"""
         self.queries.append((l, r))
         return len(self.queries) - 1
 
     def solve(self, add, remove, answer) -> list:
-        """全クエリを処理し、add_queryした順番に対応する答えのリストを返す。"""
+        """全クエリを処理し、add_queryした順番に対応する答えのリストを返す。
+
+        add / removeの呼び出しがO(N sqrt(Q))回、answerの呼び出しがQ回、ソートにO(Q log Q)。
+        """
         q = len(self.queries)
         if q == 0:
             return []

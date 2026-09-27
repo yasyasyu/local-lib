@@ -2,7 +2,10 @@ from collections import deque
 
 
 def topological_sort(es):
-    """
+    """トポロジカルソート（Kahn法）。O(N + M)（Nは頂点数、Mは辺数）
+
+    閉路がある場合、閉路に関わる頂点は結果に含まれない（len(order) < Nで閉路の有無を判定できる）。
+
     es : 有向グラフ（隣接リスト。es[u]はuから出る辺の行き先のリスト）
 
     使い方:

@@ -27,6 +27,7 @@ class SegmentTree2D:
     """
 
     def __init__(self, h: int, w: int, op, e, v=None) -> None:
+        """H×Wで構築する。vを渡せばその値で初期化する。O(HW)"""
         self.h = h
         self.w = w
         self.op = op
@@ -48,11 +49,11 @@ class SegmentTree2D:
             self.tree[i] = SegTree(op, e, merged)
 
     def get(self, x: int, y: int):
-        """座標(x, y)の現在値を返す。"""
+        """座標(x, y)の現在値を返す。O(1)"""
         return self.tree[x + self.size_h].get(y)
 
     def update(self, x: int, y: int, val) -> None:
-        """座標(x, y)の値をvalに更新する。"""
+        """座標(x, y)の値をvalに更新する。O(log H log W)"""
         i = x + self.size_h
         self.tree[i].set(y, val)
         i //= 2
@@ -62,7 +63,7 @@ class SegmentTree2D:
             i //= 2
 
     def query(self, x1: int, y1: int, x2: int, y2: int):
-        """半開矩形[x1, x2) x [y1, y2)の集約値を返す。"""
+        """半開矩形[x1, x2) x [y1, y2)の集約値を返す。O(log H log W)"""
         l = x1 + self.size_h
         r = x2 + self.size_h
         res_l = self.e

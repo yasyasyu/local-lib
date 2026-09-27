@@ -1,5 +1,5 @@
 class Trie:
-    """文字列の集合を管理するTrie木（挿入・完全一致検索・前置一致個数）
+    """文字列の集合を管理するTrie木（挿入・完全一致検索・前置一致個数）。各操作O(|s|)
 
     使い方:
         trie = Trie()
@@ -17,15 +17,17 @@ class Trie:
         __slots__ = ("children", "is_end", "count")
 
         def __init__(self):
+            """空のノードを作る。O(1)"""
             self.children = {}
             self.is_end = False
             self.count = 0  # このノードを通過する（接頭辞に持つ）単語の数
 
     def __init__(self) -> None:
+        """空のTrieを作る。O(1)"""
         self.root = self._Node()
 
     def insert(self, s: str) -> None:
-        """文字列sを挿入する。"""
+        """文字列sを挿入する。O(|s|)"""
         node = self.root
         node.count += 1
         for c in s:
@@ -36,6 +38,7 @@ class Trie:
         node.is_end = True
 
     def _find(self, s: str):
+        """sに対応するノードを返す。無ければNone。O(|s|)"""
         node = self.root
         for c in s:
             if c not in node.children:
@@ -44,22 +47,22 @@ class Trie:
         return node
 
     def search(self, s: str) -> bool:
-        """文字列sが完全一致で挿入済みかを返す。"""
+        """文字列sが完全一致で挿入済みかを返す。O(|s|)"""
         node = self._find(s)
         return node is not None and node.is_end
 
     def starts_with(self, prefix: str) -> bool:
-        """prefixを接頭辞に持つ単語が1つ以上挿入済みかを返す。"""
+        """prefixを接頭辞に持つ単語が1つ以上挿入済みかを返す。O(|prefix|)"""
         return self._find(prefix) is not None
 
     def count_prefix(self, prefix: str) -> int:
-        """prefixを接頭辞に持つ単語の個数を返す。"""
+        """prefixを接頭辞に持つ単語の個数を返す。O(|prefix|)"""
         node = self._find(prefix)
         return node.count if node else 0
 
 
 class BinaryTrie:
-    """非負整数の多重集合を管理し、XORに関するクエリを高速に処理するTrie木
+    """非負整数の多重集合を管理し、XORに関するクエリを高速に処理するTrie木。各操作O(B)（Bはbit_length）
 
     使い方:
         trie = BinaryTrie(bit_length=30)
@@ -75,20 +78,23 @@ class BinaryTrie:
     """
 
     def __init__(self, bit_length: int = 30) -> None:
+        """bit_lengthビットの非負整数を扱う空のTrieを作る。O(1)"""
         self.bit_length = bit_length
         self.children = [[-1, -1]]  # children[node] = [0側の子, 1側の子]
         self.count = [0]  # count[node] = このノードを通過する要素数
 
     def _new_node(self) -> int:
+        """ノードを1つ追加してその番号を返す。O(1)"""
         self.children.append([-1, -1])
         self.count.append(0)
         return len(self.children) - 1
 
     def __len__(self) -> int:
+        """要素数（多重度込み）を返す。O(1)"""
         return self.count[0]
 
     def insert(self, x: int) -> None:
-        """xを挿入する。"""
+        """xを挿入する。O(B)"""
         node = 0
         self.count[node] += 1
         for i in range(self.bit_length - 1, -1, -1):
@@ -99,7 +105,7 @@ class BinaryTrie:
             self.count[node] += 1
 
     def erase(self, x: int) -> None:
-        """xを1つ削除する。xが挿入済みであることが前提（未挿入の値を渡すと状態が壊れる）。"""
+        """xを1つ削除する。xが挿入済みであることが前提（未挿入の値を渡すと状態が壊れる）。O(B)"""
         node = 0
         self.count[node] -= 1
         for i in range(self.bit_length - 1, -1, -1):
@@ -108,6 +114,7 @@ class BinaryTrie:
             self.count[node] -= 1
 
     def __contains__(self, x: int) -> bool:
+        """xが含まれるかを返す。O(B)"""
         node = 0
         for i in range(self.bit_length - 1, -1, -1):
             b = (x >> i) & 1
@@ -118,7 +125,7 @@ class BinaryTrie:
         return True
 
     def max_xor(self, x: int):
-        """集合内の要素yについて x^y の最大値を返す。集合が空ならNone。"""
+        """集合内の要素yについて x^y の最大値を返す。集合が空ならNone。O(B)"""
         if self.count[0] == 0:
             return None
         node = 0
@@ -135,7 +142,7 @@ class BinaryTrie:
         return res
 
     def min_xor(self, x: int):
-        """集合内の要素yについて x^y の最小値を返す。集合が空ならNone。"""
+        """集合内の要素yについて x^y の最小値を返す。集合が空ならNone。O(B)"""
         if self.count[0] == 0:
             return None
         node = 0

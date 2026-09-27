@@ -2,7 +2,7 @@ import sys
 
 
 class SCC:
-    """強連結成分分解（Kosaraju法）
+    """強連結成分分解（Kosaraju法）。O(N + M)（Nは頂点数、Mは辺数）
 
     使い方:
         scc = SCC(4)
@@ -15,15 +15,18 @@ class SCC:
     """
 
     def __init__(self, n):
+        """頂点数nのグラフを作る。O(n)"""
         self.n = n
         self.edge = [[] for _ in range(n)]
         self.redge = [[] for _ in range(n)]
 
     def connect(self, frm, to):
+        """有向辺frm->toを追加する。O(1)"""
         self.edge[frm].append(to)
         self.redge[to].append(frm)
 
     def dfs1(self):
+        """1回目のDFSで帰りがけ順を求める。O(N + M)"""
         backorder = []
         bef = [False for _ in range(self.n)]
 
@@ -43,6 +46,7 @@ class SCC:
         return backorder
 
     def dfs2(self, reverse_order):
+        """逆辺グラフを帰りがけ順の逆順にDFSし、強連結成分に分ける。O(N + M)"""
         bef = [False for _ in range(self.n)]
         grps = []
 
@@ -64,6 +68,7 @@ class SCC:
         return grps
 
     def solve(self):
+        """強連結成分のリストをトポロジカル順で返す。O(N + M)"""
         sys.setrecursionlimit(max(sys.getrecursionlimit(), self.n * 2 + 10))
         order = self.dfs1()
         grps = self.dfs2(order[::-1])

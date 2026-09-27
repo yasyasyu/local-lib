@@ -2,7 +2,8 @@ def euler_tour(G: list[list], root: int):
     """
     G:隣接リスト\\
     root:根\\
-    euler tourしてleft idとright idと深さのlistを返す
+    euler tourしてleft idとright idと深さのlistを返す\
+    計算量: O(N)
 
     使い方:
         # 0 -> 1, 2 ; 1 -> 3 という木

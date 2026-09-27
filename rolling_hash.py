@@ -16,6 +16,7 @@ class RollingHash:
     MOD = (1 << 61) - 1
 
     def __init__(self, s: str, base: int | None = None) -> None:
+        """文字列sから構築する。O(N)"""
         n = len(s)
         if base is None:
             base = random.randint(37, self.MOD - 1)
@@ -28,11 +29,11 @@ class RollingHash:
             self.pw[i + 1] = self.pw[i] * base % self.MOD
 
     def get(self, l: int, r: int) -> int:
-        """区間[l, r)のハッシュ値を返す。"""
+        """区間[l, r)のハッシュ値を返す。O(1)"""
         return (self.hash[r] - self.hash[l] * self.pw[r - l]) % self.MOD
 
     def lcp(self, a: int, b: int) -> int:
-        """位置a, bからそれぞれ始まる最長共通接頭辞の長さを返す。"""
+        """位置a, bからそれぞれ始まる最長共通接頭辞の長さを返す。O(log N)"""
         length = min(self.n - a, self.n - b)
         ok, ng = 0, length + 1
         while ng - ok > 1:
