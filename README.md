@@ -11,7 +11,7 @@
 
 | ファイル | 内容 |
 | --- | --- |
-| `union_find.py` | Union-Find（素集合データ構造） |
+| `union_find.py` | 改造用のUnion-Findのベース（普通に使うなら`atcoder.dsu`。改造の方針と改造ポイントをコメントで示している） |
 | `potential_union_find.py` | 重み付きUnion-Find |
 | `rollback_union_find.py` | rollback（undo）可能なUnion-Find |
 
