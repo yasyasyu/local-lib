@@ -3,6 +3,10 @@ class UnionFind:
 
     普通のUnion-Findとして使うなら`atcoder.dsu.DSU`を使う。このクラスは、Union-Findに
     情報を載せたり動きを変えたりする問題で、コピーして改造する土台として置いている。
+
+    ただし、次の2つは一般化したクラスがあるので、まずそちらで足りないかを考える:
+        - 集合ごとの値（下の方針1・2）: monoid_union_find.py の MonoidUnionFind（opとvを渡す）
+        - 要素間の重み（下の方針4）: potential_union_find.py の PotentialUnionFind（群をop / inv / eで渡す）
     そのため、改造しやすいように処理を最小限にし、改造する場所に「改造ポイント」のコメントを付けている。
 
     経路圧縮とunion by rankにより、find / merge / sameはならしO(α(N))（実質定数）。
@@ -29,7 +33,7 @@ class UnionFind:
         4. 要素間の差（ポテンシャル・重み）を持つ
            findの改造ポイント(C)で、親を根に付け替える前に「weight[x] += weight[元の親]」とする
            （再帰で元の親を先に根へ付け替えておけば、weight[元の親]は元の親から根までの差になる）。
-           完成版はpotential_union_find.pyを参照。二部グラフ判定・偶奇の管理は、重みをmod 2で持てばよい。
+           任意の群で一般化した完成版がpotential_union_find.py。二部グラフ判定・偶奇の管理は、重みをmod 2で持てばよい。
 
         5. mergeを取り消せるようにする（オフラインの辺削除、分割統治など）
            経路圧縮をやめ（findの(C)を消して親を辿るだけにする）、mergeで書き換える前の値を履歴に積む。

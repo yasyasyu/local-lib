@@ -12,7 +12,8 @@
 | ファイル | 内容 |
 | --- | --- |
 | `union_find.py` | 改造用のUnion-Findのベース（普通に使うなら`atcoder.dsu`。改造の方針と改造ポイントをコメントで示している） |
-| `potential_union_find.py` | 重み付きUnion-Find |
+| `potential_union_find.py` | 重み付きUnion-Find（重みは任意の群。既定は整数の足し算。XOR・mod 2・非可換な群も可） |
+| `monoid_union_find.py` | 集合ごとにモノイドの値を載せたUnion-Find（要素数・和・最小値・辺の本数などを`op`と`v`で指定） |
 | `rollback_union_find.py` | rollback（undo）可能なUnion-Find |
 
 ### データ構造（集合・ヒープなど）
