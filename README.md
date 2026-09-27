@@ -29,6 +29,7 @@
 | `trie.py` | 文字列Trie木、およびXORクエリ用のBinaryTrie |
 | `fenwick_tree_2d.py` | 2次元Fenwick Tree（点更新・矩形和取得。列方向に`ac-library-python`の`FenwickTree`を使う） |
 | `segment_tree_2d.py` | 2次元セグメント木（点更新・矩形集約、任意の可換モノイド用。列方向に`ac-library-python`の`SegTree`を使う） |
+| `dual_segtree.py` | 双対セグメント木（区間作用・1点取得。`LazySegTree`から区間集約を除いたもの。`ac-library-python`には無いため実装） |
 
 セグメント木・遅延セグメント木・Fenwick Tree（1次元）など`ac-library-python`にある機能は実装せず、
 [USAGE_SegTree.md](USAGE_SegTree.md)に使い方一覧をまとめている。`fenwick_tree_2d.py`と
