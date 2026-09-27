@@ -41,6 +41,13 @@ class TestEratosthenes(unittest.TestCase):
             expected = [p for p in range(2, n + 1) if is_prime(p)]
             self.assertEqual(sorted(Eratosthenes(n)), expected, f"n={n}")
 
+    def test_small_n_has_no_primes(self):
+        self.assertEqual(Eratosthenes(0), [])
+        self.assertEqual(Eratosthenes(1), [])
+
+    def test_ascending_order(self):
+        self.assertEqual(Eratosthenes(30), [2, 3, 5, 7, 11, 13, 17, 19, 23, 29])
+
 
 class TestPrimeFactorize(unittest.TestCase):
     def test_factorize_composite(self):

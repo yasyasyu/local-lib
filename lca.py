@@ -35,23 +35,23 @@ class LCA:
         self.doubling = Doubling(N, N, lambda x: parent[x])
 
     def query(self, u: int, v: int) -> int:
-        """頂点uとvの最小共通祖先を返す。O(log^2 N)（二分探索の各ステップでDoubling.getがO(log N)）"""
+        """頂点uとvの最小共通祖先を返す。O(log N)"""
         if self.depth[u] < self.depth[v]:
             u, v = v, u
+        # 深い方のuを、vと同じ深さまで持ち上げる
         u = self.doubling.get(u, self.depth[u] - self.depth[v])
         if u == v:
             return u
 
-        ok, ng = 0, self.depth[u] + 1
-        while ng - ok > 1:
-            mid = (ok + ng) // 2
-            if self.doubling.get(u, mid) != self.doubling.get(v, mid):
-                ok = mid
-            else:
-                ng = mid
+        # 2^i個上の祖先が異なる間だけ、大きいiから順に両方を持ち上げる。
+        # 最後にu, vはLCAの直下の子になっている
+        table = self.doubling.doubling_table
+        for i in range(len(table) - 1, -1, -1):
+            if table[i][u] != table[i][v]:
+                u, v = table[i][u], table[i][v]
 
-        return self.doubling.get(u, ng)
+        return table[0][u]
 
     def distance(self, u: int, v: int) -> int:
-        """頂点uとvの間の距離（辺数）を返す。O(log^2 N)"""
+        """頂点uとvの間の距離（辺数）を返す。O(log N)"""
         return self.depth[u] + self.depth[v] - 2 * self.depth[self.query(u, v)]

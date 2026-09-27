@@ -19,20 +19,20 @@ def divisors(n) -> list[int]:
 
 
 def Eratosthenes(N) -> list[int]:
-    """N以下の素数を列挙する（エラトステネスの篩）。O(N π(sqrt(N)))（sqrt(N)以下の素数ごとにリスト全体を作り直すため、通常の篩のO(N log log N)より遅い）
+    """N以下の素数を昇順に列挙する（エラトステネスの篩）。O(N log log N)
     Eratosthenes(30)               # [2, 3, 5, 7, ..., 29]（30以下の素数）
 
     https://github.com/yasyasyu/local-lib/blob/master/_math.py
     """
-    prime = [2]
-    data = [i + 1 for i in range(2, N, 2)]
-    while data:
-        p = data[0]
-        prime.append(p)
-        data = [e for e in data if (e % p != 0)]
-        if int(N**0.5) <= p:
-            return prime + data
-    return prime
+    if N < 2:
+        return []
+    is_prime = bytearray([1]) * (N + 1)
+    is_prime[0] = is_prime[1] = 0
+    for p in range(2, math.isqrt(N) + 1):
+        if is_prime[p]:
+            # p*p未満のpの倍数は、より小さい素数ですでにふるわれている
+            is_prime[p * p :: p] = bytes(len(range(p * p, N + 1, p)))
+    return [i for i in range(N + 1) if is_prime[i]]
 
 
 def prime_factorize(N) -> dict[int, int]:
