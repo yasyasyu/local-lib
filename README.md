@@ -42,7 +42,7 @@
 
 | ファイル | 内容 |
 | --- | --- |
-| `scc.py` | 強連結成分分解（Kosaraju法） |
+| `strongly_connected_components.py` | 強連結成分分解（Kosaraju法） |
 | `topological_sort.py` | トポロジカルソート |
 | `kruskal.py` | クラスカル法による最小全域木（`union_find.py`に依存） |
 | `dijkstra.py` | 単一始点最短路（ダイクストラ法） |
