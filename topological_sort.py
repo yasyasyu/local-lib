@@ -1,7 +1,7 @@
 from collections import deque
 
 
-def topological_sort(es):
+def topological_sort(directed_graph):
     """トポロジカルソート（Kahn法）。O(N + M)（Nは頂点数、Mは辺数）
 
     閉路がある場合、閉路に関わる頂点は結果に含まれない（len(order) < Nで閉路の有無を判定できる）。
@@ -19,10 +19,10 @@ def topological_sort(es):
 
     https://github.com/yasyasyu/local-lib/blob/master/topological_sort.py
     """
-    V = len(es)
+    V = len(directed_graph)
     deg = [0] * V
     for i in range(V):
-        for e in es[i]:
+        for e in directed_graph[i]:
             deg[e] += 1
     d = deque()
     for i, deg_i in enumerate(deg):
@@ -32,7 +32,7 @@ def topological_sort(es):
     while d:
         v = d.popleft()
         order.append(v)
-        for i in es[v]:
+        for i in directed_graph[v]:
             deg[i] -= 1
             if deg[i] == 0:
                 d.append(i)
