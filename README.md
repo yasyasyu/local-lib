@@ -88,6 +88,7 @@
 | `cumulative_sum_2d.py` | 2次元累積和 |
 | `compress.py` | 座標圧縮 |
 | `cmp_sort.py` | 比較関数を渡せる安定ソート（PyPyでは`cmp_to_key`より数倍速いマージソート） |
+| `comparators.py` | 比較関数の部品集（分数の比較`frac_cmp`、連結の比較`concat_cmp`、交換論法`exchange_cmp`、組み合わせ用の`key_cmp`/`reverse_cmp`/`then_cmp`、順序の検査`check_cmp`） |
 | `array_binary_search.py` | 配列上の二分探索（比較関数を渡せる`lower_bound`/`upper_bound`、述語で区切る`partition_point`） |
 | `rle.py` | ランレングス圧縮 |
 | `rotate90.py` | グリッドの90度回転・転置 |
