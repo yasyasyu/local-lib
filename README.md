@@ -114,8 +114,14 @@
 | ファイル | 内容 |
 | --- | --- |
 | `deciding_binary_search.py` | 答えで二分探索するテンプレート（`is_ok`は問題ごとに書き換える。配列上の二分探索は`array_binary_search.py`） |
+| `experiment.py` | 考察のための実験用の道具（小さい入力の全列挙・操作の全探索・表示・全探索との比較。ローカル専用） |
+| `experiment_template.py` | 実験用テンプレート（`d:\work`で`.\exp.ps1`を実行すると`exp.py`として作られる。`brute`/`solve`を書き換えて使う） |
+| `review.py` | 考察の振り返りノート（`REVIEW_NOTES.md`）に記録するスクリプト（`d:\work`で`.\review.ps1`から使う。解き直す日の管理・型ごとの集計） |
 | `add_treeview.py` | セグ木風クラスに`__str__`でツリー表示を追加するデコレータ |
 | `_parser.py` | 四則演算パーサー |
+
+考察が必要な問題（ARC の A・B など）の進め方と、実験用の道具の使い方は
+[THINKING_GUIDE.md](THINKING_GUIDE.md) にまとめている。
 
 各モジュールに対応するテストは `tests/test_*.py` にあります。以下でまとめて実行できます。
 
