@@ -31,6 +31,8 @@
 | `fenwick_tree_2d.py` | 2次元Fenwick Tree（点更新・矩形和取得。列方向に`ac-library-python`の`FenwickTree`を使う） |
 | `segment_tree_2d.py` | 2次元セグメント木（点更新・矩形集約、任意の可換モノイド用。列方向に`ac-library-python`の`SegTree`を使う） |
 | `dual_segtree.py` | 双対セグメント木（区間作用・1点取得。`LazySegTree`から区間集約を除いたもの。`ac-library-python`には無いため実装） |
+| `sparse_table.py` | Sparse Table（変更のない配列の区間min/max/gcdなどをO(1)で取得。冪等な演算のみ） |
+| `wavelet_matrix.py` | ウェーブレット行列（変更のない整数列の区間k番目・値の範囲の個数・前後の値をO(log σ)で取得） |
 
 セグメント木・遅延セグメント木・Fenwick Tree（1次元）など`ac-library-python`にある機能は実装せず、
 [USAGE_SegTree.md](USAGE_SegTree.md)に使い方一覧をまとめている。`fenwick_tree_2d.py`と
@@ -51,12 +53,19 @@
 | `euler_tour.py` | オイラーツアー（深さ・部分木の管理） |
 | `doubling.py` | ダブリング（写像の高速反復適用） |
 | `lca.py` | 最小共通祖先（LCA、`doubling.py`に依存） |
+| `tree_order.py` | 再帰を使わない木の走査（BFS順と親。木DPの土台） |
+| `rerooting.py` | 全方位木DP（`op`・`e`・`add_vertex`・`add_edge`を渡す。`tree_order.py`に依存） |
+| `hld.py` | HL分解（パス・部分木を列の区間にする。LCA・距離・k個上の祖先も。`tree_order.py`に依存） |
+| `lowlink.py` | lowlinkによる橋・関節点の列挙（再帰なし、多重辺対応） |
+| `zero_one_bfs.py` | 0-1 BFS（辺の重みが0か1のグラフの単一始点最短路） |
 
 ### 数学
 
 | ファイル | 内容 |
 | --- | --- |
 | `_math.py` | 約数列挙・素数篩・素因数分解・区間篩 |
+| `pollard_rho.py` | 高速な素数判定（Miller-Rabin）・素因数分解（Pollardのρ法）。10^18程度まで |
+| `smallest_prime_factor.py` | 最小素因数の篩（N以下の数の素因数分解・約数列挙をO(log x)で。たくさんの数を分解するとき用） |
 | `isqrt.py` | 整数の平方根（floor） |
 | `combinatorics.py` | mod付き組合せ論（階乗・逆元テーブルによるnCr等） |
 | `matrix_pow.py` | 行列累乗（繰り返し二乗法） |
@@ -67,6 +76,9 @@
 | --- | --- |
 | `rolling_hash.py` | ローリングハッシュ |
 | `lcs.py` | 最長共通部分列（LCS） |
+| `manacher.py` | Manacher法（各中心の最長回文。偶数長も対応） |
+| `kmp.py` | KMP法（失敗関数・パターン検索・最小周期） |
+| `aho_corasick.py` | Aho-Corasick法（複数パターンの同時検索・出現回数。状態遷移はDPにも使える） |
 
 ### 幾何
 
@@ -87,6 +99,8 @@
 | --- | --- |
 | `cumulative_sum_2d.py` | 2次元累積和 |
 | `compress.py` | 座標圧縮 |
+| `lis.py` | 最長増加部分列（各要素で終わる長さ・復元。狭義/広義を選べる） |
+| `inversion_count.py` | 転倒数（マージソートで数える。座標圧縮不要） |
 | `cmp_sort.py` | 比較関数を渡せる安定ソート（PyPyでは`cmp_to_key`より数倍速いマージソート） |
 | `comparators.py` | 比較関数の部品集（分数の比較`frac_cmp`、連結の比較`concat_cmp`、交換論法`exchange_cmp`、組み合わせ用の`key_cmp`/`reverse_cmp`/`then_cmp`、順序の検査`check_cmp`） |
 | `array_binary_search.py` | 配列上の二分探索（比較関数を渡せる`lower_bound`/`upper_bound`、述語で区切る`partition_point`） |
