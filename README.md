@@ -73,6 +73,7 @@
 | ファイル | 内容 |
 | --- | --- |
 | `geometry.py` | 凸包・線分交差判定・点と多角形の内外判定 |
+| `arg_sort.py` | 偏角ソート（整数の外積のみで誤差なし。始線の向き・始線ちょうどの点を先頭/末尾にするかを指定可。比較関数`arg_cmp`も提供。`cmp_sort.py`に依存） |
 
 ### クエリ処理テクニック
 
@@ -86,6 +87,8 @@
 | --- | --- |
 | `cumulative_sum_2d.py` | 2次元累積和 |
 | `compress.py` | 座標圧縮 |
+| `cmp_sort.py` | 比較関数を渡せる安定ソート（PyPyでは`cmp_to_key`より数倍速いマージソート） |
+| `array_binary_search.py` | 配列上の二分探索（比較関数を渡せる`lower_bound`/`upper_bound`、述語で区切る`partition_point`） |
 | `rle.py` | ランレングス圧縮 |
 | `rotate90.py` | グリッドの90度回転・転置 |
 | `grid_trim.py` | グリッドの余白トリム |
@@ -95,7 +98,7 @@
 
 | ファイル | 内容 |
 | --- | --- |
-| `deciding_binary_search.py` | 二分探索テンプレート（`is_ok`は問題ごとに書き換える） |
+| `deciding_binary_search.py` | 答えで二分探索するテンプレート（`is_ok`は問題ごとに書き換える。配列上の二分探索は`array_binary_search.py`） |
 | `add_treeview.py` | セグ木風クラスに`__str__`でツリー表示を追加するデコレータ |
 | `_parser.py` | 四則演算パーサー |
 
