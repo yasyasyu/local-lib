@@ -104,16 +104,16 @@ class PotentialUnionFind:
         """aの属する集合の要素数を返す。ならしO(α(N))"""
         return -self.parent[self.root(a)]
 
-    def groups(self) -> typing.List[typing.List[int]]:
+    def groups(self) -> list[list[int]]:
         """集合ごとの要素のリストを返す。O(N α(N))"""
-        G = [[] for _ in range(self.N)]
+        G: list[list[int]] = [[] for _ in range(self.N)]
         for i in range(self.N):
             G[self.root(i)].append(i)
         return [g for g in G if g]
 
-    def groups_index(self) -> typing.Tuple[typing.List[typing.List[int]], typing.List[int]]:
+    def groups_index(self) -> tuple[list[list[int]], list[int]]:
         """集合ごとの要素のリストと、根から集合の番号への対応を返す。O(N α(N))"""
-        G = [[] for _ in range(self.N)]
+        G: list[list[int]] = [[] for _ in range(self.N)]
         for i in range(self.N):
             G[self.root(i)].append(i)
         cnt = 0
@@ -126,9 +126,9 @@ class PotentialUnionFind:
                 cnt += 1
         return GG, I
 
-    def group_size(self) -> typing.List[int]:
+    def group_size(self) -> list[int]:
         """各集合の要素数のリストを返す。O(N α(N))"""
-        G = [[] for _ in range(self.N)]
+        G: list[list[int]] = [[] for _ in range(self.N)]
         for i in range(self.N):
             G[self.root(i)].append(i)
         return [len(g) for g in G if g]

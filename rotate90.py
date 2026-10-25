@@ -1,4 +1,9 @@
-def rotate90(grid):
+from typing import Iterator, Sequence, TypeVar
+
+T = TypeVar("T")
+
+
+def rotate90(grid: Sequence[Sequence[T]]) -> Iterator[list[list[T]]]:
     """gridを90度ずつ回転したものを4回分(360度分)順に返すジェネレータ。1回分ごとにO(HW)
 
     使い方:
@@ -8,11 +13,12 @@ def rotate90(grid):
     https://github.com/yasyasyu/local-lib/blob/master/rotate90.py
     """
     for _ in range(4):
-        grid = [list(g) for g in zip(*grid[::-1])]
-        yield grid
+        rotated = [list(g) for g in zip(*grid[::-1])]
+        yield rotated
+        grid = rotated
 
 
-def transpose(grid):
+def transpose(grid: Sequence[Sequence[T]]) -> list[list[T]]:
     """gridを転置する。O(HW)
 
     使い方:

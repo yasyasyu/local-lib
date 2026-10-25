@@ -1,4 +1,4 @@
-def binary_search(ng, ok):
+def binary_search(ng: int, ok: int) -> int:
     """めぐる式二分探索のテンプレート。
 
     ng: is_ok が False になる値、ok: is_ok が True になる値(順は逆でもよい)。
@@ -12,7 +12,7 @@ def binary_search(ng, ok):
     https://github.com/yasyasyu/local-lib/blob/master/deciding_binary_search.py
     """
 
-    def is_ok(mid):
+    def is_ok(mid: int) -> bool:
         if mid > 0:
             return True
         else:

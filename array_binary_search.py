@@ -1,7 +1,16 @@
 from bisect import bisect_left, bisect_right
+from typing import Callable, Sequence, TypeVar
+
+T = TypeVar("T")
 
 
-def lower_bound(a, x, cmp=None, lo=0, hi=None):
+def lower_bound(
+    a: Sequence[T],
+    x: T,
+    cmp: Callable[[T, T], int] | None = None,
+    lo: int = 0,
+    hi: int | None = None,
+) -> int:
     """ソート済み配列 a[lo:hi] で、x より前に来ない最初の要素の添字を返す（C++のlower_bound）。O(log N) 回 cmp を呼ぶ
 
     cmp: a のソートに使った比較関数（cmp_sort.sort_by_cmp と同じ約束）。
@@ -30,7 +39,13 @@ def lower_bound(a, x, cmp=None, lo=0, hi=None):
     return lo
 
 
-def upper_bound(a, x, cmp=None, lo=0, hi=None):
+def upper_bound(
+    a: Sequence[T],
+    x: T,
+    cmp: Callable[[T, T], int] | None = None,
+    lo: int = 0,
+    hi: int | None = None,
+) -> int:
     """ソート済み配列 a[lo:hi] で、x より後ろに来る最初の要素の添字を返す（C++のupper_bound）。O(log N) 回 cmp を呼ぶ
 
     cmp: a のソートに使った比較関数（cmp_sort.sort_by_cmp と同じ約束）。
@@ -57,7 +72,12 @@ def upper_bound(a, x, cmp=None, lo=0, hi=None):
     return lo
 
 
-def partition_point(a, pred, lo=0, hi=None):
+def partition_point(
+    a: Sequence[T],
+    pred: Callable[[T], bool],
+    lo: int = 0,
+    hi: int | None = None,
+) -> int:
     """a[lo:hi] で pred が False になる最初の添字を返す（C++のpartition_point）。O(log N) 回 pred を呼ぶ
 
     pred は a[lo:hi] の前半で True、後半で False になっていること。

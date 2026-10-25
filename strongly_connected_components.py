@@ -14,23 +14,23 @@ class StronglyConnectedComponents:
     https://github.com/yasyasyu/local-lib/blob/master/strongly_connected_components.py
     """
 
-    def __init__(self, n):
+    def __init__(self, n: int) -> None:
         """頂点数nのグラフを作る。O(n)"""
         self.n = n
-        self.edge = [[] for _ in range(n)]
-        self.reverse_edge = [[] for _ in range(n)]
+        self.edge: list[list[int]] = [[] for _ in range(n)]
+        self.reverse_edge: list[list[int]] = [[] for _ in range(n)]
 
-    def add_edge(self, u, v):
+    def add_edge(self, u: int, v: int) -> None:
         """有向辺u->vを追加する。O(1)"""
         self.edge[u].append(v)
         self.reverse_edge[v].append(u)
 
-    def _postorder(self):
+    def _postorder(self) -> list[int]:
         """1回目のDFSで帰りがけ順を求める。O(N + M)"""
-        postorder = []
+        postorder: list[int] = []
         visited = [False] * self.n
 
-        def dfs(v):
+        def dfs(v: int) -> None:
             visited[v] = True
             for to in self.edge[v]:
                 if visited[to]:
@@ -45,12 +45,12 @@ class StronglyConnectedComponents:
 
         return postorder
 
-    def _collect(self, order):
+    def _collect(self, order: list[int]) -> list[list[int]]:
         """逆辺グラフをorderの順にDFSし、強連結成分に分ける。O(N + M)"""
         visited = [False] * self.n
-        groups = []
+        groups: list[list[int]] = []
 
-        def dfs(v, group):
+        def dfs(v: int, group: list[int]) -> None:
             visited[v] = True
             group.append(v)
             for to in self.reverse_edge[v]:
@@ -61,13 +61,13 @@ class StronglyConnectedComponents:
         for v in order:
             if visited[v]:
                 continue
-            group = []
+            group: list[int] = []
             dfs(v, group)
             groups.append(group)
 
         return groups
 
-    def components(self):
+    def components(self) -> list[list[int]]:
         """強連結成分のリストをトポロジカル順で返す。O(N + M)"""
         sys.setrecursionlimit(max(sys.getrecursionlimit(), self.n * 2 + 10))
         postorder = self._postorder()

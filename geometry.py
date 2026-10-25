@@ -1,4 +1,10 @@
-def cross(o, a, b):
+from typing import Iterable, Sequence
+
+# 点 (x, y)。座標は整数でも小数でもよい
+Point = tuple[float, float]
+
+
+def cross(o: Point, a: Point, b: Point) -> float:
     """ベクトルOA, OBの外積 (OA x OB) を返す。O(1)
 
     正: OからみてBがAより反時計回り側、負: 時計回り側、0: 一直線上。
@@ -8,7 +14,7 @@ def cross(o, a, b):
     return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
 
 
-def ccw(a, b, c):
+def ccw(a: Point, b: Point, c: Point) -> int:
     """3点a, b, cの向きを判定する。1: 反時計回り, -1: 時計回り, 0: 一直線上。O(1)
 
     https://github.com/yasyasyu/local-lib/blob/master/geometry.py
@@ -21,7 +27,7 @@ def ccw(a, b, c):
     return 0
 
 
-def convex_hull(points):
+def convex_hull(points: Iterable[Point]) -> list[Point]:
     """点集合の凸包を、反時計回りの頂点列として返す（Andrewのモノトーンチェーン法）。O(N log N)
     convex_hull([(0, 0), (1, 1), (1, 0), (0, 1), (0.5, 0.5)])
     # -> [(0, 0), (1, 0), (1, 1), (0, 1)]（反時計回り、内部の点は除かれる）
@@ -35,13 +41,13 @@ def convex_hull(points):
     if len(pts) <= 1:
         return pts
 
-    lower = []
+    lower: list[Point] = []
     for p in pts:
         while len(lower) >= 2 and cross(lower[-2], lower[-1], p) <= 0:
             lower.pop()
         lower.append(p)
 
-    upper = []
+    upper: list[Point] = []
     for p in reversed(pts):
         while len(upper) >= 2 and cross(upper[-2], upper[-1], p) <= 0:
             upper.pop()
@@ -50,7 +56,7 @@ def convex_hull(points):
     return lower[:-1] + upper[:-1]
 
 
-def on_segment(a, b, p):
+def on_segment(a: Point, b: Point, p: Point) -> bool:
     """点a, b, pが一直線上にある前提で、pが線分ab上（端点含む）にあるかを返す。O(1)
 
     https://github.com/yasyasyu/local-lib/blob/master/geometry.py
@@ -58,7 +64,7 @@ def on_segment(a, b, p):
     return min(a[0], b[0]) <= p[0] <= max(a[0], b[0]) and min(a[1], b[1]) <= p[1] <= max(a[1], b[1])
 
 
-def segments_intersect(p1, p2, p3, p4):
+def segments_intersect(p1: Point, p2: Point, p3: Point, p4: Point) -> bool:
     """線分p1p2と線分p3p4が交差する（端点や一直線上での接触も含む）かを返す。O(1)
     segments_intersect((0, 0), (2, 2), (0, 2), (2, 0))  # True（交差する）
 
@@ -86,7 +92,7 @@ def segments_intersect(p1, p2, p3, p4):
     return False
 
 
-def point_in_polygon(point, polygon):
+def point_in_polygon(point: Point, polygon: Sequence[Point]) -> int:
     """点と多角形（頂点列、時計回り/反時計回りどちらでも可）の位置関係を判定する。O(N)（Nは多角形の頂点数）
     point_in_polygon((1, 1), [(0, 0), (2, 0), (2, 2), (0, 2)])
     # 1: 内部, 0: 辺上, -1: 外部

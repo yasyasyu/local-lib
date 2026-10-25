@@ -1,4 +1,9 @@
-def sort_by_cmp(a, cmp):
+from typing import Callable, Sequence, TypeVar
+
+T = TypeVar("T")
+
+
+def sort_by_cmp(a: Sequence[T], cmp: Callable[[T, T], int]) -> list[T]:
     """比較関数を渡せる安定ソート。ソート済みの新しいリストを返す（aは変更しない）。O(N log N) 回 cmp を呼ぶ
 
     cmp(x, y): x を y より前に置くとき負、後ろに置くとき正、どちらでもよいとき0を返す
@@ -29,7 +34,7 @@ def sort_by_cmp(a, cmp):
     #     長さ2の区間を2つずつマージ → 長さ4のソート済み区間ができる
     #     ...（width を倍にしていき、width >= n で全体がソート済み）
 
-    def merge(src, dst, lo, mid, hi):
+    def merge(src: list[T], dst: list[T], lo: int, mid: int, hi: int) -> None:
         """ソート済みの src[lo:mid] と src[mid:hi] をマージして dst[lo:hi] に書き込む"""
         i, j, k = lo, mid, lo
         while i < mid and j < hi:
@@ -53,7 +58,7 @@ def sort_by_cmp(a, cmp):
 
     n = len(a)
     src = list(a)  # 長さ width ごとの区間がそれぞれソート済みの配列
-    dst = [None] * n  # マージ結果の書き込み先（作業用の配列）
+    dst = src[:]  # マージ結果の書き込み先（作業用の配列。中身は上書きされる）
     width = 1
     while width < n:
         # 隣り合う2区間 [lo, mid) と [mid, hi) をマージする（末尾の区間は短いことがある）

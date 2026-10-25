@@ -16,9 +16,9 @@ class Trie:
     class _Node:
         __slots__ = ("children", "is_end", "count")
 
-        def __init__(self):
+        def __init__(self) -> None:
             """空のノードを作る。O(1)"""
-            self.children = {}
+            self.children: dict[str, Trie._Node] = {}
             self.is_end = False
             self.count = 0  # このノードを通過する（接頭辞に持つ）単語の数
 
@@ -37,7 +37,7 @@ class Trie:
             node.count += 1
         node.is_end = True
 
-    def _find(self, s: str):
+    def _find(self, s: str) -> "Trie._Node | None":
         """sに対応するノードを返す。無ければNone。O(|s|)"""
         node = self.root
         for c in s:
@@ -124,7 +124,7 @@ class BinaryTrie:
             node = nxt
         return True
 
-    def max_xor(self, x: int):
+    def max_xor(self, x: int) -> int | None:
         """集合内の要素yについて x^y の最大値を返す。集合が空ならNone。O(B)"""
         if self.count[0] == 0:
             return None
@@ -141,7 +141,7 @@ class BinaryTrie:
                 node = self.children[node][b]
         return res
 
-    def min_xor(self, x: int):
+    def min_xor(self, x: int) -> int | None:
         """集合内の要素yについて x^y の最小値を返す。集合が空ならNone。O(B)"""
         if self.count[0] == 0:
             return None

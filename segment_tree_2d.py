@@ -1,3 +1,5 @@
+from typing import Any, Callable
+
 from atcoder.segtree import SegTree
 
 
@@ -26,7 +28,14 @@ class SegmentTree2D:
     https://github.com/yasyasyu/local-lib/blob/master/segment_tree_2d.py
     """
 
-    def __init__(self, h: int, w: int, op, e, v=None) -> None:
+    def __init__(
+        self,
+        h: int,
+        w: int,
+        op: Callable[[Any, Any], Any],
+        e: Any,
+        v: list[list[Any]] | None = None,
+    ) -> None:
         """H×Wで構築する。vを渡せばその値で初期化する。O(HW)"""
         self.h = h
         self.w = w
@@ -38,7 +47,7 @@ class SegmentTree2D:
             self.size_h *= 2
 
         # tree[i]: 行方向の外側セグ木のノードiが担当する行範囲に対応する、列方向のSegTree
-        self.tree = [None] * (2 * self.size_h)
+        self.tree: list[Any] = [None] * (2 * self.size_h)
         for x in range(self.size_h):
             row = v[x] if v is not None and x < h else [e] * w
             self.tree[x + self.size_h] = SegTree(op, e, list(row))
@@ -48,11 +57,11 @@ class SegmentTree2D:
             merged = [op(left.get(y), right.get(y)) for y in range(w)]
             self.tree[i] = SegTree(op, e, merged)
 
-    def get(self, x: int, y: int):
+    def get(self, x: int, y: int) -> Any:
         """座標(x, y)の現在値を返す。O(1)"""
         return self.tree[x + self.size_h].get(y)
 
-    def update(self, x: int, y: int, val) -> None:
+    def update(self, x: int, y: int, val: Any) -> None:
         """座標(x, y)の値をvalに更新する。O(log H log W)"""
         i = x + self.size_h
         self.tree[i].set(y, val)
@@ -62,7 +71,7 @@ class SegmentTree2D:
             self.tree[i].set(y, self.op(left.get(y), right.get(y)))
             i //= 2
 
-    def query(self, x1: int, y1: int, x2: int, y2: int):
+    def query(self, x1: int, y1: int, x2: int, y2: int) -> Any:
         """半開矩形[x1, x2) x [y1, y2)の集約値を返す。O(log H log W)"""
         l = x1 + self.size_h
         r = x2 + self.size_h

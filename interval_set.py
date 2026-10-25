@@ -19,36 +19,36 @@ class IntervalSet:
 
     def __init__(self) -> None:
         """空の集合を作る。O(1)"""
-        self.data = SortedMultiset()
-        self.interval = SortedMultiset()
+        self.data: SortedMultiset[tuple[int, int]] = SortedMultiset()
+        self.interval: SortedMultiset[int] = SortedMultiset()
         self._INF = 10**18
         self.total_count = 0  # 追加された要素の総数
         self.data.add((-(self._INF), -(self._INF)))
         self.data.add((self._INF, self._INF))
 
-    def __len__(self):
+    def __len__(self) -> int:
         """集合に含まれる整数の個数を返す。O(1)"""
         return self.total_count
 
-    def __str__(self):
+    def __str__(self) -> str:
         """区間の一覧を文字列で返す。O(K)"""
         return str([(l, r) for l, r in self.data if -self._INF < r and l < self._INF])
 
-    def _get_interval_index(self, x):
+    def _get_interval_index(self, x: int) -> int:
         """xを含むか、xより小さい最大の区間のインデックスを返す。O(√K)"""
         return self.data.index((x, self._INF)) - 1
 
-    def _get_interval(self, x):
+    def _get_interval(self, x: int) -> tuple[int, int]:
         """xを含むか、xより小さい最大の区間を返す。O(√K)"""
         idx = self._get_interval_index(x)
         return self.data[idx]
 
-    def contains(self, x):
+    def contains(self, x: int) -> bool:
         """xが集合に含まれるかチェック。O(√K)"""
         _, end = self._get_interval(x)
         return x < end
 
-    def add(self, x):
+    def add(self, x: int) -> bool:
         """xを集合に追加。既に含まれる場合はFalseを返す。O(√K)"""
         idx = self._get_interval_index(x)
         left_start, left_end = self.data[idx]
@@ -82,7 +82,7 @@ class IntervalSet:
         self.total_count += 1  # 要素数を増加
         return True
 
-    def insert(self, left, right):
+    def insert(self, left: int, right: int) -> None:
         """区間[left, right)を集合に追加。O((m + 1)√K)（mは結合される区間の数。各区間は一度しか消えないので、ならしO(√K)）"""
         if left >= right:
             return
@@ -119,17 +119,17 @@ class IntervalSet:
         # 追加された新しい要素数 = (新しい区間の長さ) - (削除された要素数)
         self.total_count += (right - left) - removed_count
 
-    def mex(self, x):
+    def mex(self, x: int) -> int:
         """x以上で集合に含まれない最小の整数を返す。O(√K)"""
         start, end = self._get_interval(x)
         return end if x < end else x
 
-    def expand(self, x):
+    def expand(self, x: int) -> tuple[int, int]:
         """xを含む区間を返す。含まれない場合は(x, x)を返す。O(√K)"""
         start, end = self._get_interval(x)
         return (start, end) if x < end else (x, x)
 
-    def remove(self, x):
+    def remove(self, x: int) -> bool:
         """xを集合から削除。含まれない場合はFalseを返す。O(√K)"""
         idx = self._get_interval_index(x)
         start, end = self.data[idx]
@@ -150,7 +150,7 @@ class IntervalSet:
         self.total_count -= 1  # 要素数を減少
         return True
 
-    def remove_interval(self, left, right):
+    def remove_interval(self, left: int, right: int) -> None:
         """区間[left, right)を集合から削除。O((m + 1)√K)（mは削除される区間の数。各区間は一度しか消えないので、ならしO(√K)）"""
         if left >= right:
             return

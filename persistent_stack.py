@@ -1,4 +1,4 @@
-from typing import Generic, Optional, Iterable, TypeVar, Union
+from typing import Generic, Iterable, Iterator, TypeVar
 
 T = TypeVar("T")
 
@@ -49,9 +49,9 @@ class PersistentStack(Generic[T]):
 
     def __init__(
         self,
-        value: Optional[Union[T, Iterable[T]]] = None,
-        prev: Optional["PersistentStack"] = None,
-    ):
+        value: T | Iterable[T] | None = None,
+        prev: "PersistentStack[T] | None" = None,
+    ) -> None:
         """
         スタックの初期化。O(1)（valueにイテラブルを渡した場合はO(N)）
 
@@ -71,7 +71,7 @@ class PersistentStack(Generic[T]):
             self.value = value
             self.prv = prev
 
-    def push(self, value) -> "PersistentStack":
+    def push(self, value: T) -> "PersistentStack[T]":
         """
         新しい値を積んだ新しいスタックを返します。O(1)
 
@@ -92,12 +92,12 @@ class PersistentStack(Generic[T]):
         """
         return self.prv if self.prv else self
 
-    def peek(self) -> Optional[T]:
+    def peek(self) -> T | None:
         """
         先頭要素を返します。O(1)
 
         Returns:
-            Optional[T]: 先頭要素（空ならNone）
+            T | None: 先頭要素（空ならNone）
         """
         return self.value
 
@@ -126,7 +126,7 @@ class PersistentStack(Generic[T]):
         """
         return f"PersistentStack({(self)})"
 
-    def __iter__(self) -> T:
+    def __iter__(self) -> Iterator[T]:
         """
         スタックを下から上へイテレートします。O(N)
 

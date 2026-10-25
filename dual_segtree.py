@@ -51,7 +51,7 @@ class DualSegTree:
         mapping: typing.Callable[[typing.Any, typing.Any], typing.Any],
         composition: typing.Callable[[typing.Any, typing.Any], typing.Any],
         id_: typing.Any,
-        v: typing.List[typing.Any],
+        v: list[typing.Any],
     ) -> None:
         """初期値vで構築する。O(N)"""
         self._mapping = mapping
@@ -81,7 +81,7 @@ class DualSegTree:
         self._push_path(p)
         return self._d[p]
 
-    def get_all(self) -> typing.List[typing.Any]:
+    def get_all(self) -> list[typing.Any]:
         """全要素の現在値をリストで返す。O(N)"""
         for k in range(1, self._size):
             self._push(k)

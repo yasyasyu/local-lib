@@ -18,18 +18,18 @@ class DeletableHeap:
     https://github.com/yasyasyu/local-lib/blob/master/deletable_heap.py
     """
 
-    def __init__(self, is_unique=False):
+    def __init__(self, is_unique: bool = False) -> None:
         """空のヒープを作る。is_unique=Trueなら同じ値を重複して持たない。O(1)"""
-        self.heap = []
-        self.d = dict()
+        self.heap: list[int] = []
+        self.d: dict[int, int] = dict()
         self.size = 0
         self.total = 0
         self.is_unique = is_unique
 
-    def __str__(self):
+    def __str__(self) -> str:
         """要素を並べた文字列を返す。O(n)"""
         result = []
-        cnt = defaultdict(int)
+        cnt: defaultdict[int, int] = defaultdict(int)
         for a in self.heap:
             if not a in self.d.keys():
                 continue
@@ -40,7 +40,7 @@ class DeletableHeap:
 
         return f"[{', '.join(result)}]"
 
-    def push(self, x):
+    def push(self, x: int) -> None:
         """xを追加する。O(log n)"""
         if x not in self.d:
             self.d[x] = 1
@@ -53,17 +53,17 @@ class DeletableHeap:
         self.total += x
         heapq.heappush(self.heap, x)
 
-    def get(self):
+    def get(self) -> int:
         """最小値を返す（削除しない）。O(1)"""
         return self.heap[0]
 
-    def pop(self):
+    def pop(self) -> int:
         """最小値を削除して返す。ならしO(log n)"""
         n = self.get()
         self.discard(n)
         return n
 
-    def discard(self, x):
+    def discard(self, x: int) -> bool:
         """xを1個削除する。xが無ければFalseを返す。ならしO(log n)"""
         if not self.is_exist(x):
             return False
@@ -78,7 +78,7 @@ class DeletableHeap:
             heapq.heappop(self.heap)
         return True
 
-    def erase(self, x, n=10**18):
+    def erase(self, x: int, n: int = 10**18) -> int:
         """xを最大n個削除し、削除した個数を返す。ならしO(log n)"""
         if not self.is_exist(x):
             return 0
@@ -95,22 +95,22 @@ class DeletableHeap:
             heapq.heappop(self.heap)
         return n
 
-    def is_exist(self, x):
+    def is_exist(self, x: int) -> bool:
         """xが含まれるかを返す。O(1)"""
         return x in self.d
 
-    def __len__(self):
+    def __len__(self) -> int:
         """要素数（重複込み）を返す。O(1)"""
         return self.size
 
-    def types(self):
+    def types(self) -> int:
         """値の種類数を返す。O(1)"""
         return len(self.d)
 
-    def sum(self):
+    def sum(self) -> int:
         """要素の総和を返す。O(1)"""
         return self.total
 
-    def count(self, x):
+    def count(self, x: int) -> int:
         """xの個数を返す。O(1)"""
         return self.d[x] if self.is_exist(x) else 0

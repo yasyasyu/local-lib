@@ -48,14 +48,14 @@ class UnionFind:
     https://github.com/yasyasyu/local-lib/blob/master/union_find.py
     """
 
-    def __init__(self, N) -> None:
+    def __init__(self, N: int) -> None:
         """要素数Nで初期化する。O(N)"""
         self.N = N
         self.parent = [-1] * N
         self.rank = [-1] * N
         # 改造ポイント: 集合ごとの値はここで用意する（例: self.size = [1] * N）
 
-    def find(self, x):
+    def find(self, x: int) -> int:
         """xの属する集合の代表元を返す。ならしO(α(N))"""
         if self.parent[x] == -1:
             return x
@@ -65,7 +65,7 @@ class UnionFind:
         self.parent[x] = root
         return root
 
-    def merge(self, x, y):
+    def merge(self, x: int, y: int) -> None:
         """xとyの属する集合を併合する。ならしO(α(N))"""
         x = self.find(x)
         y = self.find(y)
@@ -80,13 +80,13 @@ class UnionFind:
         self.parent[x] = y
         # 改造ポイント(B): 根xの集合が根yの集合に吸収された。xの情報をyにまとめる
 
-    def same(self, x, y):
+    def same(self, x: int, y: int) -> bool:
         """xとyが同じ集合に属するかを返す。ならしO(α(N))"""
         return self.find(x) == self.find(y)
 
-    def groups(self):
+    def groups(self) -> list[list[int]]:
         """集合ごとの要素のリストを返す。O(N α(N))"""
-        G = [[] for _ in range(self.N)]
+        G: list[list[int]] = [[] for _ in range(self.N)]
         for i in range(self.N):
             G[self.find(i)].append(i)
 

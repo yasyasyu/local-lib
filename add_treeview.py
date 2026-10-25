@@ -1,4 +1,9 @@
-def add_tree_view(target_class):
+from typing import Any, TypeVar
+
+T = TypeVar("T")
+
+
+def add_tree_view(target_class: type[T]) -> type[T]:
     """セグメント木のクラス(要素数を持つ self._size、内部配列を持つ self._d)にツリー状に整形した __str__ を追加するデコレータ。
 
     使い方:
@@ -35,7 +40,9 @@ def add_tree_view(target_class):
     https://github.com/yasyasyu/local-lib/blob/master/add_treeview.py
     """
 
-    def format_level(values, group_size, cell, total_width, z):
+    def format_level(
+        values: list[Any], group_size: int, cell: int, total_width: int, z: int
+    ) -> str:
         """1段分の行を組み立てる。O(total_width)
 
         group_size: この段の1ノードがまとめている葉の数
@@ -54,7 +61,7 @@ def add_tree_view(target_class):
 
         return "".join(row)
 
-    def view(self):
+    def view(self: Any) -> str:
         """木全体をツリー状に整形した文字列を返す。O(N z log N)"""
         n_leaves = self._size
         z = max((len(str(x)) for x in self._d[1 : n_leaves * 2]), default=1)

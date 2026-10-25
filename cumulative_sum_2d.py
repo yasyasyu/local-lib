@@ -1,4 +1,4 @@
-from typing import Any, List
+from typing import Any
 
 
 class CumulativeSum2D:
@@ -12,11 +12,11 @@ class CumulativeSum2D:
     https://github.com/yasyasyu/local-lib/blob/master/cumulative_sum_2d.py
     """
 
-    def __init__(self, array: List[List[Any]]) -> None:
+    def __init__(self, array: list[list[Any]]) -> None:
         """H×Wのarrayから構築する。O(HW)"""
         self.height: int = len(array)
         self.width: int = len(array[0])
-        self.summed_array: List[List[Any]] = [
+        self.summed_array: list[list[Any]] = [
             [0] * (self.width + 1) for _ in range(self.height + 1)
         ]
         for i in range(1, self.height + 1):

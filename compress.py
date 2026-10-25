@@ -1,4 +1,9 @@
-def compress(arr):
+from typing import Iterable, TypeVar
+
+T = TypeVar("T")
+
+
+def compress(arr: Iterable[T]) -> dict[T, int]:
     """座標圧縮。値からその順位(0-indexed)への辞書を返す。O(N log N)
 
     使い方:

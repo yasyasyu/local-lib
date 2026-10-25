@@ -1,4 +1,7 @@
-def LCS(S, T):
+from typing import Any, Sequence
+
+
+def LCS(S: Sequence[Any], T: Sequence[Any]) -> int:
     """Longest Common Subsequence（最長共通部分列の長さ）。O(NM)（N, MはS, Tの長さ）
 
     >>> LCS("AABBABCCCABC", "ABC")

@@ -1,4 +1,9 @@
+from typing import Callable, Iterable
+
 from .cmp_sort import sort_by_cmp
+
+# 整数座標の点 (x, y)。誤差なく比較するため整数に限る
+IntPoint = tuple[int, int]
 
 # 偏角ソートの方針
 #   - atan2 は使わない。浮動小数点の誤差で、偏角の近い点を区別できなくなる
@@ -9,7 +14,7 @@ from .cmp_sort import sort_by_cmp
 #     原点は専用のグループにして、先頭に置く。
 
 
-def _arg_group(p, dx, dy, closed):
+def _arg_group(p: IntPoint, dx: int, dy: int, closed: bool) -> int:
     """点 p が属するグループを返す。0: 原点、1: 始線から半周、2: 残りの半周。O(1)"""
     c = dx * p[1] - dy * p[0]  # 始線 × p
     if c > 0:
@@ -24,12 +29,14 @@ def _arg_group(p, dx, dy, closed):
     return 1 if (d > 0) == closed else 2
 
 
-def _cross_cmp(p, q):
+def _cross_cmp(p: IntPoint, q: IntPoint) -> int:
     """同じ半平面の中で、q が p より反時計回り側なら負。O(1)"""
     return p[1] * q[0] - p[0] * q[1]
 
 
-def make_arg_cmp(start=(1, 0), closed=True):
+def make_arg_cmp(
+    start: IntPoint = (1, 0), closed: bool = True
+) -> Callable[[IntPoint, IntPoint], int]:
     """偏角の比較関数を作る。arg_sort(points, start, closed) と同じ順序になる。O(1)
 
     start: 始線の向き（原点以外の整数ベクトル）。ここから反時計回りに並べる。
@@ -45,7 +52,7 @@ def make_arg_cmp(start=(1, 0), closed=True):
     """
     dx, dy = start
 
-    def cmp(p, q):
+    def cmp(p: IntPoint, q: IntPoint) -> int:
         gp = _arg_group(p, dx, dy, closed)
         gq = _arg_group(q, dx, dy, closed)
         if gp != gq:
@@ -66,7 +73,9 @@ def make_arg_cmp(start=(1, 0), closed=True):
 arg_cmp = make_arg_cmp()
 
 
-def arg_sort(points, start=(1, 0), closed=True):
+def arg_sort(
+    points: Iterable[IntPoint], start: IntPoint = (1, 0), closed: bool = True
+) -> list[IntPoint]:
     """点を偏角の昇順に並べた新しいリストを返す（安定ソート、整数座標のみで誤差なし）。O(N log N)
 
     points: 点 (x, y) のリスト。中心が原点でないときは、(x - cx, y - cy) にしてから渡す。
@@ -89,7 +98,7 @@ def arg_sort(points, start=(1, 0), closed=True):
     https://github.com/yasyasyu/local-lib/blob/master/arg_sort.py
     """
     dx, dy = start
-    groups = [[], [], []]
+    groups: list[list[IntPoint]] = [[], [], []]
     for p in points:
         groups[_arg_group(p, dx, dy, closed)].append(p)
     # 比較関数の中で半平面を判定するより、先に半平面ごとに分けてから外積だけでソートする方が速い

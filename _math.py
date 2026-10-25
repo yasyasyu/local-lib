@@ -1,7 +1,7 @@
 import math
 
 
-def divisors(n) -> list[int]:
+def divisors(n: int) -> list[int]:
     """nの約数を昇順に列挙する。O(sqrt(n))
     divisors(12)                  # [1, 2, 3, 4, 6, 12]
 
@@ -18,7 +18,7 @@ def divisors(n) -> list[int]:
     return lower + upper[::-1]
 
 
-def Eratosthenes(N) -> list[int]:
+def Eratosthenes(N: int) -> list[int]:
     """N以下の素数を昇順に列挙する（エラトステネスの篩）。O(N log log N)
     Eratosthenes(30)               # [2, 3, 5, 7, ..., 29]（30以下の素数）
 
@@ -35,7 +35,7 @@ def Eratosthenes(N) -> list[int]:
     return [i for i in range(N + 1) if is_prime[i]]
 
 
-def prime_factorize(N) -> dict[int, int]:
+def prime_factorize(N: int) -> dict[int, int]:
     """Nを素因数分解し、{素数: 指数} の defaultdict を返す。O(sqrt(N))
     prime_factorize(360)     # {2: 3, 3: 2, 5: 1}
 
@@ -43,7 +43,7 @@ def prime_factorize(N) -> dict[int, int]:
     """
     from collections import defaultdict
 
-    prime = defaultdict(int)
+    prime: defaultdict[int, int] = defaultdict(int)
     while N % 2 == 0:
         prime[2] += 1
         N //= 2
@@ -60,7 +60,7 @@ def prime_factorize(N) -> dict[int, int]:
     return prime
 
 
-def section_prime_sieve(L, R) -> list[bool]:
+def section_prime_sieve(L: int, R: int) -> list[bool]:
     """区間 [L, R] の各整数が素数かどうかを判定する（区間篩）。O(sqrt(R) log log R + (R - L) log log R)
     section_prime_sieve(14, 30)    # [L,R]の各値が素数かどうかのbool列
 

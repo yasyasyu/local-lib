@@ -36,7 +36,7 @@ class MonoidUnionFind:
     def __init__(
         self,
         op: typing.Callable[[typing.Any, typing.Any], typing.Any],
-        v: typing.List[typing.Any],
+        v: list[typing.Any],
     ) -> None:
         """各要素の初期値vで初期化する。O(N)"""
         self._op = op
@@ -85,9 +85,9 @@ class MonoidUnionFind:
         """xの属する集合の要素数を返す。ならしO(α(N))"""
         return -self._parent[self.find(x)]
 
-    def groups(self) -> typing.List[typing.List[int]]:
+    def groups(self) -> list[list[int]]:
         """集合ごとの要素のリストを返す。O(N α(N))"""
-        G = [[] for _ in range(self._n)]
+        G: list[list[int]] = [[] for _ in range(self._n)]
         for i in range(self._n):
             G[self.find(i)].append(i)
         return [g for g in G if g]

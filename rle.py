@@ -1,7 +1,10 @@
 from itertools import groupby
+from typing import Iterable, TypeVar
+
+T = TypeVar("T")
 
 
-def rle(S):
+def rle(S: Iterable[T]) -> list[tuple[T, int]]:
     """ランレングス圧縮。(値, 連続回数)のリストを返す。O(N)
 
     使い方:
@@ -9,9 +12,8 @@ def rle(S):
 
     https://github.com/yasyasyu/local-lib/blob/master/rle.py
     """
-    S = groupby(S)
     ret = []
-    for k, v in S:
+    for k, v in groupby(S):
         ret.append((k, len(list(v))))
 
     return ret

@@ -1,4 +1,6 @@
-def euler_tour(G: list[list], root: int):
+def euler_tour(
+    G: list[list[int]], root: int
+) -> tuple[list[int], list[int], list[int]]:
     """
     G:隣接リスト\\
     root:根\\
@@ -16,7 +18,7 @@ def euler_tour(G: list[list], root: int):
     N = len(G)
     v = root
     tour = [0] * (2 * N - 1)
-    depth_list = []
+    depth_list: list[list[int]] = []
     depth_v = [-1] * N
     left_id = [-1] * N
     right_id = [-1] * N

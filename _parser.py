@@ -16,11 +16,11 @@ class Parser:
         self.i = 0
         return None
     
-    def _count_up(self):
+    def _count_up(self) -> None:
         """読み取り位置を1つ進める。O(1)"""
         self.i += 1
     
-    def expr(self, s) -> int:
+    def expr(self, s: str) -> int:
         """expr    = term, {("+", term) | ("-", term)}
 
         計算量: O(この呼び出しで読み進めた文字数)
@@ -38,7 +38,7 @@ class Parser:
             return res
         return res
     
-    def term(self, s):
+    def term(self, s: str) -> int:
         """term    = factor, {("*", factor) | ("/", factor) | ("(", factor)}
 
         計算量: O(この呼び出しで読み進めた文字数)
@@ -65,7 +65,7 @@ class Parser:
                 break
         return res
     
-    def factor(self, s):
+    def factor(self, s: str) -> int:
         """factor  = ("(", expr, ")") | number
 
         計算量: O(この呼び出しで読み進めた文字数)
@@ -78,7 +78,7 @@ class Parser:
             return res
         return self.number(s)
 
-    def number(self, s):
+    def number(self, s: str) -> int:
         """number  = 1つ以上の数字
 
         計算量: O(この呼び出しで読み進めた文字数)

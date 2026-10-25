@@ -1,4 +1,4 @@
-def trim(grid):
+def trim(grid: list[list[str]]) -> list[list[str]]:
     """gridの周囲にある"#"を含まない余白の行・列を取り除く(gridは破壊的に変更される)。O(HW)
 
     使い方:

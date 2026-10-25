@@ -33,7 +33,7 @@ class Doubling:
                     self.doubling_table[i - 1][j]
                 ]
 
-    def get(self, x, k):
+    def get(self, x: int, k: int) -> int:
         """xをk回操作した値を取得します。O(log k)"""
         # kをビットごとに分解して、2**a + 2**b + 2**c + ... の形で考える。
         # xを2**a回操作した結果を2**b回操作した結果を2**c回操作… のように順に適用する

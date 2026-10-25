@@ -1,3 +1,6 @@
+from typing import Any, Callable
+
+
 class Mo:
     """Moのアルゴリズム（オフラインで区間クエリをならしO((N+Q)sqrt(N))で処理する）
 
@@ -43,7 +46,12 @@ class Mo:
         self.queries.append((l, r))
         return len(self.queries) - 1
 
-    def solve(self, add, remove, answer) -> list:
+    def solve(
+        self,
+        add: Callable[[int], None],
+        remove: Callable[[int], None],
+        answer: Callable[[], Any],
+    ) -> list[Any]:
         """全クエリを処理し、add_queryした順番に対応する答えのリストを返す。
 
         add / removeの呼び出しがO(N sqrt(Q))回、answerの呼び出しがQ回、ソートにO(Q log Q)。
@@ -54,14 +62,14 @@ class Mo:
 
         block = max(1, int(self.n / max(1, q**0.5)))
 
-        def sort_key(i):
+        def sort_key(i: int) -> tuple[int, int]:
             l, r = self.queries[i]
             block_id = l // block
             return (block_id, r if block_id % 2 == 0 else -r)
 
         order = sorted(range(q), key=sort_key)
 
-        res = [None] * q
+        res: list[Any] = [None] * q
         cur_l, cur_r = 0, 0
         for idx in order:
             l, r = self.queries[idx]
