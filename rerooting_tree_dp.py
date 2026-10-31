@@ -5,7 +5,7 @@ from .tree_order import tree_order
 T = TypeVar("T")
 
 
-def rerooting(
+def rerooting_tree_dp(
     G: list[list[int]],
     op: Callable[[T, T], T],
     e: T,
@@ -23,7 +23,7 @@ def rerooting(
 
     使い方:
         # 各頂点から他のすべての頂点への距離の和（ABC220 F）。値は (頂点数, 距離の和)
-        ans = rerooting(
+        ans = rerooting_tree_dp(
             G,
             op=lambda a, b: (a[0] + b[0], a[1] + b[1]),
             e=(0, 0),
@@ -33,9 +33,9 @@ def rerooting(
         dist_sum = [s for _, s in ans]
 
         # 各頂点から一番遠い頂点までの距離（辺の重みは W[(frm, to)]）
-        ans = rerooting(G, max, 0, lambda x, v: x, lambda x, frm, to: x + W[(frm, to)])
+        ans = rerooting_tree_dp(G, max, 0, lambda x, v: x, lambda x, frm, to: x + W[(frm, to)])
 
-    https://github.com/yasyasyu/local-lib/blob/master/rerooting.py
+    https://github.com/yasyasyu/local-lib/blob/master/rerooting_tree_dp.py
     """
     N = len(G)
     order, parent = tree_order(G, 0)

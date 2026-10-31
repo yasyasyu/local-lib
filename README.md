@@ -54,7 +54,8 @@
 | `doubling.py` | ダブリング（写像の高速反復適用） |
 | `lca.py` | 最小共通祖先（LCA、`doubling.py`に依存） |
 | `tree_order.py` | 再帰を使わない木の走査（BFS順と親。木DPの土台） |
-| `rerooting.py` | 全方位木DP（`op`・`e`・`add_vertex`・`add_edge`を渡す。`tree_order.py`に依存） |
+| `tree_dp.py` | 木DP（根を1つ決めて部分木の値を求める。引数は`rerooting_tree_dp.py`と同じ。`tree_order.py`に依存） |
+| `rerooting_tree_dp.py` | 全方位木DP（`op`・`e`・`add_vertex`・`add_edge`を渡す。`tree_order.py`に依存） |
 | `hld.py` | HL分解（パス・部分木を列の区間にする。LCA・距離・k個上の祖先も。`tree_order.py`に依存） |
 | `lowlink.py` | lowlinkによる橋・関節点の列挙（再帰なし、多重辺対応） |
 | `zero_one_bfs.py` | 0-1 BFS（辺の重みが0か1のグラフの単一始点最短路） |

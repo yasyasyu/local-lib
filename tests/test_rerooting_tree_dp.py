@@ -1,6 +1,6 @@
-"""rerooting.pyのテストコード
+"""rerooting_tree_dp.pyのテストコード
 
-rerooting.pyは `from .tree_order import tree_order` という相対インポートを
+rerooting_tree_dp.pyは `from .tree_order import tree_order` という相対インポートを
 使っているため、パッケージとしてインポートする必要がある。
 親ディレクトリをsys.pathに追加し、フォルダ名前空間パッケージ経由で読み込む。
 """
@@ -15,7 +15,7 @@ from pathlib import Path
 _LIB_DIR = Path(__file__).parent.parent
 sys.path.insert(0, str(_LIB_DIR.parent))
 
-rerooting = importlib.import_module(f"{_LIB_DIR.name}.rerooting").rerooting
+rerooting_tree_dp = importlib.import_module(f"{_LIB_DIR.name}.rerooting_tree_dp").rerooting_tree_dp
 
 
 def random_tree(n, rng):
@@ -43,7 +43,7 @@ def bfs_dist(G, s, W=None):
 
 
 def dist_sum_rerooting(G):
-    ans = rerooting(
+    ans = rerooting_tree_dp(
         G,
         op=lambda a, b: (a[0] + b[0], a[1] + b[1]),
         e=(0, 0),
@@ -76,7 +76,7 @@ class TestRerooting(unittest.TestCase):
         for _ in range(100):
             n = rng.randint(1, 25)
             G, _ = random_tree(n, rng)
-            got = rerooting(G, max, -1, lambda x, v: x + 1)
+            got = rerooting_tree_dp(G, max, -1, lambda x, v: x + 1)
             want = [max(bfs_dist(G, s)) for s in range(n)]
             self.assertEqual(got, want)
 
@@ -88,7 +88,7 @@ class TestRerooting(unittest.TestCase):
             W = {}
             for u, v in edges:
                 W[(u, v)] = W[(v, u)] = rng.randint(1, 9)
-            got = rerooting(G, max, 0, lambda x, v: x, lambda x, frm, to: x + W[(frm, to)])
+            got = rerooting_tree_dp(G, max, 0, lambda x, v: x, lambda x, frm, to: x + W[(frm, to)])
             want = [max(bfs_dist(G, s, W)) for s in range(n)]
             self.assertEqual(got, want)
 
