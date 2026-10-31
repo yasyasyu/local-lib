@@ -3,11 +3,12 @@ def bellman_ford(
 ) -> list[float]:
     """単一始点最短路（ベルマンフォード法、負の重み・負閉路検出に対応）。O(NM)（Nは頂点数、Mは辺数）
 
-    edges: 辺のリスト [(u, v, cost), ...]（有向辺。無向辺はu->vとv->uの両方を入れる）
-    N: 頂点数
-    start: 始点
+    :param edges: 辺のリスト [(u, v, cost), ...]（有向辺。無向辺はu->vとv->uの両方を入れる）
+    :param N: 頂点数
+    :param start: 始点
 
-    使い方:
+    使い方::
+
         edges = [(0, 1, 3), (1, 2, -2), (2, 0, 1)]
         dist = bellman_ford(edges, 3, 0)
         # dist[v]: startからvへの最短距離

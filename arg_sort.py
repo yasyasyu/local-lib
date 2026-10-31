@@ -39,12 +39,14 @@ def make_arg_cmp(
 ) -> Callable[[IntPoint, IntPoint], int]:
     """偏角の比較関数を作る。arg_sort(points, start, closed) と同じ順序になる。O(1)
 
-    start: 始線の向き（原点以外の整数ベクトル）。ここから反時計回りに並べる。
-    closed: True なら始線ちょうどの点を先頭に、False なら末尾に置く。
+    :param start: 始線の向き（原点以外の整数ベクトル）。ここから反時計回りに並べる。
+    :param closed: True なら始線ちょうどの点を先頭に、False なら末尾に置く。
+
     原点は常に先頭に来る。偏角が等しい点どうしは cmp が0を返す。
     戻り値は cmp_sort.sort_by_cmp や array_binary_search.lower_bound などに渡せる。
 
-    使い方:
+    使い方::
+
         # atan2 と同じ (-π, π] の順（-x 方向から始めて、-x 方向ちょうどの点は末尾）
         cmp = make_arg_cmp((-1, 0), closed=False)
 
@@ -78,14 +80,16 @@ def arg_sort(
 ) -> list[IntPoint]:
     """点を偏角の昇順に並べた新しいリストを返す（安定ソート、整数座標のみで誤差なし）。O(N log N)
 
-    points: 点 (x, y) のリスト。中心が原点でないときは、(x - cx, y - cy) にしてから渡す。
-    start: 始線の向き（原点以外の整数ベクトル）。ここから反時計回りに並べる。
-    closed: True なら始線ちょうどの点を先頭に、False なら末尾に置く。
+    :param points: 点 (x, y) のリスト。中心が原点でないときは、(x - cx, y - cy) にしてから渡す。
+    :param start: 始線の向き（原点以外の整数ベクトル）。ここから反時計回りに並べる。
+    :param closed: True なら始線ちょうどの点を先頭に、False なら末尾に置く。
+
     原点は先頭に置く。偏角が等しい点どうしは、入力の順番のまま並ぶ。
     Pythonの整数はオーバーフローしないが、座標の絶対値が 2 * 10**9 程度を超えると
     外積が64bitに収まらず、PyPyでは多倍長整数になって遅くなる。
 
-    使い方:
+    使い方::
+
         arg_sort([(0, -1), (-1, 0), (1, 1), (1, 0)])
         # [(1, 0), (1, 1), (-1, 0), (0, -1)]
 

@@ -4,7 +4,8 @@ from typing import Any
 class CumulativeSum2D:
     """2次元累積和（構築O(HW)、矩形和O(1)）
 
-    使い方:
+    使い方::
+
         grid = [[1, 2, 3], [4, 5, 6]]
         cs = CumulativeSum2D(grid)
         cs.query(1, 1, 2, 3)  # 21 (全体の矩形和)

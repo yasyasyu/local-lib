@@ -1,11 +1,15 @@
 def binary_search(ng: int, ok: int) -> int:
     """めぐる式二分探索のテンプレート。
 
-    ng: is_ok が False になる値、ok: is_ok が True になる値(順は逆でもよい)。
-    is_ok の中身は問題に応じて書き換えて使う。
-    計算量: O(log |ok - ng|) 回 is_ok を呼ぶ（is_ok 1回がO(f)なら全体でO(f log |ok - ng|)）。
+    :param ng: is_ok が False になる値。
+    :param ok: is_ok が True になる値（ng との大小は逆でもよい）。
 
-    使い方:
+    is_ok の中身は問題に応じて書き換えて使う。
+
+    計算量: O(log abs(ok - ng)) 回 is_ok を呼ぶ（is_ok 1回がO(f)なら全体でO(f log abs(ok - ng))）。
+
+    使い方::
+
         # is_okを書き換えた上で
         binary_search(-1, 10)  # is_ok(mid) = mid > 0 の場合、境界の1を返す
 

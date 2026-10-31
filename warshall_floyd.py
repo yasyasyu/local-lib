@@ -1,10 +1,11 @@
 def warshall_floyd(G: list[list[float]]) -> list[list[float]]:
     """全点対最短路（ワーシャルフロイド法）。O(N^3)
 
-    G: 隣接行列。G[i][j]は辺(i,j)の重み、辺が無い場合はfloat("inf")、G[i][i]は0。
+    :param G: 隣接行列。G[i][j]は辺(i,j)の重み、辺が無い場合はfloat("inf")、G[i][i]は0。
        負の重みがあってもよいが、負閉路がある場合の結果は保証しない。
 
-    使い方:
+    使い方::
+
         INF = float("inf")
         G = [
             [0, 3, INF],

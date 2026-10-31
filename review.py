@@ -1,6 +1,7 @@
 """考察の振り返りノート（REVIEW_NOTES.md）に記録するスクリプト（ローカルで使う。提出用ではない）
 
-使い方（d:\\work で、d:\\work\\review.ps1 から実行する。python local_lib/review.py ... でも同じ）:
+使い方（``d:\\work`` で、``d:\\work\\review.ps1`` から実行する。``python local_lib/review.py ...`` でも同じ）::
+
     .\\review.ps1                       # 記録する（質問に答えるだけ）
     .\\review.ps1 add "ARC180 A" -i "操作で和の偶奇が変わらない" -t 3.3
     .\\review.ps1 due                   # 今日までに解き直す問題を表示
@@ -56,12 +57,12 @@ class Entry:
 
 
 def normalize(problem: str) -> str:
-    """問題名を比べるための形にする（空白・"-"・"_" を除いて大文字に）。O(|problem|)"""
+    """問題名を比べるための形にする（空白・"-"・"_" を除いて大文字に）。O(len(problem))"""
     return re.sub(r"[\s_\-]", "", problem).upper()
 
 
 def parse_types(s: str) -> list[str] | None:
-    """「3.3 3.1」「3, 1」のような入力を型の番号のリストにする。不正なら None。O(|s|)"""
+    """「3.3 3.1」「3, 1」のような入力を型の番号のリストにする。不正なら None。O(len(s))"""
     res = []
     for t in re.split(r"[\s,、]+", s.strip()):
         if not t:
@@ -93,7 +94,7 @@ def format_entry(e: Entry) -> str:
 
 
 def parse_notes(text: str) -> list[Entry]:
-    """ノートの Markdown から、1問ずつ取り出す。項目が欠けていても読める。O(|text|)"""
+    """ノートの Markdown から、1問ずつ取り出す。項目が欠けていても読める。O(len(text))"""
     entries = []
     fields: dict[str, str] | None = None
     title = ""

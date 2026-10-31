@@ -7,24 +7,27 @@ _NO_ARG = object()
 class DualSegTree:
     """双対セグメント木（区間作用・1点取得をO(log N)で処理する）
 
-    ac-library-pythonの`LazySegTree`から「区間の集約値（op, e, prod）」を取り除いたもの。
+    ac-library-python の ``LazySegTree`` から「区間の集約値（op, e, prod）」を取り除いたもの。
     区間更新して1点を読むだけの問題（区間代入・区間加算・区間chminなど）で、
-    `LazySegTree`に意味のないop/eを渡す代わりに使う。区間の集約値が必要なら`LazySegTree`を使うこと。
+    ``LazySegTree`` に意味のないop/eを渡す代わりに使う。区間の集約値が必要なら ``LazySegTree`` を使うこと。
 
     ノードには作用だけを持ち、葉にだけ値を持つ。1点取得・1点更新の前に根から葉までの
     作用を下へ流す（push）ので、作用が可換でなくても（区間代入・アフィン変換など）正しく動く。
 
-    引数・メソッド名は`atcoder.lazysegtree.LazySegTree`に合わせている:
-        mapping(f, x):     作用fを値xに適用した結果
-        composition(f, g): gを適用した後にfを適用する作用（f∘g。fが新しい作用）
-        id_:               恒等写像（何もしない作用）
-        v:                 初期値のリスト
+    引数・メソッド名は ``atcoder.lazysegtree.LazySegTree`` に合わせている。
+
+    :param mapping: mapping(f, x)。作用fを値xに適用した結果
+    :param composition: composition(f, g)。gを適用した後にfを適用する作用（f∘g。fが新しい作用）
+    :param id_: 恒等写像（何もしない作用）
+    :param v: 初期値のリスト
 
     計算量（mapping・compositionの1回の呼び出しをO(1)とした場合）:
-        構築 O(N)、get / set / apply（1点・区間とも） O(log N)、get_all O(N)
-        mapping・compositionが重い場合（行列など）は、その計算量が掛け算で効く。
 
-    使い方:
+    - 構築 O(N)、get / set / apply（1点・区間とも） O(log N)、get_all O(N)
+    - mapping・compositionが重い場合（行列など）は、その計算量が掛け算で効く。
+
+    使い方::
+
         # 区間代入（Noneを「何もしない」とする）
         seg = DualSegTree(
             lambda f, x: x if f is None else f,

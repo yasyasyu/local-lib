@@ -7,11 +7,13 @@ T = TypeVar("T")
 def lis_ending_at(a: Sequence[T], strict: bool = True) -> list[int]:
     """各 i について、a[i] で終わる最長増加部分列の長さを返す。O(N log N)
 
-    strict: True なら狭義単調増加（a[i] < a[j]）、False なら広義単調増加（a[i] <= a[j]）。
+    :param strict: True なら狭義単調増加（a[i] < a[j]）、False なら広義単調増加（a[i] <= a[j]）。
+
     LIS の長さは max(lis_ending_at(a))。逆順に並べた配列にも使えば、
     「a[i] を通る最長増加部分列の長さ」も求められる。
 
-    使い方:
+    使い方::
+
         lis_ending_at([3, 1, 4, 1, 5, 9, 2, 6])         # [1, 1, 2, 1, 3, 4, 2, 4]
         lis_ending_at([1, 1, 2], strict=False)          # [1, 2, 3]
 
@@ -38,10 +40,12 @@ def lis_ending_at(a: Sequence[T], strict: bool = True) -> list[int]:
 def lis(a: Sequence[T], strict: bool = True) -> list[int]:
     """最長増加部分列を1つ求め、その添字のリストを返す（値は [a[i] for i in lis(a)]）。O(N log N)
 
-    strict: True なら狭義単調増加、False なら広義単調増加。
+    :param strict: True なら狭義単調増加、False なら広義単調増加。
+
     長さだけでよいなら len(lis(a)) でも、max(lis_ending_at(a), default=0) でもよい。
 
-    使い方:
+    使い方::
+
         idx = lis([3, 1, 4, 1, 5, 9, 2, 6])  # [1, 2, 4, 7]（値は [1, 4, 5, 6]）
         len(idx)                             # 4
 

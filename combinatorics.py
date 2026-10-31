@@ -3,7 +3,8 @@ class Combinatorics:
 
     modは素数である必要がある（フェルマーの小定理で逆元を求めるため）。
 
-    使い方:
+    使い方::
+
         MOD = 998244353
         comb = Combinatorics(10**6, MOD)
         comb.fact(5)      # 5! mod MOD = 120

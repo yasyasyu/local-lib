@@ -13,7 +13,8 @@ class SegmentTree2D:
     内部では「行方向の外側セグ木の各ノードが、列方向の`atcoder.segtree.SegTree`を1つ持つ」
     構成にして、列方向の1次元セグ木ロジックは全てac-library-pythonに任せている。
 
-    使い方:
+    使い方::
+
         seg = SegmentTree2D(3, 3, op=min, e=float("inf"))
         seg.update(1, 1, 5)
         seg.update(0, 2, 3)

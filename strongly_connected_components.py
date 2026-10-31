@@ -4,7 +4,8 @@ import sys
 class StronglyConnectedComponents:
     """強連結成分分解（Kosaraju法）。O(N + M)（Nは頂点数、Mは辺数）
 
-    使い方:
+    使い方::
+
         scc = StronglyConnectedComponents(4)
         scc.add_edge(0, 1)
         scc.add_edge(1, 0)

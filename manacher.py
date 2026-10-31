@@ -6,10 +6,13 @@ T = TypeVar("T")
 def manacher(s: Sequence[T]) -> list[int]:
     """各 i について、s[i] を中心とする奇数長の最長回文の半径を返す（Manacher 法）。O(N)
 
-    戻り値 r: s[i - r[i] + 1 : i + r[i]] が回文で、その長さは 2 * r[i] - 1。
+    :return: r: s[i - r[i] + 1 : i + r[i]] が回文で、その長さは 2 * r[i] - 1。
+    :rtype: list[int]
+
     偶数長の回文も扱うなら palindrome_lengths を使う。
 
-    使い方:
+    使い方::
+
         manacher("abaaba")   # [1, 2, 1, 1, 2, 1]（"aba" の中心は半径2）
 
     https://github.com/yasyasyu/local-lib/blob/master/manacher.py
@@ -34,12 +37,16 @@ def manacher(s: Sequence[T]) -> list[int]:
 def palindrome_lengths(s: Sequence[T]) -> list[int]:
     """各中心について、最長の回文の長さを返す（偶数長も含む）。O(N)
 
-    戻り値 L は長さ 2N - 1:
-        L[2 * i]     = s[i] を中心とする最長回文の長さ（奇数）
-        L[2 * i + 1] = s[i] と s[i + 1] の間を中心とする最長回文の長さ（偶数、0 もありうる）
+    :return: 長さ 2N - 1 のリスト L（中身は下）。
+    :rtype: list[int]
+
+    - L[2 * i] = s[i] を中心とする最長回文の長さ（奇数）
+    - L[2 * i + 1] = s[i] と s[i + 1] の間を中心とする最長回文の長さ（偶数、0 もありうる）
+
     s[l:r] が回文 ⇔ L[l + r - 1] >= r - l（l < r）。
 
-    使い方:
+    使い方::
+
         L = palindrome_lengths("abba")   # [1, 0, 1, 4, 1, 0, 1]
         max(L)                           # 4（最長の回文の長さ）
         L[0 + 4 - 1] >= 4                # True（"abba" は回文）

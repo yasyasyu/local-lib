@@ -9,7 +9,8 @@ T = TypeVar("T")
 class SortedMultiset(Generic[T]):
     """昇順ソート済み多重集合（重複あり、平方分割による実装）
 
-    使い方:
+    使い方::
+
         sm = SortedMultiset([3, 1, 2, 1])
         sm.add(2)          # 重複追加可
         sm.count(1)        # 2

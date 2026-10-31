@@ -5,7 +5,8 @@ import heapq
 class DeletableHeap:
     """要素の削除が可能なヒープ（多重集合として扱える最小値取得ヒープ）
 
-    使い方:
+    使い方::
+
         h = DeletableHeap()
         h.push(3)
         h.push(1)

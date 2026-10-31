@@ -1,13 +1,15 @@
 def euler_tour(
     G: list[list[int]], root: int
 ) -> tuple[list[int], list[int], list[int]]:
-    """
-    G:隣接リスト\\
-    root:根\\
-    euler tourしてleft idとright idと深さのlistを返す\
-    計算量: O(N)
+    """euler tour をして、left id と right id と深さのリストを返す。O(N)
 
-    使い方:
+    :param G: 隣接リスト。
+    :param root: 根。
+    :return: (left_id, right_id, depth)
+    :rtype: tuple[list[int], list[int], list[int]]
+
+    使い方::
+
         # 0 -> 1, 2 ; 1 -> 3 という木
         G = [[1, 2], [0, 3], [0], [1]]
         left_id, right_id, depth = euler_tour(G, 0)

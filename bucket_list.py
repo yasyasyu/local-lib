@@ -8,7 +8,8 @@ T = TypeVar("T")
 class BucketList(Generic[T]):
     """平方分割による可変長リスト（任意位置への挿入・削除がO(√N)）
 
-    使い方:
+    使い方::
+
         bl = BucketList([1, 2, 4])
         bl.insert(2, 3)   # [1, 2, 3, 4]
         bl.append(5)      # [1, 2, 3, 4, 5]

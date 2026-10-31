@@ -8,7 +8,8 @@ class HLD:
     部分木は1つの連続区間になる。ac-library-python の SegTree などと組み合わせて使う。
     パスの区間は順番を考えずに返すので、演算は可換であること（和・min・max など）。
 
-    使い方:
+    使い方::
+
         hld = HLD(G, root=0)
         seg = SegTree(op, e, [A[hld.order[i]] for i in range(N)])  # 列の位置 i には頂点 order[i] の値
 

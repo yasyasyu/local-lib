@@ -8,7 +8,8 @@ class AhoCorasick:
     今の状態は「テキストのここまでの接尾辞のうち、どれかのパターンの接頭辞である最長のもの」になる。
     パターンを含まない文字列を数える DP などでは、状態を DP の添字に使う（end_count を参照）。
 
-    使い方:
+    使い方::
+
         ac = AhoCorasick(["he", "she", "his", "hers"])
         ac.match_counts("ushers")   # [1, 1, 0, 1]（パターンごとの出現回数）
         ac.find_all("ushers")       # [(1, 1), (2, 0), (2, 3)]（(開始位置, パターン番号)）
@@ -75,7 +76,7 @@ class AhoCorasick:
         return children[state].get(c, 0)
 
     def match_counts(self, text: str) -> list[int]:
-        """パターンごとに、text の中での出現回数（重なりも含む）を返す。O(|text| + パターンの長さの合計)"""
+        """パターンごとに、text の中での出現回数（重なりも含む）を返す。O(len(text) + パターンの長さの合計)"""
         visit = [0] * len(self.children)
         state = 0
         for c in text:
@@ -88,7 +89,7 @@ class AhoCorasick:
         return [visit[t] for t in self.terminal]
 
     def find_all(self, text: str) -> list[tuple[int, int]]:
-        """text の中のすべての出現を (開始位置, パターン番号) のリストで返す。O(|text| + 出現の個数)
+        """text の中のすべての出現を (開始位置, パターン番号) のリストで返す。O(len(text) + 出現の個数)
 
         終わる位置の順に並ぶ。出現の個数が非常に多くなりうるときは match_counts を使う。
         """

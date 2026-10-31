@@ -6,12 +6,14 @@ T = TypeVar("T")
 def sort_by_cmp(a: Sequence[T], cmp: Callable[[T, T], int]) -> list[T]:
     """比較関数を渡せる安定ソート。ソート済みの新しいリストを返す（aは変更しない）。O(N log N) 回 cmp を呼ぶ
 
-    cmp(x, y): x を y より前に置くとき負、後ろに置くとき正、どちらでもよいとき0を返す
+    :param cmp: cmp(x, y)。x を y より前に置くとき負、後ろに置くとき正、どちらでもよいとき0を返す
         （functools.cmp_to_key と同じ約束。実際には cmp(x, y) < 0 かどうかだけを見る）。
+
     sorted(a, key=cmp_to_key(cmp)) と同じ結果になる。PyPyではこちらの方が数倍速い
     （CPythonでは cmp_to_key の方が速い）。
 
-    使い方:
+    使い方::
+
         # 分数 p[0]/p[1] の昇順（分母は正）。浮動小数点を使わずに比較する
         sort_by_cmp([(1, 2), (1, 3), (2, 3)], lambda p, q: p[0] * q[1] - q[0] * p[1])
         # [(1, 3), (1, 2), (2, 3)]

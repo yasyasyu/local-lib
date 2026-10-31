@@ -13,11 +13,13 @@ def lower_bound(
 ) -> int:
     """ソート済み配列 a[lo:hi] で、x より前に来ない最初の要素の添字を返す（C++のlower_bound）。O(log N) 回 cmp を呼ぶ
 
-    cmp: a のソートに使った比較関数（cmp_sort.sort_by_cmp と同じ約束）。
+    :param cmp: a のソートに使った比較関数（cmp_sort.sort_by_cmp と同じ約束）。
         省略すると < で比較する（bisect.bisect_left と同じ）。
+
     該当する要素がなければ hi を返す。
 
-    使い方:
+    使い方::
+
         lower_bound([1, 3, 3, 5], 3)  # 1
         lower_bound([1, 3, 3, 5], 4)  # 3
 
@@ -48,12 +50,14 @@ def upper_bound(
 ) -> int:
     """ソート済み配列 a[lo:hi] で、x より後ろに来る最初の要素の添字を返す（C++のupper_bound）。O(log N) 回 cmp を呼ぶ
 
-    cmp: a のソートに使った比較関数（cmp_sort.sort_by_cmp と同じ約束）。
+    :param cmp: a のソートに使った比較関数（cmp_sort.sort_by_cmp と同じ約束）。
         省略すると < で比較する（bisect.bisect_right と同じ）。
+
     該当する要素がなければ hi を返す。
     upper_bound(a, x) - lower_bound(a, x) が x と等しい要素の個数になる。
 
-    使い方:
+    使い方::
+
         upper_bound([1, 3, 3, 5], 3)  # 3
         upper_bound([1, 3, 3, 5], 0)  # 0
 
@@ -83,7 +87,8 @@ def partition_point(
     pred は a[lo:hi] の前半で True、後半で False になっていること。
     すべて True なら hi、すべて False なら lo を返す（= pred が True の要素の個数 + lo）。
 
-    使い方:
+    使い方::
+
         a = [1, 3, 3, 5, 8]
         partition_point(a, lambda v: v * v < 20)  # 3（5 * 5 >= 20）
 

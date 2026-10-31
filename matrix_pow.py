@@ -25,7 +25,8 @@ def mat_mul(
 def mat_pow(A: list[list[int]], k: int, mod: int | None = None) -> list[list[int]]:
     """正方行列Aのk乗を繰り返し二乗法で計算する。O(n^3 log k)（Aはn×n）
 
-    使い方:
+    使い方::
+
         A = [[1, 1], [1, 0]]  # フィボナッチ数列の遷移行列
         A_k = mat_pow(A, 10, mod=10**9 + 7)
         A_k[0][1]             # フィボナッチ数列 F(10)

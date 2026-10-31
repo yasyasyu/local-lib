@@ -7,7 +7,8 @@ class FenwickTree2D:
     内部では「行方向の外側BITの各ノードが、列方向の`atcoder.fenwicktree.FenwickTree`を
     1つ持つ」構成にして、列方向の1次元BITロジックは全てac-library-pythonに任せている。
 
-    使い方:
+    使い方::
+
         bit = FenwickTree2D(5, 5)
         bit.add(1, 2, 3)     # (1, 2) に3を加算
         bit.add(3, 3, 4)     # (3, 3) に4を加算

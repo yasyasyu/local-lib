@@ -4,7 +4,8 @@ from typing import Callable
 class Doubling:
     """ダブリング（写像の高速反復適用）
 
-    使い方:
+    使い方::
+
         N, K = map(int, input().split())
         mapping = list(map(lambda x: int(x) - 1, input().split()))
 

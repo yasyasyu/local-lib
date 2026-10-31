@@ -6,7 +6,8 @@ class IntervalSet:
 
     計算量はKを現在の区間の個数として表す（内部のSortedMultisetの操作がO(√K)）。
 
-    使い方:
+    使い方::
+
         s = IntervalSet()
         s.insert(1, 5)   # 区間[1, 5)を追加
         s.contains(3)    # True

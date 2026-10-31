@@ -97,7 +97,8 @@ def point_in_polygon(point: Point, polygon: Sequence[Point]) -> int:
     point_in_polygon((1, 1), [(0, 0), (2, 0), (2, 2), (0, 2)])
     # 1: 内部, 0: 辺上, -1: 外部
 
-    戻り値: 1 = 内部, 0 = 辺上（頂点含む）, -1 = 外部。
+    :return: 1 = 内部, 0 = 辺上（頂点含む）, -1 = 外部。
+    :rtype: int
 
     https://github.com/yasyasyu/local-lib/blob/master/geometry.py
     """

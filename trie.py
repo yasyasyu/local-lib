@@ -1,7 +1,8 @@
 class Trie:
-    """文字列の集合を管理するTrie木（挿入・完全一致検索・前置一致個数）。各操作O(|s|)
+    """文字列の集合を管理するTrie木（挿入・完全一致検索・前置一致個数）。各操作O(len(s))
 
-    使い方:
+    使い方::
+
         trie = Trie()
         trie.insert("abc")
         trie.insert("abd")
@@ -27,7 +28,7 @@ class Trie:
         self.root = self._Node()
 
     def insert(self, s: str) -> None:
-        """文字列sを挿入する。O(|s|)"""
+        """文字列sを挿入する。O(len(s))"""
         node = self.root
         node.count += 1
         for c in s:
@@ -38,7 +39,7 @@ class Trie:
         node.is_end = True
 
     def _find(self, s: str) -> "Trie._Node | None":
-        """sに対応するノードを返す。無ければNone。O(|s|)"""
+        """sに対応するノードを返す。無ければNone。O(len(s))"""
         node = self.root
         for c in s:
             if c not in node.children:
@@ -47,16 +48,16 @@ class Trie:
         return node
 
     def search(self, s: str) -> bool:
-        """文字列sが完全一致で挿入済みかを返す。O(|s|)"""
+        """文字列sが完全一致で挿入済みかを返す。O(len(s))"""
         node = self._find(s)
         return node is not None and node.is_end
 
     def starts_with(self, prefix: str) -> bool:
-        """prefixを接頭辞に持つ単語が1つ以上挿入済みかを返す。O(|prefix|)"""
+        """prefixを接頭辞に持つ単語が1つ以上挿入済みかを返す。O(len(prefix))"""
         return self._find(prefix) is not None
 
     def count_prefix(self, prefix: str) -> int:
-        """prefixを接頭辞に持つ単語の個数を返す。O(|prefix|)"""
+        """prefixを接頭辞に持つ単語の個数を返す。O(len(prefix))"""
         node = self._find(prefix)
         return node.count if node else 0
 
@@ -64,7 +65,8 @@ class Trie:
 class BinaryTrie:
     """非負整数の多重集合を管理し、XORに関するクエリを高速に処理するTrie木。各操作O(B)（Bはbit_length）
 
-    使い方:
+    使い方::
+
         trie = BinaryTrie(bit_length=30)
         trie.insert(5)
         trie.insert(12)

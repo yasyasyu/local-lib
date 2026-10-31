@@ -11,20 +11,21 @@ class PersistentStack(Generic[T]):
     これにより、過去の状態を保持したまま操作を行うことができます。
     push / pop / peekはO(1)、要素を全て辿る__iter__ / __str__ / __repr__はO(N)。
 
-    Attributes:
-        value: スタックの先頭要素
-        prv: 直前のスタック（前の状態）
+    :var value: スタックの先頭要素
+    :var prv: 直前のスタック（前の状態）
 
-    Methods:
-        push(value): 新しい値を積んだ新しいスタックを返す
-        pop(): 1つ前の状態のスタックを返す
-        peek(): 先頭要素を返す（空ならNone）
-        from_iterable(iterable): イテラブルからスタックを生成
-        __iter__(): 下から上へスタックをイテレート
-        __str__(): スタック内容を文字列で返す
-        __repr__(): デバッグ用表現
+    メソッド:
 
-    使い方例:
+    - ``push(value)``: 新しい値を積んだ新しいスタックを返す
+    - ``pop()``: 1つ前の状態のスタックを返す
+    - ``peek()``: 先頭要素を返す（空ならNone）
+    - ``from_iterable(iterable)``: イテラブルからスタックを生成
+    - ``__iter__()``: 下から上へスタックをイテレート
+    - ``__str__()``: スタック内容を文字列で返す
+    - ``__repr__()``: デバッグ用表現
+
+    使い方例::
+
         >>> A = PersistentStack()
         >>> A = A.push(1)
         >>> A = A.push(2)
@@ -33,7 +34,8 @@ class PersistentStack(Generic[T]):
         >>> print(A)  # [1]
         >>> print(A.peek())  # 1
 
-    状態の保存・復元例:
+    状態の保存・復元例::
+
         >>> from collections import defaultdict
         >>> notebook = defaultdict(lambda: PersistentStack())
         >>> A = PersistentStack()
@@ -55,9 +57,8 @@ class PersistentStack(Generic[T]):
         """
         スタックの初期化。O(1)（valueにイテラブルを渡した場合はO(N)）
 
-        Args:
-            value: スタックに積む値、またはイテラブル
-            prev: 直前のスタック
+        :param value: スタックに積む値、またはイテラブル
+        :param prev: 直前のスタック
         """
         if (
             value is not None
@@ -75,11 +76,9 @@ class PersistentStack(Generic[T]):
         """
         新しい値を積んだ新しいスタックを返します。O(1)
 
-        Args:
-            value: 積む値
-
-        Returns:
-            PersistentStack: 新しいスタック
+        :param value: 積む値
+        :return: 新しいスタック
+        :rtype: PersistentStack[T]
         """
         return PersistentStack(value=value, prev=self)
 
@@ -87,8 +86,8 @@ class PersistentStack(Generic[T]):
         """
         1つ前の状態のスタックを返します。O(1)
 
-        Returns:
-            PersistentStack: 1つ前のスタック
+        :return: 1つ前のスタック
+        :rtype: PersistentStack
         """
         return self.prv if self.prv else self
 
@@ -96,8 +95,8 @@ class PersistentStack(Generic[T]):
         """
         先頭要素を返します。O(1)
 
-        Returns:
-            T | None: 先頭要素（空ならNone）
+        :return: 先頭要素（空ならNone）
+        :rtype: T | None
         """
         return self.value
 
@@ -106,11 +105,9 @@ class PersistentStack(Generic[T]):
         """
         イテラブルからスタックを生成します。O(N)
 
-        Args:
-            iterable: イテラブル
-
-        Returns:
-            PersistentStack: 生成されたスタック
+        :param iterable: イテラブル
+        :return: 生成されたスタック
+        :rtype: PersistentStack
         """
         cur = PersistentStack()
         for v in iterable:
@@ -121,8 +118,8 @@ class PersistentStack(Generic[T]):
         """
         デバッグ用にクラス名付きでスタック内容を返します。O(N)
 
-        Returns:
-            str: スタックのデバッグ用表現
+        :return: スタックのデバッグ用表現
+        :rtype: str
         """
         return f"PersistentStack({(self)})"
 
@@ -130,8 +127,8 @@ class PersistentStack(Generic[T]):
         """
         スタックを下から上へイテレートします。O(N)
 
-        Yields:
-            T: スタックの各要素
+        :return: スタックの各要素を下から順に返すイテレータ
+        :rtype: Iterator[T]
         """
         val = []
         cur = self
@@ -146,7 +143,7 @@ class PersistentStack(Generic[T]):
         """
         スタック内容を文字列で返します。O(N)
 
-        Returns:
-            str: スタックの内容
+        :return: スタックの内容
+        :rtype: str
         """
         return "[" + ", ".join(str(v) for v in self) + "]"

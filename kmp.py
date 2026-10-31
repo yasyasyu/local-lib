@@ -9,7 +9,8 @@ def prefix_function(s: Sequence[T]) -> list[int]:
     最小周期（s が長さ p の文字列の繰り返しで書けるような最小の p）は len(s) - pi[-1]。
     ac-library-python の z_algorithm でも検索はできるが、周期や境界（border）を扱うときはこちらが便利。
 
-    使い方:
+    使い方::
+
         prefix_function("abacaba")         # [0, 0, 1, 0, 1, 2, 3]
         s = "abcabcab"
         len(s) - prefix_function(s)[-1]    # 3（最小周期）
@@ -29,11 +30,12 @@ def prefix_function(s: Sequence[T]) -> list[int]:
 
 
 def kmp_search(text: Sequence[T], pattern: Sequence[T]) -> list[int]:
-    """text の中で pattern が現れる開始位置を、重なりも含めてすべて返す（KMP 法）。O(|text| + |pattern|)
+    """text の中で pattern が現れる開始位置を、重なりも含めてすべて返す（KMP 法）。O(len(text) + len(pattern))
 
     pattern が空なら、0 から len(text) までのすべての位置を返す。
 
-    使い方:
+    使い方::
+
         kmp_search("abababa", "aba")   # [0, 2, 4]
         kmp_search("abc", "d")         # []
 

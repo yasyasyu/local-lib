@@ -8,7 +8,8 @@ def topological_sort(directed_graph: list[list[int]]) -> list[int]:
 
     es : 有向グラフ（隣接リスト。es[u]はuから出る辺の行き先のリスト）
 
-    使い方:
+    使い方::
+
         n, m = map(int, input().split())
         es = [[] for _ in range(n)]
         for _ in range(m):

@@ -19,7 +19,8 @@ def frac_cmp(p: Frac, q: Frac) -> int:
     0/0 は渡さないこと（どの値とも等しくなり、順序が壊れる）。
     a/b を浮動小数点で計算して比べると、値の近い分数を区別できないことがある。
 
-    使い方:
+    使い方::
+
         frac_cmp((1, 3), (1, 2))  # 負（1/3 < 1/2）
         frac_cmp((1, 2), (2, 4))  # 0（等しい）
 
@@ -41,12 +42,13 @@ def frac_cmp(p: Frac, q: Frac) -> int:
 
 
 def concat_cmp(x: str, y: str) -> int:
-    """x + y が y + x より小さいとき x を前にする比較。O(|x| + |y|)
+    """x + y が y + x より小さいとき x を前にする比較。O(len(x) + len(y))
 
     この順に並べてつなげると、つなげた文字列が辞書順最小になる（推移律が成り立つことが知られている）。
     最大にしたいときは reverse_cmp(concat_cmp) を使う。
 
-    使い方:
+    使い方::
+
         "".join(sort_by_cmp(["3", "30", "34"], concat_cmp))               # "30334"（最小）
         "".join(sort_by_cmp(["3", "30", "34"], reverse_cmp(concat_cmp)))  # "34330"（最大）
 
@@ -60,13 +62,15 @@ def concat_cmp(x: str, y: str) -> int:
 def exchange_cmp(cost: Callable[[T, T], int]) -> Callable[[T, T], int]:
     """交換論法の比較関数を作る。cost(a, b) < cost(b, a) なら a を前にする。O(1)（cost 2回）
 
-    cost(a, b): 隣り合う a, b を「a, b の順」に置いたときのコスト
+    :param cost: cost(a, b)。隣り合う a, b を「a, b の順」に置いたときのコスト
         （並べ順で変わる部分だけでよい。前後にある他の要素の影響は受けないこと）。
+
     注意: 「隣を入れ替えて得なら入れ替える」で決まる順序は、推移律が成り立つとは限らない。
     成り立たないとソートの結果がおかしくなるので、check_cmp で小さいデータを確かめておくとよい。
     多くの場合は、ある値の比（frac_cmp）の比較に帰着する。
 
-    使い方:
+    使い方::
+
         # 処理時間 p・重み w のタスクを順に処理し、(重み × 完了時刻) の総和を最小にする
         tasks = [(3, 1), (1, 2), (2, 2)]  # (p, w)
         cost = lambda a, b: a[1] * a[0] + b[1] * (a[0] + b[0])
@@ -89,7 +93,8 @@ def key_cmp(
     then_cmp で他の比較関数とつなげるとき、要素をそのまま比較関数に渡せないとき
     （添字を並べ替えたいときなど）に使う。key だけで済むなら sorted(key=key) の方が速い。
 
-    使い方:
+    使い方::
+
         # 添字を、点 P[i] の偏角の順に並べる
         sort_by_cmp(range(N), key_cmp(lambda i: P[i], arg_cmp))
 
@@ -113,7 +118,8 @@ def key_cmp(
 def reverse_cmp(cmp: Callable[[T, T], int]) -> Callable[[T, T], int]:
     """cmp の逆順（降順）にする比較関数を作る。O(1)
 
-    使い方:
+    使い方::
+
         sort_by_cmp(fracs, reverse_cmp(frac_cmp))  # 分数の大きい順
 
     https://github.com/yasyasyu/local-lib/blob/master/comparators.py
@@ -128,7 +134,8 @@ def reverse_cmp(cmp: Callable[[T, T], int]) -> Callable[[T, T], int]:
 def then_cmp(*cmps: Callable[[T, T], int]) -> Callable[[T, T], int]:
     """比較関数を優先順につなげる。前の比較関数で等しい（0）ときだけ、次の比較関数で比べる。O(len(cmps))
 
-    使い方:
+    使い方::
+
         # 偏角の昇順、同じ偏角なら原点に近い順
         cmp = then_cmp(arg_cmp, key_cmp(lambda p: p[0] * p[0] + p[1] * p[1]))
         sort_by_cmp(points, cmp)
@@ -152,13 +159,17 @@ def then_cmp(*cmps: Callable[[T, T], int]) -> Callable[[T, T], int]:
 def check_cmp(items: Sequence[T], cmp: Callable[[T, T], int]) -> tuple[T, ...] | None:
     """cmp が items の上で正しい順序（全前順序）になっているかを全組で調べる（デバッグ用）。O(N^3)
 
-    正しければ None を返す。崩れていれば、その原因になった要素の組を返す:
-        (x,)       : cmp(x, x) が0でない
-        (x, y)     : cmp(x, y) と cmp(y, x) の符号が逆になっていない
-        (x, y, z)  : x <= y かつ y <= z なのに x <= z でない（推移律が成り立たない）
+    :return: 正しければ None。崩れていれば、その原因になった要素の組（中身は下）。
+    :rtype: tuple[T, ...] | None
+
+    - (x,): cmp(x, x) が0でない
+    - (x, y): cmp(x, y) と cmp(y, x) の符号が逆になっていない
+    - (x, y, z): x <= y かつ y <= z なのに x <= z でない（推移律が成り立たない）
+
     交換論法などで作った比較関数を、小さいデータ（N は数十まで）で確かめるのに使う。
 
-    使い方:
+    使い方::
+
         check_cmp(small_tasks, exchange_cmp(cost))  # None なら、この範囲ではソートに使ってよい
 
     https://github.com/yasyasyu/local-lib/blob/master/comparators.py

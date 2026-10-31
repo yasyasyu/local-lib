@@ -7,7 +7,8 @@ class SmallestPrimeFactor:
     構築は O(N log log N)。たくさんの数（N は 10**7 程度まで）を素因数分解するときに使う。
     1個だけ・大きい数（10**18 程度）を分解するなら pollard_rho.py を使う。
 
-    使い方:
+    使い方::
+
         spf = SmallestPrimeFactor(10**6)
         spf.factorize(360)      # {2: 3, 3: 2, 5: 1}
         spf.is_prime(97)        # True

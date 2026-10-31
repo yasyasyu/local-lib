@@ -5,7 +5,8 @@ def bit_partial_set(n: int) -> None:
 
     計算量: O(2^k)（kはnの立っているビット数。列挙する部分集合の個数）
 
-    使い方:
+    使い方::
+
         bit_partial_set(0b1011)  # 標準出力に列挙結果を表示する
 
     https://github.com/yasyasyu/local-lib/blob/master/bit_partial_set.py

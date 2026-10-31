@@ -17,7 +17,8 @@ S = TypeVar("S", bound=Hashable)
 def arrays(n: int, lo: int, hi: int) -> Iterator[tuple[int, ...]]:
     """長さ n で、各要素が lo 以上 hi 以下の配列をすべて列挙する。O((hi - lo + 1)^n)
 
-    使い方:
+    使い方::
+
         list(arrays(2, 0, 1))   # [(0, 0), (0, 1), (1, 0), (1, 1)]
 
     https://github.com/yasyasyu/local-lib/blob/master/experiment.py
@@ -26,9 +27,10 @@ def arrays(n: int, lo: int, hi: int) -> Iterator[tuple[int, ...]]:
 
 
 def strings(n: int, alphabet: str = "ab") -> Iterator[str]:
-    """長さ n で、alphabet の文字からなる文字列をすべて列挙する。O(|alphabet|^n)
+    """長さ n で、alphabet の文字からなる文字列をすべて列挙する。O(len(alphabet)^n)
 
-    使い方:
+    使い方::
+
         list(strings(2, "ab"))   # ["aa", "ab", "ba", "bb"]
 
     https://github.com/yasyasyu/local-lib/blob/master/experiment.py
@@ -39,7 +41,8 @@ def strings(n: int, alphabet: str = "ab") -> Iterator[str]:
 def permutations(n: int) -> Iterator[tuple[int, ...]]:
     """0, 1, ..., n - 1 の順列をすべて列挙する。O(n!)
 
-    使い方:
+    使い方::
+
         list(permutations(3))   # [(0, 1, 2), (0, 2, 1), ..., (2, 1, 0)]
 
     https://github.com/yasyasyu/local-lib/blob/master/experiment.py
@@ -52,7 +55,8 @@ def trees(n: int) -> Iterator[list[tuple[int, int]]]:
 
     プリューファー列から木を復元して作る。n は 7 程度まで。
 
-    使い方:
+    使い方::
+
         len(list(trees(4)))   # 16
         for edges in trees(4):
             ...
@@ -82,7 +86,8 @@ def graphs(n: int, connected: bool = False) -> Iterator[list[tuple[int, int]]]:
 
     connected=True なら連結なものだけ。n は 5（1024 個）〜 6（32768 個）程度まで。
 
-    使い方:
+    使い方::
+
         len(list(graphs(3)))                   # 8
         len(list(graphs(3, connected=True)))   # 4
 
@@ -122,7 +127,8 @@ def bfs_states(start: S, moves: Callable[[S], Iterable[S]]) -> dict[S, int]:
     「この操作を繰り返して目標にできるか」「最小何回か」を全探索するときに使う。
     状態はタプルや文字列など、ハッシュできるもので表す（リストは不可）。
 
-    使い方:
+    使い方::
+
         # 隣り合う2つを入れ替える操作
         def moves(p):
             for i in range(len(p) - 1):
@@ -151,7 +157,8 @@ def bfs_states(start: S, moves: Callable[[S], Iterable[S]]) -> dict[S, int]:
 def show(f: Callable[[Any], Any], inputs: Iterable[Any]) -> None:
     """各入力について「入力 -> f(入力)」を1行ずつ表示する。O(入力の個数 × f)
 
-    使い方:
+    使い方::
+
         show(brute, permutations(3))
         # (0, 1, 2) -> 0
         # (0, 2, 1) -> 1
@@ -168,7 +175,8 @@ def table(f: Callable[[int, int], Any], rows: Iterable[int], cols: Iterable[int]
 
     答えが2つの値（N と K など）で決まるときに、規則を探すのに使う。
 
-    使い方:
+    使い方::
+
         table(lambda n, k: n * k, range(1, 4), range(0, 3))
         #   | 0 1 2
         # ---------
@@ -199,11 +207,13 @@ def stress(
     """gen で作ったランダムな入力で solve と brute を比べ、最初に答えが違った入力を返す（無ければ None）。
 
     計算量: O(trials × (solve + brute))
+
     gen(rng) は乱数生成器 rng を受け取り、入力を1つ返す（引数が複数なら、タプルにまとめる）。
     答えが違ったら、その入力と両方の答えを表示する。反例は小さい方が調べやすいので、
     gen では小さい入力（N <= 6 程度）を作るとよい。
 
-    使い方:
+    使い方::
+
         def gen(rng):
             n = rng.randint(1, 6)
             return tuple(rng.randint(0, 3) for _ in range(n))

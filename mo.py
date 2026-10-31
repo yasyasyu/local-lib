@@ -7,7 +7,8 @@ class Mo:
     add/removeで「集合に要素iを足す/抜く」差分更新だけを実装すれば、
     クエリを良い順番で処理することで全体を高速化できる。
 
-    使い方:
+    使い方::
+
         mo = Mo(N)
         for l, r in queries:  # 半開区間[l, r)
             mo.add_query(l, r)

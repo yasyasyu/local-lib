@@ -6,7 +6,8 @@ T = TypeVar("T")
 def rotate90(grid: Sequence[Sequence[T]]) -> Iterator[list[list[T]]]:
     """gridを90度ずつ回転したものを4回分(360度分)順に返すジェネレータ。1回分ごとにO(HW)
 
-    使い方:
+    使い方::
+
         for rotated in rotate90(grid):
             ...  # 90, 180, 270, 360(元と同じ)度回転したgridが順に得られる
 
@@ -21,7 +22,8 @@ def rotate90(grid: Sequence[Sequence[T]]) -> Iterator[list[list[T]]]:
 def transpose(grid: Sequence[Sequence[T]]) -> list[list[T]]:
     """gridを転置する。O(HW)
 
-    使い方:
+    使い方::
+
         transpose([[1, 2, 3], [4, 5, 6]])  # [[1, 4], [2, 5], [3, 6]]
 
     https://github.com/yasyasyu/local-lib/blob/master/rotate90.py

@@ -6,10 +6,11 @@ def kruskal(
 ) -> tuple[int, list[tuple[int, int, int]]]:
     """クラスカル法による最小全域木（MST）。O(M log M)（Mは辺数）
 
-    edges: 辺のリスト [(cost, u, v), ...]
-    N: 頂点数
+    :param edges: 辺のリスト [(cost, u, v), ...]
+    :param N: 頂点数
 
-    使い方:
+    使い方::
+
         edges = [(1, 0, 1), (2, 1, 2), (3, 0, 2)]
         total_cost, used_edges = kruskal(edges, 3)
         # total_cost: MSTの総コスト

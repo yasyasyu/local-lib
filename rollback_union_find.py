@@ -4,7 +4,8 @@ class RollbackUnionFind:
     経路圧縮を行わない代わりに、直前までのmergeを元に戻せる。
     union by sizeによりfindはO(log N)。
 
-    使い方:
+    使い方::
+
         uf = RollbackUnionFind(5)
         uf.merge(0, 1)
         state = uf.snapshot()

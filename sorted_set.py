@@ -9,7 +9,8 @@ T = TypeVar("T")
 class SortedSet(Generic[T]):
     """昇順ソート済み集合（重複なし、平方分割による実装）
 
-    使い方:
+    使い方::
+
         ss = SortedSet([3, 1, 2])
         ss.add(4)         # True (新規追加)
         ss.add(4)         # False (既に存在)

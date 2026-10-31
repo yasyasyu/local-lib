@@ -10,7 +10,8 @@ class SparseTable(Generic[T]):
     区間を重なりのある2つの区間で覆って求めるため。値の更新はできない（必要なら SegTree）。
     クエリのメソッド名は ac-library-python の SegTree に合わせて prod にしている。
 
-    使い方:
+    使い方::
+
         st = SparseTable([3, 1, 4, 1, 5, 9, 2, 6])         # 既定は min
         st.prod(2, 5)                                     # 1（a[2:5] = [4, 1, 5] の最小値）
         SparseTable([3, 1, 4, 1, 5], op=max).prod(0, 3)   # 4

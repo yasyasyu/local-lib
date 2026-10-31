@@ -15,7 +15,8 @@ class PotentialUnionFind:
 
     経路圧縮とunion by sizeにより、root / dist / unite / sizeはならしO(α(N))（実質定数）。
 
-    使い方:
+    使い方::
+
         uf = PotentialUnionFind(3)
         uf.unite(0, 1, 5)  # potential[1] - potential[0] = 5
         uf.dist(0, 1)      # 5

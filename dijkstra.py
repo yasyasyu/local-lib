@@ -4,10 +4,11 @@ import heapq
 def dijkstra(G: list[list[tuple[int, int]]], start: int) -> list[float]:
     """単一始点最短路（ダイクストラ法、負の重みがない場合のみ使える）。O((N + M) log M)（Nは頂点数、Mは辺数）
 
-    G: 隣接リスト。G[u] = [(v, cost), ...]
-    start: 始点
+    :param G: 隣接リスト。G[u] = [(v, cost), ...]
+    :param start: 始点
 
-    使い方:
+    使い方::
+
         N, M = map(int, input().split())
         G = [[] for _ in range(N)]
         for _ in range(M):

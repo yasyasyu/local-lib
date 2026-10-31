@@ -6,7 +6,8 @@ T = TypeVar("T")
 def add_tree_view(target_class: type[T]) -> type[T]:
     """セグメント木のクラス(要素数を持つ self._size、内部配列を持つ self._d)にツリー状に整形した __str__ を追加するデコレータ。
 
-    使い方:
+    使い方::
+
         class Segtree:
             def __init__(self, n):
                 self._size = n
@@ -15,7 +16,7 @@ def add_tree_view(target_class: type[T]) -> type[T]:
         add_tree_view(Segtree)
         print(Segtree(4))  # ツリー状に整形されて表示される
 
-    target_classを返すので、自分で定義するクラスには通常のデコレータ構文が使える:
+    target_classを返すので、自分で定義するクラスには通常のデコレータ構文が使える::
 
         @add_tree_view
         class Segtree:
@@ -23,9 +24,9 @@ def add_tree_view(target_class: type[T]) -> type[T]:
                 self._size = n
                 self._d = [0] * (2 * n)
 
-    ac-library-pythonの`atcoder.segtree.SegTree`・`atcoder.lazysegtree.LazySegTree`のように
-    既に定義済みの外部クラスは、クラス定義文の直後にしか書けない`@`構文をその場で使えないため、
-    代わりに関数として後付けする（戻り値を返すので代入形でも書ける）:
+    ac-library-python の ``atcoder.segtree.SegTree``・``atcoder.lazysegtree.LazySegTree`` のように
+    既に定義済みの外部クラスは、クラス定義文の直後にしか書けない ``@`` 構文をその場で使えないため、
+    代わりに関数として後付けする（戻り値を返すので代入形でも書ける）::
 
         from atcoder.segtree import SegTree
         add_tree_view(SegTree)  # SegTree自体が書き換わる
@@ -45,9 +46,9 @@ def add_tree_view(target_class: type[T]) -> type[T]:
     ) -> str:
         """1段分の行を組み立てる。O(total_width)
 
-        group_size: この段の1ノードがまとめている葉の数
-        cell: 葉1個分の表示幅（値の桁数z + 区切りの"|" 1文字）
-        total_width: 木全体（葉の段）の行の文字数。全ての段でこの幅に揃える
+        :param group_size: この段の1ノードがまとめている葉の数
+        :param cell: 葉1個分の表示幅（値の桁数z + 区切りの"|" 1文字）
+        :param total_width: 木全体（葉の段）の行の文字数。全ての段でこの幅に揃える
         """
         row = [" "] * total_width
         for j in range(len(values) + 1):

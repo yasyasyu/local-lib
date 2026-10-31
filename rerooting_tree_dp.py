@@ -14,14 +14,18 @@ def rerooting_tree_dp(
 ) -> list[T]:
     """全方位木DP。すべての頂点について、その頂点を根にしたときの木全体の値を返す。O(N)
 
-    G: 木の隣接リスト（無向）。
-    op, e: 子から来た値をまとめる演算と単位元（可換モノイド。足し算・max など）。
-    add_vertex(x, v): 子からの値をまとめた x に頂点 v を足して、v を根とする部分木の値にする。
-    add_edge(x, frm, to): 部分木の値 x を、辺 frm -> to を通して親 to へ渡す値にする。省略すると x のまま。
-    戻り値 ans: ans[v] は v を根にしたときの値（= add_vertex(すべての隣からの値, v)）。
+    :param G: 木の隣接リスト（無向）。
+    :param op: 子から来た値をまとめる演算 op(a, b)（可換モノイド。足し算・max など）。
+    :param e: op の単位元。
+    :param add_vertex: add_vertex(x, v)。子からの値をまとめた x に頂点 v を足して、v を根とする部分木の値にする。
+    :param add_edge: add_edge(x, frm, to)。部分木の値 x を、辺 frm -> to を通して親 to へ渡す値にする。省略すると x のまま。
+    :return: ans[v] は v を根にしたときの値（= add_vertex(すべての隣からの値, v)）。
+    :rtype: list[T]
+
     再帰を使わないので、深い木でも使える。
 
-    使い方:
+    使い方::
+
         # 各頂点から他のすべての頂点への距離の和（ABC220 F）。値は (頂点数, 距離の和)
         ans = rerooting_tree_dp(
             G,

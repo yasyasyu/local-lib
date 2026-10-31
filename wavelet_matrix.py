@@ -8,7 +8,8 @@ class WaveletMatrix:
     値は内部で座標圧縮するので、負の数や大きな数でもよい（σ は値の種類数）。
     構築 O(N log σ)、各クエリ O(log σ)。区間はすべて半開区間 [l, r)。
 
-    使い方:
+    使い方::
+
         wm = WaveletMatrix([5, 1, 4, 1, 5, 9, 2, 6])
         wm.kth_smallest(1, 6, 0)       # 1（a[1:6] = [1, 4, 1, 5, 9] で 0 番目に小さい値）
         wm.kth_smallest(1, 6, 2)       # 4

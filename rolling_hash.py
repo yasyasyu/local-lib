@@ -4,7 +4,8 @@ import random
 class RollingHash:
     """ローリングハッシュ（部分文字列の一致判定・LCPを高速に求める）
 
-    使い方:
+    使い方::
+
         rh = RollingHash("abcabc")
         rh.get(0, 3)                  # "abc" のハッシュ値
         rh.get(0, 3) == rh.get(3, 6)  # True（どちらも"abc"）

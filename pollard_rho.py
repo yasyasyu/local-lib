@@ -11,7 +11,8 @@ def is_prime(n: int) -> bool:
     n < 2**64（約 1.8 * 10**18）の範囲では、確定的に正しい答えを返す。
     それより大きい n でも動くが、まれに合成数を素数と判定する可能性がある。
 
-    使い方:
+    使い方::
+
         is_prime(998244353)            # True
         is_prime(10**18 + 9)           # True
         is_prime(561)                  # False（カーマイケル数）
@@ -81,7 +82,8 @@ def factorize(n: int) -> dict[int, int]:
     10**18 程度の数でも高速に分解できる（_math.prime_factorize は試し割りなので 10**12 程度まで）。
     たくさんの小さい数を分解するなら smallest_prime_factor.py の方が速い。
 
-    使い方:
+    使い方::
+
         factorize(360)                         # {2: 3, 3: 2, 5: 1}
         factorize(999999999999999989 * 2)      # {2: 1, 999999999999999989: 1}
         factorize(1)                           # {}
